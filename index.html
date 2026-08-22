@@ -8,7 +8,7 @@
 <meta name="color-scheme" content="light" />
 <style>
   :root{
-    color-scheme:light;
+    color-scheme:only light;
     --bg:#fef7f0;
     --panel:#ffffff;
     --line:#f0e2d4;
@@ -32,10 +32,19 @@
   .wrap{max-width:1160px;margin:0 auto;padding:0 24px}
   .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 
+  /* 防御：即使系统/浏览器处于深色偏好，也强制保持本站的浅色配色，与 Chrome 一致 */
+  @media (prefers-color-scheme: dark){
+    :root{color-scheme:only light}
+    html,body{background-color:#fef7f0}
+    body{color:#5b4a3d}
+  }
+
   /* ===== Top bar ===== */
   .topbar{
     position:sticky;top:0;z-index:50;
-    background:rgba(254,247,240,.9);backdrop-filter:blur(12px);
+    background:rgba(254,247,240,.9);
+    -webkit-backdrop-filter:blur(12px);
+    backdrop-filter:blur(12px);
     border-bottom:1px solid var(--line);
   }
   .topbar-in{display:flex;align-items:center;justify-content:space-between;height:62px;gap:20px}
@@ -70,7 +79,14 @@
     background:var(--accent-soft);border-radius:999px;padding:6px 16px;margin-bottom:18px;
   }
   .hero h1{font-size:46px;font-weight:800;line-height:1.2;letter-spacing:-.5px}
-  .hero h1 em{font-style:normal;background:linear-gradient(120deg,#ff8a5c,#e07a3f);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero h1 em{
+    font-style:normal;color:var(--accent);
+    background:linear-gradient(120deg,#ff8a5c,#e07a3f);
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+    color:transparent;
+  }
   .hero p{color:var(--muted);font-size:17px;max-width:600px;margin:14px auto 0}
   .hero .cta-row{display:flex;gap:14px;justify-content:center;margin-top:28px}
   .hero-stats{
@@ -128,15 +144,23 @@
   .empty{text-align:center;padding:50px 0;color:var(--muted);display:none;grid-column:1/-1}
 
   /* ===== Feature band ===== */
-  .features{margin:30px 0}
-  .feat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:1000px;margin:0 auto}
+  .features{margin:30px auto}
+  .feat-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:20px;
+    max-width:1000px;width:100%;margin:0 auto;
+  }
   .feat{
     background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:26px 24px;
     display:flex;flex-direction:column;align-items:center;text-align:center;
     transition:box-shadow .2s,border-color .2s;
   }
   .feat:hover{border-color:#ffcf9a;box-shadow:0 12px 24px rgba(224,122,63,.08)}
-  .feat .ico{font-size:22px;margin-bottom:14px;width:48px;height:48px;border-radius:14px;background:var(--accent-soft);display:grid;place-items:center}
+  .feat .ico{
+    font-size:22px;margin-bottom:14px;width:48px;height:48px;border-radius:14px;
+    background:var(--accent-soft);color:var(--accent);
+    display:grid;place-items:center;
+  }
+  .feat .ico svg{width:23px;height:23px}
   .feat h3{font-size:16px;color:var(--ink);font-weight:700}
   .feat p{color:var(--muted);font-size:13px;margin-top:6px;flex:1}
 
@@ -207,14 +231,19 @@
     .footer-grid{grid-template-columns:1fr 1fr;gap:24px}
     .cp{flex-direction:column;align-items:flex-start;gap:6px}
   }
+
+  @media(max-width:980px){
+    .feat-grid{grid-template-columns:repeat(2,1fr)}
+  }
+
   @media(max-width:520px){
     .actions .btn-ghost{display:none}
     .brand small{display:none}
     .actions .btn-orange{padding:8px 12px;font-size:13px}
+    .feat-grid{grid-template-columns:1fr}
   }
   @media(max-width:440px){
     .grid{grid-template-columns:1fr}
-    .feat-grid{grid-template-columns:1fr}
     .sub-form input{min-width:0;width:100%}
     .cta-row .btn{flex:1;text-align:center}
   }
@@ -250,7 +279,7 @@
     <!-- Hero -->
     <section class="wrap hero">
       <span class="eyebrow">🍡 正在开发 · 新作预约</span>
-      <h1>把做出的小游戏，<br>都放在 <em>这个小站</em></h1>
+      <h1><em>一个人</em> 的游戏<br>一群人的 <em>快乐</em></h1>
       <p>这里展示我独立开发的免费与测试游戏，以及上架海外市场的轻量小作品。轻松解压、离线可玩，随时随地来一盘。</p>
       <div class="cta-row">
         <a class="btn btn-orange" href="#games">立即开始游戏</a>
@@ -289,10 +318,10 @@
         <h2>这些小游戏，值得一玩</h2>
       </div>
       <div class="feat-grid">
-        <div class="feat"><div class="ico">🎈</div><h3>轻量有趣</h3><p>几分钟一局，随时开玩，不需要复杂学习成本。</p></div>
-        <div class="feat"><div class="ico">📴</div><h3>离线可玩</h3><p>没有网络也能玩，填满碎片时间，通勤路上不无聊。</p></div>
-        <div class="feat"><div class="ico">🆓</div><h3>免费体验</h3><p>开发中的测试版免费开放，遇到喜欢的游戏随时反馈。</p></div>
-        <div class="feat"><div class="ico">📱</div><h3>多端支持</h3><p>覆盖网页 iOS 安卓，不管在哪都能接着玩。</p></div>
+        <div class="feat"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></div><h3>轻量有趣</h3><p>几分钟一局，随时开玩，不需要复杂学习成本。</p></div>
+        <div class="feat"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8.82a15 15 0 0 1 4.17-2.65"/><path d="M10.66 5.05A15 15 0 0 1 22 8.82"/><path d="M16.85 11.25a10 10 0 0 1 2.22 1.68"/><path d="M5 13a10 10 0 0 1 5.24-2.76"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><path d="M12 20h.01"/><path d="M2 2l20 20"/></svg></div><h3>离线可玩</h3><p>没有网络也能玩，填满碎片时间，通勤路上不无聊。</p></div>
+        <div class="feat"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/></svg></div><h3>免费体验</h3><p>开发中的测试版免费开放，遇到喜欢的游戏随时反馈。</p></div>
+        <div class="feat"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></div><h3>多端支持</h3><p>覆盖网页 iOS 安卓，不管在哪都能接着玩。</p></div>
       </div>
     </section>
 
@@ -352,7 +381,7 @@
   // ===== 游戏数据（占位，后续可替换为真实内容）=====
   const GAMES = [
     // 开发中 / 免费测试
-    { name:"抓大鹅 · TileBuddies", desc:"三消叠牌抓大鹅，休闲解压、离线可玩，正在打磨关卡与动效。", cat:"dev", tags:["休闲","三消","离线"], glyph:"🐦", rating:4.8, art:["#ff9a7a","#ffd9b8"] },
+    { name:"TileBuddies", desc:"三消叠牌，休闲解压、离线可玩，正在打磨关卡与动效。", cat:"dev", tags:["休闲","三消","离线"], glyph:"🐦", rating:4.8, art:["#ff9a7a","#ffd9b8"] },
     { name:"像素遗迹 · Pixel Ruins", desc:"像素风 Roguelike，随机地图与战斗，正在内测招募。", cat:"dev", tags:["像素","Roguelike","内测"], glyph:"👾", rating:4.6, art:["#ff9e6a","#ffd4ae"] },
     // 海外上架
     { name:"Neon Drift", desc:"霓虹都市漂移赛车，海外 Google Play 已上架。", cat:"oversea", tags:["竞速","Google Play","海外"], glyph:"🏎️", rating:4.7, art:["#ffc9a0","#ffe0ca"] },
