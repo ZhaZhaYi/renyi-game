@@ -5,8 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="description" content="Renyi Games — 个人游戏站，这里展示我独立开发的免费与测试游戏，以及上架海外与国内市场的轻量小作品。" />
 <title>Renyi Games · 个人游戏站</title>
+<meta name="color-scheme" content="light" />
 <style>
   :root{
+    color-scheme:light;
     --bg:#fef7f0;
     --panel:#ffffff;
     --line:#f0e2d4;
@@ -20,7 +22,7 @@
     --radius:20px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth;background:#fef7f0}
   body{
     font-family:"Hiragino Sans","PingFang SC","Microsoft YaHei",sans-serif;
     background:var(--bg);color:var(--ink);line-height:1.7;
@@ -68,7 +70,7 @@
     background:var(--accent-soft);border-radius:999px;padding:6px 16px;margin-bottom:18px;
   }
   .hero h1{font-size:46px;font-weight:800;line-height:1.2;letter-spacing:-.5px}
-  .hero h1 em{font-style:normal;color:var(--accent)}
+  .hero h1 em{font-style:normal;background:linear-gradient(120deg,#ff8a5c,#e07a3f);-webkit-background-clip:text;background-clip:text;color:transparent}
   .hero p{color:var(--muted);font-size:17px;max-width:600px;margin:14px auto 0}
   .hero .cta-row{display:flex;gap:14px;justify-content:center;margin-top:28px}
   .hero-stats{
@@ -101,19 +103,21 @@
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px}
   .card{
     background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
-    overflow:hidden;transition:transform .2s,box-shadow .2s,border-color .2s;cursor:pointer;
+    overflow:hidden;transition:transform .22s,box-shadow .22s,border-color .22s;cursor:pointer;
   }
-  .card:hover{transform:translateY(-4px);box-shadow:0 14px 28px rgba(232,216,198,.5);border-color:#ffd9b8}
-  .thumb{height:140px;position:relative;display:grid;place-items:center}
+  .card:hover{transform:translateY(-5px);box-shadow:0 18px 34px rgba(224,122,63,.12);border-color:#ffcf9a}
+  .thumb{height:140px;position:relative;display:grid;place-items:center;overflow:hidden}
   .thumb .bg{position:absolute;inset:0}
-  .thumb .glyph{font-size:50px;position:relative;filter:drop-shadow(0 6px 10px rgba(0,0,0,.15))}
+  .thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,rgba(255,255,255,.18))}
+  .thumb .glyph{font-size:50px;position:relative;filter:drop-shadow(0 8px 12px rgba(0,0,0,.18));transition:transform .25s}
+  .card:hover .thumb .glyph{transform:scale(1.12)}
   .badge{
     position:absolute;top:10px;left:10px;z-index:3;font-size:11px;font-weight:700;
-    padding:3px 9px;border-radius:999px;color:#fff;
+    padding:4px 10px;border-radius:999px;color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.12);
   }
-  .card-body{padding:14px 16px 16px}
-  .card-body h3{font-size:16px;color:var(--ink)}
-  .card-body .desc{color:var(--muted);font-size:13px;margin-top:4px;min-height:38px}
+  .card-body{padding:15px 16px 18px}
+  .card-body h3{font-size:16px;color:var(--ink);font-weight:700}
+  .card-body .desc{color:var(--muted);font-size:13px;margin-top:5px;min-height:38px}
   .tags{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
   .tag{font-size:11px;padding:2px 9px;border-radius:999px;background:var(--accent-soft);color:#c9763d}
   .card-foot{display:flex;align-items:center;justify-content:space-between;margin-top:12px}
@@ -125,13 +129,16 @@
 
   /* ===== Feature band ===== */
   .features{margin:30px 0}
-  .feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+  .feat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:1000px;margin:0 auto}
   .feat{
-    background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px;
+    background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:26px 24px;
+    display:flex;flex-direction:column;align-items:center;text-align:center;
+    transition:box-shadow .2s,border-color .2s;
   }
-  .feat .ico{font-size:26px;margin-bottom:10px}
-  .feat h3{font-size:16px;color:var(--ink)}
-  .feat p{color:var(--muted);font-size:13px;margin-top:6px}
+  .feat:hover{border-color:#ffcf9a;box-shadow:0 12px 24px rgba(224,122,63,.08)}
+  .feat .ico{font-size:22px;margin-bottom:14px;width:48px;height:48px;border-radius:14px;background:var(--accent-soft);display:grid;place-items:center}
+  .feat h3{font-size:16px;color:var(--ink);font-weight:700}
+  .feat p{color:var(--muted);font-size:13px;margin-top:6px;flex:1}
 
   /* ===== Subscribe ===== */
   .subscribe{
@@ -151,7 +158,7 @@
 
   /* ===== Footer ===== */
   footer{border-top:1px solid var(--line);padding:36px 0 34px;color:var(--muted);font-size:13px}
-  .footer-grid{display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr 1.4fr;gap:26px}
+  .footer-grid{display:grid;grid-template-columns:2.2fr 1fr 1fr 1.2fr 1.4fr;gap:26px}
   .footer-brand .brand{margin-bottom:12px}
   .footer-brand p{max-width:280px}
   footer h4{color:var(--ink);font-size:14px;margin-bottom:12px;font-weight:700}
@@ -192,7 +199,7 @@
     .hero p{font-size:15px}
     .hero-stats{gap:24px;margin-top:30px}
     .hstat b{font-size:22px}
-    .cards-row,.grid{grid-template-columns:1fr 1fr}
+    .feat-grid{grid-template-columns:repeat(2,1fr)}
     .cat{font-size:12px;padding:8px 11px}
     .sec-head h2{font-size:22px}
     .subscribe{padding:26px 22px}
@@ -207,6 +214,7 @@
   }
   @media(max-width:440px){
     .grid{grid-template-columns:1fr}
+    .feat-grid{grid-template-columns:1fr}
     .sub-form input{min-width:0;width:100%}
     .cta-row .btn{flex:1;text-align:center}
   }
@@ -243,16 +251,16 @@
     <section class="wrap hero">
       <span class="eyebrow">🍡 正在开发 · 新作预约</span>
       <h1>把做出的小游戏，<br>都放在 <em>这个小站</em></h1>
-      <p>这里展示我独立开发的免费与测试游戏，以及上架海外与国内市场的轻量小作品。轻松解压、离线可玩，随时随地来一盘。</p>
+      <p>这里展示我独立开发的免费与测试游戏，以及上架海外市场的轻量小作品。轻松解压、离线可玩，随时随地来一盘。</p>
       <div class="cta-row">
         <a class="btn btn-orange" href="#games">立即开始游戏</a>
         <a class="btn btn-ghost" href="#games">看全部作品</a>
       </div>
-      <div class="hero-stats">
-        <div class="hstat"><b>6</b><span>款游戏</span></div>
-        <div class="hstat"><b>3</b><span>免费测试中</span></div>
-        <div class="hstat"><b>2</b><span>海外已上架</span></div>
-        <div class="hstat"><b>1</b><span>国内已上架</span></div>
+      <div class="hero-stats" id="heroStats">
+        <div class="hstat"><b data-k="all">0</b><span>款游戏</span></div>
+        <div class="hstat"><b data-k="dev">0</b><span>免费测试中</span></div>
+        <div class="hstat"><b data-k="oversea">0</b><span>海外已上架</span></div>
+        <div class="hstat"><b>100%</b><span>免费畅玩</span></div>
       </div>
     </section>
 
@@ -268,11 +276,10 @@
         <div class="cat on" data-f="all" role="tab" tabindex="0">全部 <span class="cnt" data-c="all"></span></div>
         <div class="cat" data-f="dev" role="tab" tabindex="0">🛠 开发中 · 免费测试 <span class="cnt" data-c="dev"></span></div>
         <div class="cat" data-f="oversea" role="tab" tabindex="0">🌍 海外上架 <span class="cnt" data-c="oversea"></span></div>
-        <div class="cat" data-f="cn" role="tab" tabindex="0">🇨🇳 国内上架 <span class="cnt" data-c="cn"></span></div>
       </div>
 
       <div class="grid" id="grid"></div>
-      <div class="empty" id="empty">该分类暂无作品。</div>
+      <div class="empty" id="empty">该分类暂无作品，敬请期待后续上新。</div>
     </section>
 
     <!-- Feature band -->
@@ -320,13 +327,13 @@
         </div>
         <div>
           <h4>关于</h4>
-          <ul><li><a href="#about">开发者简介</a></li><li><a href="#about">开发日志</a></li><li><a href="mailto:1066594281@qq.com">QQ 邮箱：1066594281@qq.com</a></li></ul>
+          <ul><li><a href="#about">开发者简介</a></li><li><a href="#about">开发日志</a></li><li><a href="#contact">合作交流</a></li></ul>
         </div>
         <div>
           <h4>支持</h4>
-          <ul><li><a href="#subscribe">订阅更新</a></li><li><a href="#subscribe">问题反馈</a></li><li><a href="#subscribe">合作洽谈</a></li></ul>
+          <ul><li><a href="#subscribe">订阅更新</a></li><li><a href="#subscribe">问题反馈</a></li><li><a href="#contact">商务合作</a></li></ul>
         </div>
-        <div>
+        <div id="contact">
           <h4>联系方式</h4>
           <ul>
             <li><a href="mailto:1066594281@qq.com">1066594281@qq.com</a></li>
@@ -346,13 +353,10 @@
   const GAMES = [
     // 开发中 / 免费测试
     { name:"抓大鹅 · TileBuddies", desc:"三消叠牌抓大鹅，休闲解压、离线可玩，正在打磨关卡与动效。", cat:"dev", tags:["休闲","三消","离线"], glyph:"🐦", rating:4.8, art:["#ff9a7a","#ffd9b8"] },
-    { name:"极速单词 · Word Rush", desc:"英语单词竞速拼写，轻量益智，面向学习人群的测试版。", cat:"dev", tags:["益智","竞速","测试"], glyph:"⚡", rating:"—", art:["#ffb37a","#ffe0c0"] },
     { name:"像素遗迹 · Pixel Ruins", desc:"像素风 Roguelike，随机地图与战斗，正在内测招募。", cat:"dev", tags:["像素","Roguelike","内测"], glyph:"👾", rating:4.6, art:["#ff9e6a","#ffd4ae"] },
     // 海外上架
     { name:"Neon Drift", desc:"霓虹都市漂移赛车，海外 Google Play 已上架。", cat:"oversea", tags:["竞速","Google Play","海外"], glyph:"🏎️", rating:4.7, art:["#ffc9a0","#ffe0ca"] },
     { name:"Sky Jump", desc:"竖屏跳跃闯关小游戏，App Store 与 Google Play 双端上架。", cat:"oversea", tags:["休闲","iOS","Google Play"], glyph:"🪂", rating:4.5, art:["#ffd0a6","#ffe6d2"] },
-    // 国内上架
-    { name:"小小动物园", desc:"轻松经营模拟，Android 各大应用商店已上架。", cat:"cn", tags:["经营","模拟","国内"], glyph:"🦁", rating:4.4, art:["#ffe0b0","#ffefda"] },
   ];
 
   const BADGE = { dev:["开发中","#f0a05a"], oversea:["海外上架","#e08a4a"], cn:["国内上架","#e8924a"] };
@@ -390,10 +394,11 @@
     empty.style.display = list.length ? 'none' : 'block';
   }
 
-  // 计数
+  // 计数（同步 hero 统计与分类角标）
   const counts = { all:GAMES.length, dev:0, oversea:0, cn:0 };
   GAMES.forEach(g => { counts[g.cat]++; });
   document.querySelectorAll('[data-c]').forEach(el => { el.textContent = counts[el.dataset.c]; });
+  document.querySelectorAll('#heroStats [data-k]').forEach(el => { el.textContent = counts[el.dataset.k]; });
 
   // 切换分类
   function selectTab(el){
