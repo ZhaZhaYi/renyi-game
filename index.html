@@ -151,7 +151,7 @@
 
   /* ===== Footer ===== */
   footer{border-top:1px solid var(--line);padding:36px 0 34px;color:var(--muted);font-size:13px}
-  .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:30px}
+  .footer-grid{display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr 1.4fr;gap:26px}
   .footer-brand .brand{margin-bottom:12px}
   .footer-brand p{max-width:280px}
   footer h4{color:var(--ink);font-size:14px;margin-bottom:12px;font-weight:700}
@@ -159,12 +159,56 @@
   footer li a:hover{color:var(--accent)}
   .cp{margin-top:28px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
 
-  @media(max-width:760px){
-    .nav{display:none}
-    .hero h1{font-size:32px}
-    .footer-grid{grid-template-columns:1fr}
-    .sub-form{flex-direction:column}
-    .sub-form input{width:100%}
+  /* ===== Mobile menu (hamburger) ===== */
+  .menu-toggle{
+    display:none;
+    background:transparent;border:1px solid var(--line);border-radius:10px;
+    width:40px;height:40px;cursor:pointer;align-items:center;justify-content:center;flex-direction:column;gap:3px;
+  }
+  .menu-toggle span{display:block;width:18px;height:2px;background:var(--ink);border-radius:2px;transition:.2s}
+  .menu-toggle.open span:nth-child(1){transform:translateY(5px) rotate(45deg)}
+  .menu-toggle.open span:nth-child(2){opacity:0}
+  .menu-toggle.open span:nth-child(3){transform:translateY(-5px) rotate(-45deg)}
+
+  /* mobile nav (slides down) */
+  @media(max-width:860px){
+    .nav{
+      position:absolute;top:62px;left:0;right:0;
+      background:var(--bg);border-bottom:1px solid var(--line);
+      flex-direction:column;gap:0;padding:8px 24px 16px;
+      display:none;
+    }
+    .nav.open{display:flex}
+    .nav a{padding:12px 0;border-bottom:1px solid var(--line);font-size:15px}
+    .nav a:last-child{border-bottom:none}
+    .nav a.on{border-bottom:none;border-left:3px solid var(--accent);padding-left:10px}
+  }
+
+  @media(max-width:860px){
+    .menu-toggle{display:flex}
+    .topbar-in{height:60px;gap:12px}
+    .hero{padding:44px 0 24px}
+    .hero h1{font-size:30px;line-height:1.25}
+    .hero p{font-size:15px}
+    .hero-stats{gap:24px;margin-top:30px}
+    .hstat b{font-size:22px}
+    .cards-row,.grid{grid-template-columns:1fr 1fr}
+    .cat{font-size:12px;padding:8px 11px}
+    .sec-head h2{font-size:22px}
+    .subscribe{padding:26px 22px}
+    .subscribe h3{font-size:19px}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:24px}
+    .cp{flex-direction:column;align-items:flex-start;gap:6px}
+  }
+  @media(max-width:520px){
+    .actions .btn-ghost{display:none}
+    .brand small{display:none}
+    .actions .btn-orange{padding:8px 12px;font-size:13px}
+  }
+  @media(max-width:440px){
+    .grid{grid-template-columns:1fr}
+    .sub-form input{min-width:0;width:100%}
+    .cta-row .btn{flex:1;text-align:center}
   }
 </style>
 </head>
@@ -177,7 +221,7 @@
         <span class="dot">R</span>
         <span>Renyi Games<br><small>个人游戏站</small></span>
       </a>
-      <nav class="nav" aria-label="主导航">
+      <nav class="nav" aria-label="主导航" id="mainNav">
         <a class="on" href="#top">首页</a>
         <a href="#games">游戏库</a>
         <a href="#feature">为什么值得玩</a>
@@ -187,6 +231,9 @@
       <div class="actions">
         <button class="btn btn-ghost">收藏</button>
         <a class="btn btn-orange" href="#games">立即开始游戏</a>
+        <button class="menu-toggle" id="menuToggle" aria-label="打开菜单" aria-expanded="false" aria-controls="mainNav">
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </div>
   </header>
@@ -273,11 +320,18 @@
         </div>
         <div>
           <h4>关于</h4>
-          <ul><li><a href="#about">开发者简介</a></li><li><a href="#about">开发日志</a></li><li><a href="#about">联系方式</a></li></ul>
+          <ul><li><a href="#about">开发者简介</a></li><li><a href="#about">开发日志</a></li><li><a href="mailto:1066594281@qq.com">QQ 邮箱：1066594281@qq.com</a></li></ul>
         </div>
         <div>
           <h4>支持</h4>
           <ul><li><a href="#subscribe">订阅更新</a></li><li><a href="#subscribe">问题反馈</a></li><li><a href="#subscribe">合作洽谈</a></li></ul>
+        </div>
+        <div>
+          <h4>联系方式</h4>
+          <ul>
+            <li><a href="mailto:1066594281@qq.com">1066594281@qq.com</a></li>
+            <li><a href="mailto:1066594281ry@gmail.com">1066594281ry@gmail.com</a></li>
+          </ul>
         </div>
       </div>
       <div class="cp">
@@ -360,6 +414,24 @@
   });
 
   render('all');
+
+  // ===== Mobile hamburger menu =====
+  const menuToggle = document.getElementById('menuToggle');
+  const mainNav = document.getElementById('mainNav');
+  function closeMenu(){ menuToggle.classList.remove('open'); mainNav.classList.remove('open'); menuToggle.setAttribute('aria-expanded','false'); }
+  menuToggle.addEventListener('click', () => {
+    const isOpen = mainNav.classList.toggle('open');
+    menuToggle.classList.toggle('open', isOpen);
+    menuToggle.setAttribute('aria-expanded', String(isOpen));
+  });
+  // close menu when a nav link is tapped
+  mainNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+  // close menu on outside click
+  document.addEventListener('click', e => {
+    if(!mainNav.classList.contains('open')) return;
+    if(!mainNav.contains(e.target) && !menuToggle.contains(e.target)) closeMenu();
+  });
 </script>
+
 </body>
 </html>
