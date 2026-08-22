@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Renyi Games — 个人游戏站，这里展示我独立开发的免费与测试游戏，以及上架海外与国内市场的轻量小作品。" />
+<title>Renyi Games · 个人游戏站</title>
+<style>
+  :root{
+    --bg:#fef7f0;
+    --panel:#ffffff;
+    --line:#f0e2d4;
+    --ink:#5b4a3d;
+    --ink-soft:#8a7460;
+    --muted:#a08a76;
+    --accent:#e07a3f;
+    --accent-strong:#e07a3f;
+    --accent-soft:#ffe9d6;
+    --accent-2:#f0a05a;
+    --radius:20px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Hiragino Sans","PingFang SC","Microsoft YaHei",sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{text-decoration:none;color:inherit}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+  /* ===== Top bar ===== */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    background:rgba(254,247,240,.9);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar-in{display:flex;align-items:center;justify-content:space-between;height:62px;gap:20px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;color:var(--ink)}
+  .brand .dot{
+    width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#ffb37a,#ff8a5c);
+    display:grid;place-items:center;color:#fff;font-weight:900;font-size:16px;
+    box-shadow:0 3px 8px rgba(255,179,122,.5);
+  }
+  .brand small{font-size:11px;color:var(--muted);font-weight:600}
+  .nav{display:flex;gap:22px;font-size:14px;color:var(--muted)}
+  .nav a{transition:color .2s;padding:4px 0}
+  .nav a:hover,.nav a.on{color:var(--accent)}
+  .nav a.on{border-bottom:2px solid var(--accent)}
+  .actions{display:flex;align-items:center;gap:12px}
+  .btn{
+    font-family:inherit;font-weight:700;border:none;cursor:pointer;
+    border-radius:999px;padding:9px 18px;font-size:14px;transition:.2s;
+  }
+  .btn-orange{background:linear-gradient(135deg,#ffb37a,#ff8a5c);color:#fff;box-shadow:0 6px 14px rgba(255,138,92,.35)}
+  .btn-orange:hover{transform:translateY(-1px);box-shadow:0 8px 18px rgba(255,138,92,.45)}
+  .btn-ghost{background:transparent;color:var(--ink-soft);border:1px solid var(--line)}
+  .btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+  .btn-white{background:#fff;color:var(--accent);box-shadow:0 4px 12px rgba(0,0,0,.08)}
+  .btn-white:hover{transform:translateY(-1px)}
+
+  /* ===== Hero ===== */
+  .hero{padding:64px 0 30px;text-align:center}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:13px;color:var(--accent);font-weight:600;
+    background:var(--accent-soft);border-radius:999px;padding:6px 16px;margin-bottom:18px;
+  }
+  .hero h1{font-size:46px;font-weight:800;line-height:1.2;letter-spacing:-.5px}
+  .hero h1 em{font-style:normal;color:var(--accent)}
+  .hero p{color:var(--muted);font-size:17px;max-width:600px;margin:14px auto 0}
+  .hero .cta-row{display:flex;gap:14px;justify-content:center;margin-top:28px}
+  .hero-stats{
+    display:flex;gap:44px;justify-content:center;margin-top:40px;flex-wrap:wrap;text-align:center;
+  }
+  .hstat{border-top:3px solid var(--accent-soft);padding-top:10px}
+  .hstat b{font-size:27px;color:var(--accent);display:block}
+  .hstat span{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+
+  /* ===== Section base ===== */
+  section{padding:26px 0}
+  .sec-head{text-align:center;margin-bottom:6px}
+  .sec-head .kicker{font-size:12px;color:var(--accent);letter-spacing:2px;font-weight:700}
+  .sec-head h2{font-size:28px;font-weight:800;margin-top:6px}
+  .sec-head p{color:var(--muted);font-size:15px;margin-top:6px}
+
+  /* ===== Categories / tabs ===== */
+  .cats{display:flex;gap:10px;justify-content:center;margin:26px 0 22px;flex-wrap:wrap}
+  .cat{
+    cursor:pointer;user-select:none;display:flex;align-items:center;gap:8px;
+    padding:9px 16px;border-radius:999px;font-size:14px;font-weight:600;
+    color:var(--muted);background:#fff;border:1px solid var(--line);transition:.2s;
+  }
+  .cat:hover{color:var(--accent);border-color:#ffd9b8}
+  .cat.on{color:#fff;background:linear-gradient(135deg,#ffb37a,#ff8a5c);border-color:transparent;box-shadow:0 6px 14px rgba(255,138,92,.3)}
+  .cat .cnt{font-size:12px;font-weight:700;background:var(--accent-soft);color:var(--accent);padding:1px 8px;border-radius:999px}
+  .cat.on .cnt{background:rgba(255,255,255,.35);color:#fff}
+
+  /* ===== Game grid ===== */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px}
+  .card{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    overflow:hidden;transition:transform .2s,box-shadow .2s,border-color .2s;cursor:pointer;
+  }
+  .card:hover{transform:translateY(-4px);box-shadow:0 14px 28px rgba(232,216,198,.5);border-color:#ffd9b8}
+  .thumb{height:140px;position:relative;display:grid;place-items:center}
+  .thumb .bg{position:absolute;inset:0}
+  .thumb .glyph{font-size:50px;position:relative;filter:drop-shadow(0 6px 10px rgba(0,0,0,.15))}
+  .badge{
+    position:absolute;top:10px;left:10px;z-index:3;font-size:11px;font-weight:700;
+    padding:3px 9px;border-radius:999px;color:#fff;
+  }
+  .card-body{padding:14px 16px 16px}
+  .card-body h3{font-size:16px;color:var(--ink)}
+  .card-body .desc{color:var(--muted);font-size:13px;margin-top:4px;min-height:38px}
+  .tags{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+  .tag{font-size:11px;padding:2px 9px;border-radius:999px;background:var(--accent-soft);color:#c9763d}
+  .card-foot{display:flex;align-items:center;justify-content:space-between;margin-top:12px}
+  .rating{color:#e8a04f;font-size:13px;font-weight:700}
+  .rating span{color:var(--muted);font-weight:500;margin-left:2px}
+  .play{font-size:13px;font-weight:700;color:var(--accent)}
+  .card:hover .play{text-decoration:underline}
+  .empty{text-align:center;padding:50px 0;color:var(--muted);display:none;grid-column:1/-1}
+
+  /* ===== Feature band ===== */
+  .features{margin:30px 0}
+  .feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+  .feat{
+    background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px;
+  }
+  .feat .ico{font-size:26px;margin-bottom:10px}
+  .feat h3{font-size:16px;color:var(--ink)}
+  .feat p{color:var(--muted);font-size:13px;margin-top:6px}
+
+  /* ===== Subscribe ===== */
+  .subscribe{
+    margin:40px 0;padding:34px;border-radius:24px;
+    background:linear-gradient(120deg,#ffe9d6,#fff2e6);border:1px solid #f6e0c8;
+    display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  }
+  .subscribe h3{font-size:22px;color:var(--ink)}
+  .subscribe p{color:var(--muted);margin-top:6px}
+  .sub-form{display:flex;gap:10px;flex-wrap:wrap}
+  .sub-form input{
+    font-family:inherit;font-size:14px;padding:11px 16px;border:1px solid #f0dcc0;border-radius:999px;
+    background:#fff;color:var(--ink);min-width:220px;
+  }
+  .sub-form input:focus{outline:none;border-color:var(--accent)}
+  .sub-note{font-size:12px;color:var(--muted);margin-top:8px;width:100%}
+
+  /* ===== Footer ===== */
+  footer{border-top:1px solid var(--line);padding:36px 0 34px;color:var(--muted);font-size:13px}
+  .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:30px}
+  .footer-brand .brand{margin-bottom:12px}
+  .footer-brand p{max-width:280px}
+  footer h4{color:var(--ink);font-size:14px;margin-bottom:12px;font-weight:700}
+  footer ul{list-style:none;display:grid;gap:8px}
+  footer li a:hover{color:var(--accent)}
+  .cp{margin-top:28px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+  @media(max-width:760px){
+    .nav{display:none}
+    .hero h1{font-size:32px}
+    .footer-grid{grid-template-columns:1fr}
+    .sub-form{flex-direction:column}
+    .sub-form input{width:100%}
+  }
+</style>
+</head>
+<body>
+
+  <!-- Top bar -->
+  <header class="topbar">
+    <div class="wrap topbar-in">
+      <a class="brand" href="#top">
+        <span class="dot">R</span>
+        <span>Renyi Games<br><small>个人游戏站</small></span>
+      </a>
+      <nav class="nav" aria-label="主导航">
+        <a class="on" href="#top">首页</a>
+        <a href="#games">游戏库</a>
+        <a href="#feature">为什么值得玩</a>
+        <a href="#subscribe">订阅</a>
+        <a href="#about">关于</a>
+      </nav>
+      <div class="actions">
+        <button class="btn btn-ghost">收藏</button>
+        <a class="btn btn-orange" href="#games">立即开始游戏</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- Hero -->
+    <section class="wrap hero">
+      <span class="eyebrow">🍡 正在开发 · 新作预约</span>
+      <h1>把做出的小游戏，<br>都放在 <em>这个小站</em></h1>
+      <p>这里展示我独立开发的免费与测试游戏，以及上架海外与国内市场的轻量小作品。轻松解压、离线可玩，随时随地来一盘。</p>
+      <div class="cta-row">
+        <a class="btn btn-orange" href="#games">立即开始游戏</a>
+        <a class="btn btn-ghost" href="#games">看全部作品</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hstat"><b>6</b><span>款游戏</span></div>
+        <div class="hstat"><b>3</b><span>免费测试中</span></div>
+        <div class="hstat"><b>2</b><span>海外已上架</span></div>
+        <div class="hstat"><b>1</b><span>国内已上架</span></div>
+      </div>
+    </section>
+
+    <!-- Games -->
+    <section class="wrap" id="games">
+      <div class="sec-head">
+        <span class="kicker">GAMES</span>
+        <h2>游戏库</h2>
+        <p>我的全部作品 · 按状态分类，点击切换查看</p>
+      </div>
+
+      <div class="cats" id="cats" role="tablist">
+        <div class="cat on" data-f="all" role="tab" tabindex="0">全部 <span class="cnt" data-c="all"></span></div>
+        <div class="cat" data-f="dev" role="tab" tabindex="0">🛠 开发中 · 免费测试 <span class="cnt" data-c="dev"></span></div>
+        <div class="cat" data-f="oversea" role="tab" tabindex="0">🌍 海外上架 <span class="cnt" data-c="oversea"></span></div>
+        <div class="cat" data-f="cn" role="tab" tabindex="0">🇨🇳 国内上架 <span class="cnt" data-c="cn"></span></div>
+      </div>
+
+      <div class="grid" id="grid"></div>
+      <div class="empty" id="empty">该分类暂无作品。</div>
+    </section>
+
+    <!-- Feature band -->
+    <section class="wrap features" id="feature">
+      <div class="sec-head">
+        <span class="kicker">WHY</span>
+        <h2>这些小游戏，值得一玩</h2>
+      </div>
+      <div class="feat-grid">
+        <div class="feat"><div class="ico">🎈</div><h3>轻量有趣</h3><p>几分钟一局，随时开玩，不需要复杂学习成本。</p></div>
+        <div class="feat"><div class="ico">📴</div><h3>离线可玩</h3><p>没有网络也能玩，填满碎片时间，通勤路上不无聊。</p></div>
+        <div class="feat"><div class="ico">🆓</div><h3>免费体验</h3><p>开发中的测试版免费开放，遇到喜欢的游戏随时反馈。</p></div>
+        <div class="feat"><div class="ico">📱</div><h3>多端支持</h3><p>覆盖网页 iOS 安卓，不管在哪都能接着玩。</p></div>
+      </div>
+    </section>
+
+    <!-- Subscribe -->
+    <section class="wrap" id="subscribe">
+      <div class="subscribe">
+        <div>
+          <h3>想第一时间玩到新游戏？</h3>
+          <p>新作上线、内测资格，第一时间通知你。</p>
+        </div>
+        <form class="sub-form" onsubmit="return false;">
+          <label class="sr" for="email">邮箱</label>
+          <input id="email" type="email" placeholder="输入你的邮箱" required />
+          <button class="btn btn-orange" type="submit">订阅更新</button>
+          <span class="sub-note">我们不会发送垃圾邮件，仅通知新作与内测。</span>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer id="about">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="brand"><span class="dot">R</span><span>Renyi Games</span></div>
+          <p>一枚独立开发者的个人游戏站。记录从想法到上架的过程，分享轻量、好玩、免费的小游戏。</p>
+        </div>
+        <div>
+          <h4>游戏</h4>
+          <ul><li><a href="#games">全部作品</a></li><li><a href="#games">开发中</a></li><li><a href="#games">海外上架</a></li><li><a href="#games">国内上架</a></li></ul>
+        </div>
+        <div>
+          <h4>关于</h4>
+          <ul><li><a href="#about">开发者简介</a></li><li><a href="#about">开发日志</a></li><li><a href="#about">联系方式</a></li></ul>
+        </div>
+        <div>
+          <h4>支持</h4>
+          <ul><li><a href="#subscribe">订阅更新</a></li><li><a href="#subscribe">问题反馈</a></li><li><a href="#subscribe">合作洽谈</a></li></ul>
+        </div>
+      </div>
+      <div class="cp">
+        <span>© 2026 Renyi Games · 个人网站 · 免费游戏</span>
+        <span>友情提示：适龄游戏，理性娱乐</span>
+      </div>
+    </div>
+  </footer>
+
+<script>
+  // ===== 游戏数据（占位，后续可替换为真实内容）=====
+  const GAMES = [
+    // 开发中 / 免费测试
+    { name:"抓大鹅 · TileBuddies", desc:"三消叠牌抓大鹅，休闲解压、离线可玩，正在打磨关卡与动效。", cat:"dev", tags:["休闲","三消","离线"], glyph:"🐦", rating:4.8, art:["#ff9a7a","#ffd9b8"] },
+    { name:"极速单词 · Word Rush", desc:"英语单词竞速拼写，轻量益智，面向学习人群的测试版。", cat:"dev", tags:["益智","竞速","测试"], glyph:"⚡", rating:"—", art:["#ffb37a","#ffe0c0"] },
+    { name:"像素遗迹 · Pixel Ruins", desc:"像素风 Roguelike，随机地图与战斗，正在内测招募。", cat:"dev", tags:["像素","Roguelike","内测"], glyph:"👾", rating:4.6, art:["#ff9e6a","#ffd4ae"] },
+    // 海外上架
+    { name:"Neon Drift", desc:"霓虹都市漂移赛车，海外 Google Play 已上架。", cat:"oversea", tags:["竞速","Google Play","海外"], glyph:"🏎️", rating:4.7, art:["#ffc9a0","#ffe0ca"] },
+    { name:"Sky Jump", desc:"竖屏跳跃闯关小游戏，App Store 与 Google Play 双端上架。", cat:"oversea", tags:["休闲","iOS","Google Play"], glyph:"🪂", rating:4.5, art:["#ffd0a6","#ffe6d2"] },
+    // 国内上架
+    { name:"小小动物园", desc:"轻松经营模拟，Android 各大应用商店已上架。", cat:"cn", tags:["经营","模拟","国内"], glyph:"🦁", rating:4.4, art:["#ffe0b0","#ffefda"] },
+  ];
+
+  const BADGE = { dev:["开发中","#f0a05a"], oversea:["海外上架","#e08a4a"], cn:["国内上架","#e8924a"] };
+
+  function card(g){
+    const [b,c] = BADGE[g.cat];
+    const tags = g.tags.map(t => `<span class="tag">${t}</span>`).join("");
+    return `
+      <article class="card" data-cat="${g.cat}">
+        <div class="thumb">
+          <div class="bg" style="background:linear-gradient(135deg,${g.art[0]},${g.art[1]})"></div>
+          <div class="badge" style="background:${c}">${b}</div>
+          <span class="glyph">${g.glyph}</span>
+        </div>
+        <div class="card-body">
+          <h3>${g.name}</h3>
+          <div class="desc">${g.desc}</div>
+          <div class="tags">${tags}</div>
+          <div class="card-foot">
+            <span class="rating">★ ${g.rating}<span>/5</span></span>
+            <span class="play">立即试玩 →</span>
+          </div>
+        </div>
+      </article>`;
+  }
+
+  const grid = document.getElementById('grid');
+  const empty = document.getElementById('empty');
+  const cats = document.getElementById('cats');
+  const heading = document.querySelector('#games .sec-head h2');
+
+  function render(filter){
+    const list = GAMES.filter(g => filter === 'all' || g.cat === filter);
+    grid.innerHTML = list.map(card).join('');
+    empty.style.display = list.length ? 'none' : 'block';
+  }
+
+  // 计数
+  const counts = { all:GAMES.length, dev:0, oversea:0, cn:0 };
+  GAMES.forEach(g => { counts[g.cat]++; });
+  document.querySelectorAll('[data-c]').forEach(el => { el.textContent = counts[el.dataset.c]; });
+
+  // 切换分类
+  function selectTab(el){
+    cats.querySelectorAll('.cat').forEach(x => x.classList.remove('on'));
+    el.classList.add('on');
+    render(el.dataset.f);
+    heading.textContent = el.dataset.f === 'all' ? '游戏库' : el.textContent.trim();
+  }
+  cats.addEventListener('click', e => {
+    const el = e.target.closest('.cat'); if(!el) return;
+    selectTab(el);
+  });
+  cats.addEventListener('keydown', e => {
+    if(e.key === 'Enter' || e.key === ' '){
+      const el = e.target.closest('.cat'); if(!el) return;
+      e.preventDefault(); selectTab(el);
+    }
+  });
+
+  render('all');
+</script>
+</body>
+</html>

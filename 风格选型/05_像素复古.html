@@ -1,0 +1,48 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>05 像素复古 · 风格选型</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:"Press Start 2P","SimSun","PingFang SC",monospace;background:#101020;color:#f0f0ff;line-height:1.7;image-rendering:pixelated}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+.topbar{position:sticky;top:0;z-index:5;background:#080818;border-bottom:4px solid #4a4a8a}
+.t-in{display:flex;align-items:center;justify-content:space-between;height:60px;gap:20px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-weight:400;font-size:14px;color:#ffe94a}.brand .dot{width:24px;height:24px;background:#ff3b6b;display:grid;place-items:center;color:#fff;font-size:12px;border:3px solid #fff}
+nav{display:flex;gap:16px;font-size:10px;color:#8a8ab0}nav a{text-decoration:none;color:inherit}nav a.on{color:#ffe94a;background:#33336a;padding:4px 6px}
+.btn{border:3px solid #f0f0ff;background:#101020;font-family:inherit;font-weight:400;padding:8px 14px;font-size:11px;color:#f0f0ff;cursor:pointer;box-shadow:4px 4px 0 #000}
+.btn-solid{background:#ff3b6b;color:#fff;border-color:#fff;box-shadow:4px 4px 0 #000}
+.btn-ghost{background:transparent;color:#8a8ab0;border-color:#4a4a8a;box-shadow:none;cursor:pointer}
+.hero{padding:56px 0 22px;text-align:center}.eyebrow{display:inline-block;font-size:10px;color:#ffe94a;border:3px solid #ffe94a;padding:6px 12px;margin-bottom:18px;background:#33336a12}
+.hero h1{font-size:32px;font-weight:400;line-height:1.5;text-shadow:4px 4px 0 #ff3b6b}.hero h1 em{font-style:normal;color:#ffe94a}
+.hero p{color:#8a8ab0;font-size:12px;max-width:560px;margin:16px auto 0;line-height:2}
+.cta{display:flex;gap:14px;justify-content:center;margin-top:26px}
+.stats{display:flex;gap:36px;justify-content:center;margin-top:36px;flex-wrap:wrap}.st b{font-size:20px;color:#4ef0ff}.st span{display:block;color:#8a8ab0;font-size:9px}
+.cats{display:flex;gap:10px;margin:30px 0 18px;flex-wrap:wrap;justify-content:center}.cat{cursor:pointer;padding:9px 14px;font-size:10px;color:#8a8ab0;background:#181838;border:3px solid #33336a}
+.cat.on{color:#101020;background:#ffe94a;border-color:#ffe94a}
+.sec{display:flex;justify-content:space-between;align-items:baseline;margin-top:6px}.sec h2{font-size:14px}.sec span{color:#8a8ab0;font-size:9px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px;margin-top:18px}
+.card{background:#181838;border:4px solid #4a4a8a;overflow:hidden;transition:.15s;cursor:pointer;box-shadow:6px 6px 0 #000}.card:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 #000;border-color:#ffe94a}
+.thumb{height:140px;position:relative;display:grid;place-items:center;border-bottom:4px solid #4a4a8a}.thumb .bg{position:absolute;inset:0}.thumb .g{font-size:48px;z-index:2;filter:drop-shadow(3px 3px 0 #000)}.badge{position:absolute;top:8px;left:8px;z-index:3;font-size:9px;padding:3px 8px;color:#101020;border:2px solid #101020}
+.cb{padding:14px 16px 16px}.cb h3{font-size:12px}.cb .d{color:#8a8ab0;font-size:9px;margin-top:6px;min-height:36px;line-height:1.8}
+.tags{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}.tag{font-size:8px;padding:3px 7px;background:#33336a;color:#b0b0d0;border:2px solid #4a4a8a}
+.foot{display:flex;justify-content:space-between;align-items:center;margin-top:12px}.rt{color:#ffe94a;font-size:10px}.play{font-size:9px;color:#4ef0ff;font-weight:400}
+.banner{margin:36px 0;padding:28px;border:4px solid #4a4a8a;background:#181838;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;box-shadow:6px 6px 0 #000}
+.banner h3{font-size:14px;line-height:1.6}.banner p{color:#8a8ab0;font-size:9px;margin-top:8px}
+footer{border-top:4px solid #4a4a8a;padding:30px 0 38px;color:#8a8ab0;font-size:9px}.fg{display:grid;grid-template-columns:2fr 1fr 1fr;gap:26px}.fh h4{color:#f0f0ff;font-size:11px;margin-bottom:12px}.fh ul{list-style:none;display:grid;gap:8px}.cc{margin-top:26px;padding-top:16px;border-top:2px solid #4a4a8a;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+@media(max-width:760px){nav{display:none}.hero h1{font-size:22px}.fg{grid-template-columns:1fr}}
+</style></head><body>
+<header class="topbar"><div class="wrap t-in"><div class="brand"><span class="dot">R</span><span>RENYI</span></div><nav><a class="on" href="#">首页</a><a href="#">开发中</a><a href="#">海外</a><a href="#">国内</a><a href="#">关于</a></nav><div style="display:flex;gap:12px"><button class="btn btn-ghost">收藏</button><button class="btn btn-solid">登录</button></div></div></header>
+<section class="wrap hero"><span class="eyebrow">★ 正在开发 · 新作预约 ★</span><h1>把做出的小游戏，<br>都放在 <em>这个小站</em></h1><p>这里展示我独立开发的免费与测试游戏，以及上架海外与国内市场的轻量小作品。</p>
+<div class="cta"><button class="btn btn-solid">开始游戏</button><button class="btn btn-ghost">看全部</button></div>
+<div class="stats"><div class="st"><b>6</b><span>款游戏</span></div><div class="st"><b>3</b><span>测试中</span></div><div class="st"><b>2</b><span>海外上架</span></div><div class="st"><b>1</b><span>国内上架</span></div></div></section>
+<div class="wrap"><div class="cats" id="cats">
+<div class="cat on" data-f="all">全部</div><div class="cat" data-f="dev">开发中</div><div class="cat" data-f="oversea">海外上架</div><div class="cat" data-f="cn">国内上架</div></div>
+<div class="sec"><h2 id="t">全部游戏</h2><span>按热度 ▾</span></div><div class="grid" id="g"></div></div>
+<section class="wrap"><div class="banner"><div><h3>想第一时间玩到新游戏？</h3><p>新作上线、内测资格第一时间通知。</p></div><button class="btn btn-solid">订阅更新</button></div></section>
+<footer><div class="wrap"><div class="fg"><div><div class="brand" style="margin-bottom:12px"><span class="dot">R</span><span>RENYI</span></div><p>一枚独立开发者的个人游戏站，记录从想法到上架的过程。</p></div><div class="fh"><h4>游戏</h4><ul><li>开发中</li><li>海外上架</li><li>国内上架</li></ul></div><div class="fh"><h4>关于</h4><ul><li>开发者简介</li><li>开发日志</li><li>联系方式</li></ul></div></div>
+<div class="cc"><span>© 2026 Renyi Games</span><span>风格 05 · 像素复古</span></div></div></footer>
+<script>
+const G=[{n:"抓大鹅",d:"三消叠牌抓大鹅，休闲解压。",c:"dev",q:["休闲","三消"],g:"🐦",r:4.8,s:["#2a3a5a","#101030"]},{n:"单词冲刺",d:"英语单词竞速拼写测试版。",c:"dev",q:["益智","竞速"],g:"⚡",r:"—",s:["#3a2a5a","#101030"]},{n:"像素遗迹",d:"像素Roguelike随机战斗。",c:"dev",q:["像素","Roguelike"],g:"👾",r:4.6,s:["#4a1a4a","#101030"]},{n:"Neon Drift",d:"霓虹都市漂移，Google Play。",c:"oversea",q:["竞速","GP"],g:"🏎️",r:4.7,s:["#1a5a5a","#101030"]},{n:"Sky Jump",d:"竖屏跳跃闯关，双端上架。",c:"oversea",q:["休闲","iOS"],g:"🪂",r:4.5,s:["#1a4a6a","#101030"]},{n:"小小动物园",d:"轻松经营，国内已上架。",c:"cn",q:["经营","模拟"],g:"🦁",r:4.4,s:["#5a4a1a","#101030"]}];
+const bc=x=>x==="dev"?["开发中","#ff3b6b"]:x==="oversea"?["海外","#4ef0ff"]:["国内","#ffe94a"];
+function card(g){const[b,c]=bc(g.c);const t=g.q.map((x,i)=>`<span class="tag">${x}</span>`).join("");return`<div class="card"><div class="thumb"><div class="bg" style="background:linear-gradient(135deg,${g.s[0]},${g.s[1]})"></div><div class="badge" style="background:${c}">${b}</div><div class="g">${g.g}</div></div><div class="cb"><h3>${g.n}</h3><div class="d">${g.d}</div><div class="tags">${t}</div><div class="foot"><span class="rt">★${g.r}</span><span class="play">PLAY> </span></div></div></div>`}
+function render(f){const L=G.filter(g=>f==="all"||g.c===f);document.getElementById("g").innerHTML=L.map(card).join("");document.getElementById("t").textContent=f==="all"?"全部游戏":document.querySelector(`[data-f="${f}"]`).textContent.trim();}
+document.getElementById("cats").addEventListener("click",e=>{const c=e.target.closest(".cat");if(!c)return;document.querySelectorAll(".cat").forEach(x=>x.classList.remove("on"));c.classList.add("on");render(c.dataset.f)});
+render("all");
+</script></body></html>
