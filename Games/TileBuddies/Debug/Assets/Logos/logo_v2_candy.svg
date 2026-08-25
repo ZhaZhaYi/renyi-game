@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 320" width="1000" height="320">
+  <defs>
+    <linearGradient id="candy" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.45" stop-color="#8fc6f0"/>
+      <stop offset="1" stop-color="#5fb0e8"/>
+    </linearGradient>
+  </defs>
+  <g filter="drop-shadow(0 9px 10px rgba(47,128,200,.4))">
+    <text x="500" y="212" text-anchor="middle"
+          font-family="'Arial Rounded MT Bold','Baloo 2','Fredoka','Nunito',sans-serif"
+          font-size="150" font-weight="900" letter-spacing="1"
+          fill="url(#candy)" stroke="#ffffff" stroke-width="9" paint-order="stroke">Tile Buddies</text>
+  </g>
+  <g transform="translate(930 52)">
+    <path fill="#ff8fb2" d="M0 0 l10 24 28 3 -20 19 5 28 -23 -12 -23 12 5 -28 -20 -19 28 -3z"/>
+  </g>
+</svg>

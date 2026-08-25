@@ -1,0 +1,7 @@
+{
+  "interstitialMinGapMs": 180000,
+  "interstitialDailyCap": 6,
+  "interstitialSessionCap": 4,
+  "interstitialFirstShowCleared": 3,
+  "sessionResetGapMs": 1800000
+}

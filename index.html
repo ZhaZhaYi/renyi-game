@@ -32,6 +32,8 @@
   .wrap{max-width:1160px;margin:0 auto;padding:0 24px}
   .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 
+
+
   /* 防御：即使系统/浏览器处于深色偏好，也强制保持本站的浅色配色，与 Chrome 一致 */
   @media (prefers-color-scheme: dark){
     :root{color-scheme:only light}
@@ -116,13 +118,49 @@
   .cat.on .cnt{background:rgba(255,255,255,.35);color:#fff}
 
   /* ===== Game grid ===== */
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px}
-  .card{
-    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
-    overflow:hidden;transition:transform .22s,box-shadow .22s,border-color .22s;cursor:pointer;
-  }
+    .grid {
+        display: flex;
+        flex-wrap: wrap; /*运行卡片换行*/
+        gap: 20px;
+        justify-content: center; /* 核心修改：让卡片水平居中 */
+        max-width: 1060px;
+        margin: 0 auto; /* 让整个容器在页面居中 */
+    }
+    .card {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        overflow: hidden;
+        transition: transform .22s,box-shadow .22s,border-color .22s;
+        cursor: pointer;
+        /* --- 关键新增 --- */
+        width: 250px; /* 固定宽度，必须与上面的计算一致 */
+        flex-shrink: 0; /* 防止空间不足时卡片被挤压变形 */
+
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        overflow: hidden;
+    }
   .card:hover{transform:translateY(-5px);box-shadow:0 18px 34px rgba(224,122,63,.12);border-color:#ffcf9a}
-  .thumb{height:140px;position:relative;display:grid;place-items:center;overflow:hidden}
+    .thumb {
+        height: 140px;
+        position: relative;
+        /* --- 修改开始 --- */
+        display: flex; /* 改用 flex */
+        align-items: center; /* 垂直居中 */
+        justify-content: center; /* 水平居中 */
+        overflow: hidden; /* 防止图片放大时溢出 */
+        /* --- 修改结束 --- */
+    }
+        /* 把原来的 .thumb .glyph { ... } 替换为下面这段 */
+        .thumb img {
+            width: 80px; /* 根据你的图标大小调整，比如 60px - 100px */
+            height: 80px; /* 保持宽高一致 */
+            object-fit: contain; /* 保持图片比例，不拉伸变形 */
+            z-index: 2; /* 确保图片在背景色块(gradient)的上面 */
+            transition: transform .25s; /* 添加过渡动画，配合下面的 hover 效果 */
+        }
   .thumb .bg{position:absolute;inset:0}
   .thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,rgba(255,255,255,.18))}
   .thumb .glyph{font-size:50px;position:relative;filter:drop-shadow(0 8px 12px rgba(0,0,0,.18));transition:transform .25s}
@@ -139,8 +177,15 @@
   .card-foot{display:flex;align-items:center;justify-content:space-between;margin-top:12px}
   .rating{color:#e8a04f;font-size:13px;font-weight:700}
   .rating span{color:var(--muted);font-weight:500;margin-left:2px}
-  .play{font-size:13px;font-weight:700;color:var(--accent)}
-  .card:hover .play{text-decoration:underline}
+    .play {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--accent);
+        text-decoration: none; /* 【新增】去掉下划线 */
+        cursor: pointer; /* 【新增】确保鼠标放上去是手型 */
+        display: inline-block;
+    }
+  .card:hover .play{text-decoration:underline}/* 鼠标悬停时才显示下划线，提示可点击 */
   .empty{text-align:center;padding:50px 0;color:var(--muted);display:none;grid-column:1/-1}
 
   /* ===== Feature band ===== */
@@ -303,8 +348,8 @@
 
       <div class="cats" id="cats" role="tablist">
         <div class="cat on" data-f="all" role="tab" tabindex="0">全部 <span class="cnt" data-c="all"></span></div>
-        <div class="cat" data-f="dev" role="tab" tabindex="0">🛠 开发中 · 免费测试 <span class="cnt" data-c="dev"></span></div>
-        <div class="cat" data-f="oversea" role="tab" tabindex="0">🌍 海外上架 <span class="cnt" data-c="oversea"></span></div>
+        <div class="cat" data-f="dev" role="tab" tabindex="0">🛠 开发中 <span class="cnt" data-c="dev"></span></div>
+        <div class="cat" data-f="oversea" role="tab" tabindex="0">🌍 已上架 <span class="cnt" data-c="oversea"></span></div>
       </div>
 
       <div class="grid" id="grid"></div>
@@ -379,38 +424,41 @@
 
 <script>
   // ===== 游戏数据（占位，后续可替换为真实内容）=====
-  const GAMES = [
+const GAMES = [
     // 开发中 / 免费测试
-    { name:"TileBuddies", desc:"三消叠牌，休闲解压、离线可玩，正在打磨关卡与动效。", cat:"dev", tags:["休闲","三消","离线"], glyph:"🐦", rating:4.8, art:["#ff9a7a","#ffd9b8"] },
-    { name:"像素遗迹 · Pixel Ruins", desc:"像素风 Roguelike，随机地图与战斗，正在内测招募。", cat:"dev", tags:["像素","Roguelike","内测"], glyph:"👾", rating:4.6, art:["#ff9e6a","#ffd4ae"] },
-    // 海外上架
-    { name:"Neon Drift", desc:"霓虹都市漂移赛车，海外 Google Play 已上架。", cat:"oversea", tags:["竞速","Google Play","海外"], glyph:"🏎️", rating:4.7, art:["#ffc9a0","#ffe0ca"] },
-    { name:"Sky Jump", desc:"竖屏跳跃闯关小游戏，App Store 与 Google Play 双端上架。", cat:"oversea", tags:["休闲","iOS","Google Play"], glyph:"🪂", rating:4.5, art:["#ffd0a6","#ffe6d2"] },
-  ];
+    { name: "TileBuddies · 测试版", desc: "三消叠牌，休闲解压、离线可玩，正在打磨关卡与动效。", cat: "dev", tags: ["休闲", "三消", "离线"], img: "./Games/TileBuddies/Debug/Assets/Icons/icon_app_small.png", rating: 4.8, art: ["#ff9a7a", "#ffd9b8"], link: "./Games/TileBuddies/Debug/index.html" },
+    ];
 
   const BADGE = { dev:["开发中","#f0a05a"], oversea:["海外上架","#e08a4a"], cn:["国内上架","#e8924a"] };
 
-  function card(g){
-    const [b,c] = BADGE[g.cat];
-    const tags = g.tags.map(t => `<span class="tag">${t}</span>`).join("");
-    return `
-      <article class="card" data-cat="${g.cat}">
+    function card(g) {
+        const [b, c] = BADGE[g.cat];
+        const tags = g.tags.map(t => `<span class="tag">${t}</span>`).join("");
+
+        // 如果没有图片，给一个默认占位图，防止破图
+        const imgUrl = g.img || "images/default.png";
+
+        return `
+    <article class="card" data-cat="${g.cat}">
         <div class="thumb">
-          <div class="bg" style="background:linear-gradient(135deg,${g.art[0]},${g.art[1]})"></div>
-          <div class="badge" style="background:${c}">${b}</div>
-          <span class="glyph">${g.glyph}</span>
+            <div class="bg" style="background:linear-gradient(135deg,${g.art[0]},${g.art[1]})"></div>
+            <div class="badge" style="background:${c}">${b}</div>
+            
+            <!-- 【修改点】：把原来的 span class="glyph" 删掉，换成下面的 img -->
+            <img src="${imgUrl}" alt="${g.name}" class="card-img">
+            
         </div>
         <div class="card-body">
-          <h3>${g.name}</h3>
-          <div class="desc">${g.desc}</div>
-          <div class="tags">${tags}</div>
-          <div class="card-foot">
-            <span class="rating">★ ${g.rating}<span>/5</span></span>
-            <span class="play">立即试玩 →</span>
-          </div>
+            <h3>${g.name}</h3>
+            <div class="desc">${g.desc}</div>
+            <div class="tags">${tags}</div>
+            <div class="card-foot">
+                <span class="rating">★ ${g.rating}<span>/5</span></span>
+                <a href="${g.link}" class="play" target="_blank" rel="noopener noreferrer">立即试玩 &rarr;</a>
+            </div>
         </div>
-      </article>`;
-  }
+    </article>`;
+    }
 
   const grid = document.getElementById('grid');
   const empty = document.getElementById('empty');
