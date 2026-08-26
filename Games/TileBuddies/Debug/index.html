@@ -1051,171 +1051,6 @@
                 transform: translateY(2px);
                 box-shadow: 0 1px 0 rgba(63,92,120,.18);
             }
-        /*#TEST_START*/
-        #test-panel {
-            position: fixed;
-            top: 52px;
-            right: 10px;
-            width: min(320px, 92vw);
-            padding: 12px 14px;
-            border-radius: 18px;
-            background: rgba(255,255,255,.96);
-            box-shadow: 0 10px 30px rgba(40,60,80,.25);
-            z-index: 19000;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            max-height: calc(100vh - 72px);
-            overflow-y: auto; /* 面板滚动条（老板 2026-08-24） */
-        }
-
-            #test-panel.hidden {
-                display: none;
-            }
-
-        .tp-title {
-            font-size: 14px;
-            font-weight: 800;
-            color: #3f6a8d;
-            letter-spacing: 1px;
-        }
-
-        .tp-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-        }
-
-            .tp-grid label {
-                display: flex;
-                flex-direction: column;
-                font-size: 12px;
-                color: #5a7188;
-                font-weight: 700;
-                gap: 3px;
-            }
-
-            .tp-grid input, .tp-grid select {
-                font-size: 14px;
-                padding: 6px 8px;
-                border: 2px solid #cfdde8;
-                border-radius: 9px;
-                color: #2b4a68;
-                background: #fff;
-                outline: none;
-            }
-
-                .tp-grid input:focus, .tp-grid select:focus {
-                    border-color: #7fb3d9;
-                }
-
-        .tp-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .tp-btn {
-            border: none;
-            border-radius: 999px;
-            padding: 9px 16px;
-            font-size: 14px;
-            font-weight: 800;
-            cursor: pointer;
-            color: #fff;
-            background: linear-gradient(180deg,#5fd6a8,#2fae7b);
-            box-shadow: 0 3px 0 rgba(31,122,82,.3);
-        }
-
-            .tp-btn:active {
-                transform: translateY(2px);
-                box-shadow: 0 1px 0 rgba(31,122,82,.3);
-            }
-
-            .tp-btn.danger {
-                background: linear-gradient(180deg,#ff9d7a,#e05f3a);
-                box-shadow: 0 3px 0 rgba(160,60,30,.32);
-            }
-
-        .tp-hint {
-            font-size: 12px;
-            color: #8a5a12;
-            font-weight: 700;
-        }
-
-        .tp-toolbar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-
-        .tp-btn.mini {
-            padding: 4px 10px;
-            font-size: 11px;
-        }
-
-        .tp-home {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .tp-module-btn {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 8px;
-            border: 1px solid #dce7f0;
-            border-radius: 10px;
-            padding: 10px 12px;
-            font-size: 13px;
-            font-weight: 800;
-            color: #2f5f86;
-            background: #fff;
-            cursor: pointer;
-        }
-
-            .tp-module-btn:hover {
-                background: #eef6fb;
-            }
-
-        .tp-caret {
-            font-size: 14px;
-            color: #8aa6bf;
-        }
-
-        #test-panel.tp-show-sub .tp-home {
-            display: none;
-        }
-
-        .tp-sub {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-            .tp-sub.hidden {
-                display: none;
-            }
-
-        .tp-sub-head {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            font-weight: 800;
-            color: #2f5f86;
-        }
-
-        .tp-sub-body {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        /*#TEST_END*/
         #screen-menu .ver-badge {
             position: absolute;
             left: 16px;
@@ -1355,45 +1190,6 @@
             body.tablet-up #screen-game #topbar {
                 transform: translateY(var(--tablet-shift, 0px));
             }
-        /*#TEST_START*/
-        #device-bar {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            z-index: 20000;
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            background: rgba(20,30,42,.85);
-            padding: 6px 10px;
-            border-radius: 999px;
-            color: #fff;
-            font-size: 13px;
-            font-weight: 700;
-            box-shadow: 0 6px 18px rgba(0,0,0,.32);
-        }
-
-            #device-bar button, #test-panel .tp-btn.device {
-                border: none;
-                background: linear-gradient(180deg,#5fd6a8,#2fae7b);
-                color: #fff;
-                padding: 6px 12px;
-                border-radius: 999px;
-                font-weight: 800;
-                font-size: 13px;
-                cursor: pointer;
-            }
-
-            #device-bar select {
-                background: #fff;
-                color: #2b4a68;
-                border: none;
-                border-radius: 999px;
-                padding: 5px 8px;
-                font-weight: 700;
-                font-size: 13px;
-            }
-        /*#TEST_END*/
         body.phone-view {
             background: #1b2532;
         }
@@ -1552,31 +1348,6 @@
             position: relative;
             z-index: 1;
         }
-        /*#TEST_START*/
-        /* 牌面生成区描边（测试面板「牌面区域」按钮切换，正式包剥离） */
-        body.board-area-visible #board {
-            outline: 2px dashed rgba(255,80,80,.9);
-            outline-offset: -2px;
-        }
-
-            body.board-area-visible #board::after {
-                content: attr(data-area-label);
-                position: absolute;
-                top: 4px;
-                left: 4px;
-                z-index: 999;
-                pointer-events: none;
-                background: rgba(170,30,30,.82);
-                color: #fff;
-                font-size: 12px;
-                font-weight: 700;
-                line-height: 1.3;
-                padding: 3px 7px;
-                border-radius: 6px;
-                white-space: nowrap;
-                font-family: system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
-            }
-        /*#TEST_END*/
         .tile {
             position: absolute;
             width: 62px;
@@ -3368,13 +3139,6 @@
             opacity: 0;
             pointer-events: none;
         }
-        /*#TEST_START*/
-        .tutorial-mode #device-bar {
-            opacity: 0;
-            pointer-events: none;
-        }
-        /* 仅测试设备栏用，正式包随测试功能剥离 */
-        /*#TEST_END*/
         .tut-trail {
             position: fixed;
             z-index: 9998;
@@ -3697,210 +3461,6 @@
 
 </div>
 
-<!--#TEST_START-->
-<!-- 测试工具（临时测试工具，打正式包时整体剥离） -->
-<div id="device-bar">
-  <button onclick="toggleTestPanel()">🧪 测试</button>
-</div>
-<div id="test-panel" class="hidden">
-  <!-- 一级：模块列表 -->
-  <div class="tp-toolbar">
-    <span class="tp-hint">测试工具（打正式包时整体剥离）</span>
-  </div>
-  <div class="tp-home">
-    <button class="tp-module-btn" onclick="tpOpenModule('common')"><span>① 通用操作</span><span class="tp-caret">›</span></button>
-    <button class="tp-module-btn" onclick="tpOpenModule('level')"><span>② 关卡调试</span><span class="tp-caret">›</span></button>
-    <button class="tp-module-btn" onclick="tpOpenModule('board')"><span>③ 牌面区域调试</span><span class="tp-caret">›</span></button>
-    <button class="tp-module-btn" onclick="tpOpenModule('card')"><span>④ 卡牌资源</span><span class="tp-caret">›</span></button>
-    <button class="tp-module-btn" onclick="tpOpenModule('anim')"><span>⑤ 动画调试</span><span class="tp-caret">›</span></button>
-    <button class="tp-module-btn" onclick="tpOpenModule('ad')"><span>⑥ 广告测试</span><span class="tp-caret">›</span></button>
-    <button class="tp-module-btn" onclick="tpOpenModule('perf')"><span>⑦ 性能对比（效果 A/B）</span><span class="tp-caret">›</span></button>
-  </div>
-
-  <!-- 二级：模块内容页（点模块进入，← 返回列表） -->
-  <div class="tp-sub hidden" id="tp-sub-common">
-    <div class="tp-sub-head"><button class="tp-btn mini" onclick="tpBackHome()">← 返回</button><span>① 通用操作</span></div>
-    <div class="tp-sub-body">
-      <div class="tp-row">
-        <button class="tp-btn danger" onclick="resetAllData()">🗑 重置数据</button>
-        <span class="tp-hint" id="tp-reset-hint">清空进度 / 收集记录</span>
-      </div>
-      <div class="tp-row">
-        <button class="tp-btn device" onclick="togglePhoneView()">📱 手机视图</button>
-        <select id="device-select" onchange="setDevice(this.value)">
-          <option value="auto">自动</option>
-          <option value="desktop">桌面</option>
-          <option value="iphone_se">iPhone SE</option>
-          <option value="iphone14">iPhone 14</option>
-          <option value="iphone_pro">iPhone 15 Pro Max</option>
-          <option value="pixel7">Pixel 7</option>
-          <option value="xiaomi13">小米 13</option>
-          <option value="huawei60">华为 P60</option>
-          <option value="ipad">iPad</option>
-        </select>
-      </div>
-    </div>
-  </div>
-
-  <div class="tp-sub hidden" id="tp-sub-level">
-    <div class="tp-sub-head"><button class="tp-btn mini" onclick="tpBackHome()">← 返回</button><span>② 关卡调试</span></div>
-    <div class="tp-sub-body">
-      <span class="tp-hint">跳转关卡</span>
-      <div class="tp-row">
-        <select id="tp-jump-mode">
-          <option value="normal">经典模式</option>
-          <option value="daily">每日挑战</option>
-        </select>
-        <input type="number" id="tp-jump-lv" min="1" max="100" step="1" value="1" style="width:72px">
-        <button class="tp-btn device" onclick="jumpToLevel()">跳转</button>
-      </div>
-      <span class="tp-hint">测试关自定义：层数 / 网格边长 / 牌种类 / 密度 / 层间偏移 / 形状</span>
-      <div class="tp-grid">
-        <label>层数<input type="number" id="tp-layers" min="1" max="8" step="1"></label>
-        <label>网格边长<input type="number" id="tp-grid" min="2" max="8" step="1"></label>
-        <label>牌种类<input type="number" id="tp-faces" min="1" max="32" step="1"></label>
-        <label>密度<input type="number" id="tp-density" min="0.1" max="1" step="0.05"></label>
-        <label>层间偏移<input type="number" id="tp-offset" min="0" max="20" step="1"></label>
-        <label>形状
-          <select id="tp-shape">
-            <option value="square">方形（按网格边长）</option>
-            <option value="heart">心形</option>
-            <option value="pyramid">金字塔</option>
-            <option value="cross">十字</option>
-            <option value="diamond">菱形</option>
-            <option value="arch">拱门</option>
-            <option value="ring">圆环</option>
-            <option value="tower">塔</option>
-            <option value="steps">阶梯</option>
-            <option value="hourglass">沙漏</option>
-            <option value="mountain">双峰山</option>
-            <option value="star">五角星</option>
-            <option value="tree">圣诞树</option>
-            <option value="rocket">火箭</option>
-            <option value="butterfly">蝴蝶</option>
-            <option value="sun">太阳</option>
-            <option value="castle">城堡</option>
-            <option value="fish">鱼</option>
-            <option value="moon">月牙</option>
-            <option value="flower">花朵</option>
-          </select>
-        </label>
-      </div>
-      <div class="tp-row">
-        <button class="tp-btn" onclick="startCustomTest()">▶ 进入自定义测试关</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="tp-sub hidden" id="tp-sub-board">
-    <div class="tp-sub-head"><button class="tp-btn mini" onclick="tpBackHome()">← 返回</button><span>③ 牌面区域调试</span></div>
-    <div class="tp-sub-body">
-      <div class="tp-row">
-        <button class="tp-btn" onclick="toggleBoardArea()">▦ 显示/隐藏牌面区域</button>
-        <button class="tp-btn" onclick="resetBoardArea()">↺ 恢复默认</button>
-      </div>
-      <div class="tp-grid">
-        <label>区域宽度<input type="range" id="tp-bw" min="280" max="640" step="2" value="448"><span id="tp-bw-v">448</span></label>
-        <label>区域高度<input type="range" id="tp-bh" min="400" max="780" step="2" value="490"><span id="tp-bh-v">490</span></label>
-        <label>缩放上限<input type="range" id="tp-maxscale" min="1" max="3" step="0.05" value="1.15"><span id="tp-maxscale-v">1.15</span></label>
-      </div>
-      <span class="tp-hint">区域越小卡牌越大（等同横/竖向数量减少）；进关卡后拖动即时预览</span>
-    </div>
-  </div>
-
-  <div class="tp-sub hidden" id="tp-sub-card">
-    <div class="tp-sub-head"><button class="tp-btn mini" onclick="tpBackHome()">← 返回</button><span>④ 卡牌资源</span></div>
-    <div class="tp-sub-body">
-      <div class="tp-row">
-        <select id="card-style-select" onchange="setCardStyle(this.value)">
-          <option value="d3">D3 合成卡</option>
-          <option value="mahjong">麻将牌卡（整图）</option>
-          <option value="cookie">饼干牌卡（整图）</option>
-          <option value="emoji">emoji</option>
-        </select>
-        <span class="tp-hint">重进关卡后按所选资源渲染</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="tp-sub hidden" id="tp-sub-anim">
-    <div class="tp-sub-head"><button class="tp-btn mini" onclick="tpBackHome()">← 返回</button><span>⑤ 动画调试</span></div>
-    <div class="tp-sub-body">
-      <span class="tp-hint">破碎参数（保存后生效）</span>
-      <div class="tp-grid">
-    <label>掉落速度<input type="range" id="sc-speed" min="0.3" max="6" step="0.1" value="0.8"><span id="sc-speed-v">0.8</span></label>
-    <label>重力<input type="range" id="sc-gravity" min="400" max="6000" step="100" value="1400"><span id="sc-gravity-v">1400</span></label>
-        <label>碎片间隔(ms)<input type="range" id="sc-batchms" min="8" max="200" step="1" value="62"><span id="sc-batchms-v">62</span></label>
-    <label>碎片大小<input type="range" id="sc-shardsize" min="0.3" max="2.5" step="0.05" value="0.85"><span id="sc-shardsize-v">0.85</span></label>
-        <label>随机种子<input type="number" id="sc-seed" min="1" max="99999999" step="1" value="20260822"></label>
-        <label>上抛最高点<input type="range" id="sc-apex" min="0.3" max="3" step="0.05" value="1.6"><span id="sc-apex-v">1.6</span></label>
-        <label>粒子数量<input type="range" id="sc-parts" min="100" max="8000" step="100" value="1000"><span id="sc-parts-v">1000</span></label>
-    <label>碎片数量<input type="range" id="sc-shards" min="8" max="256" step="1" value="40"><span id="sc-shards-v">40</span></label>
-        <label>生命周期<input type="range" id="sc-life" min="0.5" max="2" step="0.05" value="1"><span id="sc-life-v">1</span></label>
-        <label>扩散范围<input type="range" id="sc-spread" min="0.2" max="2" step="0.05" value="0.7"><span id="sc-spread-v">0.7</span></label>
-    <label>消除方向
-      <select id="sc-dir">
-        <option value="-1">左下</option>
-        <option value="0">正下</option>
-        <option value="1" selected>右下</option>
-      </select>
-    </label>
-    <label>碎片开关
-      <select id="sc-shardson">
-        <option value="1" selected>开</option>
-        <option value="0">关</option>
-      </select>
-    </label>
-    <label>碎片抛物线<input type="range" id="sc-shardarc" min="0.3" max="3" step="0.05" value="1.3"><span id="sc-shardarc-v">1.3</span></label>
-      </div>
-      <div class="tp-row">
-        <button class="tp-btn" onclick="saveShatterCfg()">💾 保存动画参数</button>
-        <button class="tp-btn" onclick="resetShatterCfg()">↺ 重置默认</button>
-        <span class="tp-hint">保存后当前关卡与后续消除均生效</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="tp-sub hidden" id="tp-sub-ad">
-    <div class="tp-sub-head"><button class="tp-btn mini" onclick="tpBackHome()">← 返回</button><span>⑥ 广告测试</span></div>
-    <div class="tp-sub-body">
-      <span class="tp-hint">测试广告位（不影响正式账号）</span>
-      <div class="tp-row">
-        <button class="tp-btn" onclick="testAdRewarded()">🎬 测试激励广告</button>
-        <button class="tp-btn" onclick="testAdInterstitial()">🎬 测试插屏广告</button>
-        <button class="tp-btn" onclick="testAdBanner()">🎬 测试横幅</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="tp-sub hidden" id="tp-sub-perf">
-    <div class="tp-sub-head"><button class="tp-btn mini" onclick="tpBackHome()">← 返回</button><span>⑦ 性能对比（效果 A/B）</span></div>
-    <div class="tp-sub-body">
-      <span class="tp-hint">新版默认=240ms 飞牌+即时消除；另两项对比开关默认关=原效果；改动即时生效，无需重进关卡</span>
-      <div class="set-row" onclick="togglePerfCompare('shardTransform')">
-        <span class="lbl" id="lbl-perf-shardTransform">🔹 碎片动画：transform 三段（原为 offset-path 弧线）</span>
-        <span class="switch" id="sw-perf-shardTransform"></span>
-      </div>
-      <div class="set-row" onclick="togglePerfCompare('instantMatch')">
-        <span class="lbl" id="lbl-perf-instantMatch">⚡ 即时消除（新版默认；关=320ms 回弹等待）</span>
-        <span class="switch" id="sw-perf-instantMatch"></span>
-      </div>
-      <div class="set-row" onclick="togglePerfCompare('fastFly')">
-        <span class="lbl" id="lbl-perf-fastFly">✈ 飞牌 240ms（新版默认；关=310ms）</span>
-        <span class="switch" id="sw-perf-fastFly"></span>
-      </div>
-      <div class="set-row" onclick="togglePerfCompare('lowDensity')">
-        <span class="lbl" id="lbl-perf-lowDensity">🎆 特效低密度：粒子 600 / 碎片 40（原为 800 / 80）</span>
-        <span class="switch" id="sw-perf-lowDensity"></span>
-      </div>
-      <div class="tp-row">
-        <button class="tp-btn" onclick="resetPerfCompare()">↺ 恢复新版默认</button>
-        <span class="tp-hint">240ms 飞牌 / 即时消除 / 800·80 特效 / 弧线碎片</span>
-      </div>
-    </div>
-  </div>
-</div>
-<!--#TEST_END-->
 
 <!-- 引导关卡 UI（需求文档 2026-08-20；第一版 CSS/emoji 占位，美术按 Assets/UI/ 同名替换） -->
 <div id="tut-ui" class="hidden">
@@ -4392,11 +3952,6 @@ if (LEVELS && typeof LEVELS === 'object') {
   // 结构重构：daily 不预存为数组，改由 buildDaily(dateStr) 运行时生成；此处暴露数据段口径供引用。
   if (!LEVELS.daily) LEVELS.daily = (LEVEL_DATA && LEVEL_DATA.daily) || null;
 }
-/*#TEST_START*/
-const TEST_LEVEL = (LEVEL_DATA && LEVEL_DATA.testLevel) || { layers:1, grid:2, density:1, faces:1, jitter:0, offset:0 };
-let CUSTOM_TEST = null;
-try { CUSTOM_TEST = JSON.parse(localStorage.getItem('mj_test_cfg') || 'null'); } catch (e) { CUSTOM_TEST = null; }
-/*#TEST_END*/
 if (!LEVEL_DATA) console.error('缺少关卡数据：请运行 node Tools/generate_levels.js 生成后刷新。');
 // BUG-001 兜底（仅 App 内生效）：让 WebView 覆盖状态栏区域
 if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.StatusBar) {
@@ -4495,17 +4050,7 @@ function playBgmFrom(offset) {
   bgmSrc = src;
   bgmStartAt = audioCtx().currentTime - offset;
 }
-/*#TEST_START*/
-/* 测试按钮/测试面板不触发首击 BGM（老板 2026-08-16 取消测试按钮音） */
-function isTestUi(e) {
-  const t = e && e.target;
-  return !!(t && t.closest && (t.closest('#device-bar') || t.closest('#test-panel')));
-}
-/*#TEST_END*/
 function tryStartBgm(e) {
-  /*#TEST_START*/
-  if (isTestUi(e)) return;
-  /*#TEST_END*/
   document.removeEventListener('click', tryStartBgm, true);
   document.removeEventListener('touchstart', tryStartBgm, true);
   startBgm();
@@ -4556,9 +4101,6 @@ const I18N = {
     lockTip: '🔗 锁链牌：消除它上下左右相邻的任意一张牌，即可解锁',
     starMilestone: n => '🎉 星星里程碑：累计 ' + n + ' 星！',
     starTotal: n => '⭐ ' + n,
-    /*#TEST_START*/
-    testLevel: '测试关',
-    /*#TEST_END*/
     normal: '开始闯关', daily: '每日挑战',
     animals: '植物篇', ocean: '海洋篇', furniture: '家具篇', fruits: '水果篇', snacks: '零食篇', toys: '玩具篇',
     soundOn: '🔊 音效：开', soundOff: '🔇 音效：关',
@@ -4653,9 +4195,6 @@ const I18N = {
     lockTip: '🔗 Locked tile: clear any adjacent tile (up/down/left/right) to unlock it',
     starMilestone: n => '🎉 Star milestone: ' + n + ' stars total!',
     starTotal: n => '⭐ ' + n,
-    /*#TEST_START*/
-    testLevel: 'Test Level',
-    /*#TEST_END*/
     normal: 'Start', daily: 'Daily',
     animals: 'Plants', ocean: 'Ocean', furniture: 'Furniture', fruits: 'Fruits', snacks: 'Snacks', toys: 'Toys',
     soundOn: '🔊 Sound: On', soundOff: '🔇 Sound: Off',
@@ -5338,9 +4877,6 @@ function computeBoardTopStage() {
   const bandH = Math.max(1, bandBottom - bandTop - 12); // 与 fitBoard 缩放同口径留边（2026-08-24）
   // 缩放先定（与 fitBoard 同口径），基线按【缩放后内容】居中，避免缩放后内容越出带外遮挡 UI（老板 2026-08-24 流程化标准）
   let s = Math.max(0.3, Math.min(MAX_BOARD_SCALE, availW / BOARD_W, bandH / BOARD_H));
-  /*#TEST_START*/
-  s = Math.max(0.3, Math.min(boardMaxScale(), availW / boardAreaW(), bandH / boardAreaH())); // 测试面板牌面区域调试（正式包剥离）
-  /*#TEST_END*/
   return bandTop + BOARD_TOP_INSET - minY * s; // 区域顶与移出区底对齐，卡牌整体内缩固定余量，hover 不越界（老板 2026-08-24）
 }
 /* 牌面可用宽度：按牌区容器可视宽（稳定口径，老板 2026-08-24 牌面取最大） */
@@ -5370,9 +4906,6 @@ function fitBoard(forceReset) {
   const bandBottom = propbarEl ? (propbarEl.offsetTop - 10) : (bandTop + BOARD_H);
   const bandH = Math.max(1, bandBottom - bandTop - 12);
   let boardScale = Math.max(0.3, Math.min(MAX_BOARD_SCALE, availW / BOARD_W, bandH / BOARD_H));
-  /*#TEST_START*/
-  boardScale = Math.max(0.3, Math.min(boardMaxScale(), availW / boardAreaW(), bandH / boardAreaH())); // 测试面板牌面区域调试（正式包剥离）
-  /*#TEST_END*/
   // 移出面板在牌面上方（老板 2026-08-24）：不再需要「牌面避让移出区」的上移逻辑
   boardRemoveShift = 0;
   board.style.position = 'absolute';
@@ -5381,9 +4914,6 @@ function fitBoard(forceReset) {
   board.style.transform = 'translate(-50%,0) scale(' + boardScale + ')'; // 2026-08-24：按可容纳最大尺寸放大（老板指示）
   board.style.transformOrigin = 'top center';
   S.boardScale = boardScale;
-  /*#TEST_START*/
-  if (boardAreaVisible) updateBoardAreaLabel();
-  /*#TEST_END*/
 }
 function renderBoard() {
   const board = document.getElementById('board');
@@ -7290,196 +6820,6 @@ function startLevel(modeKey, levelNum, testCfg, opts) {
   }, 1050);
 }
 
-/*#TEST_START*/
-/* ================= 测试面板（临时测试工具，打正式包时整体剥离） ================= */
-function toggleTestPanel() {
-  const p = document.getElementById('test-panel');
-  if (p) p.classList.toggle('hidden');
-}
-let boardAreaVisible = false;
-function toggleBoardArea() {
-  boardAreaVisible = !boardAreaVisible;
-  document.body.classList.toggle('board-area-visible', boardAreaVisible);
-  updateBoardAreaLabel();
-}
-function updateBoardAreaLabel() {
-  const board = document.getElementById('board');
-  if (!board) return;
-  const sc = (S && S.boardScale != null) ? S.boardScale : null;
-  let label = boardAreaOverride
-    ? ('目标区 ' + Math.round(boardAreaW()) + '×' + Math.round(boardAreaH()))
-    : ('牌面区 ' + BOARD_W + '×' + BOARD_H);
-  if (sc != null) label += ' · scale ' + sc.toFixed(2) + ' · 卡牌≈' + Math.round(TILE_W * sc) + '×' + Math.round(TILE_H * sc);
-  if (S && S.cfg) {
-    if (S.cfg.grid) label += ' · 网格 ' + S.cfg.grid + '×' + S.cfg.grid;
-    if (S.cfg.cellList) label += ' · 方形';
-    else if (S.cfg.shape) {
-      const shp = SHAPES[S.cfg.shape];
-      if (shp) label += ' · 形状 ' + shp.cols + '×' + shp.rows;
-    }
-  }
-  board.setAttribute('data-area-label', label);
-}
-/* 牌面区域调试（老板 2026-08-24）：调整缩放基准区域/上限，进关卡后拖动即时预览 */
-let boardAreaOverride = null; // { w, h, maxScale }：由测试面板「牌面区域调试」写入
-function boardAreaW() { return (boardAreaOverride && boardAreaOverride.w) || BOARD_W; }
-function boardAreaH() { return (boardAreaOverride && boardAreaOverride.h) || BOARD_H; }
-function boardMaxScale() { return (boardAreaOverride && boardAreaOverride.maxScale) || MAX_BOARD_SCALE; }
-function boardAreaFromSliders() {
-  const v = id => { const el = document.getElementById(id); return el ? parseFloat(el.value) : NaN; };
-  const w = v('tp-bw'), h = v('tp-bh'), ms = v('tp-maxscale');
-  boardAreaOverride = {
-    w: Number.isFinite(w) && w > 0 ? w : BOARD_W,
-    h: Number.isFinite(h) && h > 0 ? h : BOARD_H,
-    maxScale: Number.isFinite(ms) && ms > 0 ? ms : MAX_BOARD_SCALE,
-  };
-}
-function applyBoardArea() {
-  boardAreaFromSliders();
-  const setV = (id, t) => { const el = document.getElementById(id); if (el) el.textContent = t; };
-  setV('tp-bw-v', Math.round(boardAreaW()) + ' ≈' + Math.round((boardAreaW() - 14) / TILE_W - 1) + '列');
-  setV('tp-bh-v', Math.round(boardAreaH()) + ' ≈' + Math.round((boardAreaH() - 4) / TILE_H - 1) + '行');
-  setV('tp-maxscale-v', boardMaxScale().toFixed(2));
-  if (typeof fitBoard === 'function') fitBoard();
-  updateBoardAreaLabel();
-}
-function resetBoardArea() {
-  boardAreaOverride = null;
-  const set = (id, val) => { const el = document.getElementById(id); if (el) el.value = val; };
-  set('tp-bw', BOARD_W); set('tp-bh', BOARD_H); set('tp-maxscale', MAX_BOARD_SCALE);
-  const setV = (id, t) => { const el = document.getElementById(id); if (el) el.textContent = t; };
-  setV('tp-bw-v', BOARD_W + ' ≈' + Math.round((BOARD_W - 14) / TILE_W - 1) + '列');
-  setV('tp-bh-v', BOARD_H + ' ≈' + Math.round((BOARD_H - 4) / TILE_H - 1) + '行');
-  setV('tp-maxscale-v', MAX_BOARD_SCALE.toFixed(2));
-  if (typeof fitBoard === 'function') fitBoard();
-  updateBoardAreaLabel();
-}
-function initBoardAreaPanel() {
-  ['tp-bw', 'tp-bh', 'tp-maxscale'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.addEventListener('input', applyBoardArea);
-  });
-  const setV = (id, t) => { const el = document.getElementById(id); if (el) el.textContent = t; };
-  setV('tp-bw-v', BOARD_W + ' ≈' + Math.round((BOARD_W - 14) / TILE_W - 1) + '列');
-  setV('tp-bh-v', BOARD_H + ' ≈' + Math.round((BOARD_H - 4) / TILE_H - 1) + '行');
-  setV('tp-maxscale-v', MAX_BOARD_SCALE.toFixed(2));
-}
-/* 二级页面：一级=模块列表，二级=模块内容页（老板 2026-08-24） */
-function tpOpenModule(key) {
-  const p = document.getElementById('test-panel');
-  if (p) p.classList.add('tp-show-sub');
-  document.querySelectorAll('#test-panel .tp-sub').forEach(el => el.classList.add('hidden'));
-  const sub = document.getElementById('tp-sub-' + key);
-  if (sub) sub.classList.remove('hidden');
-}
-function tpBackHome() {
-  const p = document.getElementById('test-panel');
-  if (p) p.classList.remove('tp-show-sub');
-  document.querySelectorAll('#test-panel .tp-sub').forEach(el => el.classList.add('hidden'));
-}
-function jumpToLevel() {
-  const mode = document.getElementById('tp-jump-mode').value;
-  const el = document.getElementById('tp-jump-lv');
-  const lv = mode === 'daily' ? 0 : Math.max(1, Math.min(MODE_LEVELS_TOTAL, parseInt(el ? el.value : '1', 10) || 1));
-  startLevel(mode, lv);
-}
-function initTestPanel() {
-  const src = CUSTOM_TEST || TEST_LEVEL || {};
-  const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
-  const css = document.getElementById('card-style-select');
-  if (css) css.value = cardStyle() || 'd3';
-  set('tp-layers', src.layers || 1);
-  set('tp-grid', src.grid || 3);
-  set('tp-faces', src.faces || 3);
-  set('tp-density', src.density || 1);
-  set('tp-offset', src.offset || 0);
-  const shapeEl = document.getElementById('tp-shape');
-  if (shapeEl) shapeEl.value = (src.shape && src.shape !== 'square3') ? src.shape : 'square';
-  setTimeout(initShatterPanel, 0); // 等脚本完全加载后再初始化（避免 TDZ）
-  document.querySelectorAll('#test-panel input[type="range"][id^="sc-"]').forEach(el => {
-    el.addEventListener('input', () => {
-      const v = document.getElementById(el.id + '-v');
-      if (v) v.textContent = el.value;
-      SHATTER_LIVE_CFG = readShatterSliders(); // 拖动即时生效（动画师 2026-08-23）
-    });
-  });
-  const dirSel = document.getElementById('sc-dir');
-  if (dirSel) dirSel.addEventListener('change', () => { SHATTER_LIVE_CFG = readShatterSliders(); });
-  initBoardAreaPanel();
-  initPerfComparePanel();
-}
-/* 性能对比 A/B 开关（老板 2026-08-25：四步优化做成测试面板开关；新版默认=240ms 飞牌+即时消除，另两项默认关=原效果） */
-function refreshPerfCompareUI() {
-  const defOn = { fastFly: true, instantMatch: true }; // 新版默认开（另两项默认关）
-  for (const k of ['shardTransform', 'instantMatch', 'fastFly', 'lowDensity']) {
-    const on = PERF_COMPARE ? (defOn[k] ? PERF_COMPARE[k] !== false : !!PERF_COMPARE[k]) : !!defOn[k];
-    const sw = document.getElementById('sw-perf-' + k);
-    if (sw) sw.classList.toggle('on', on);
-  }
-}
-function togglePerfCompare(key) {
-  PERF_COMPARE = PERF_COMPARE || {};
-  const defOn = { fastFly: true, instantMatch: true }; // 新版默认开；另两项默认关
-  const cur = (key in PERF_COMPARE) ? PERF_COMPARE[key] : !!defOn[key];
-  PERF_COMPARE[key] = !cur;
-  refreshPerfCompareUI();
-}
-function resetPerfCompare() {
-  PERF_COMPARE = null;
-  refreshPerfCompareUI();
-  toast('已恢复新版默认：240ms 飞牌 / 即时消除 / 800·80 特效 / 弧线碎片');
-}
-function initPerfComparePanel() {
-  refreshPerfCompareUI();
-}
-function resetAllData() {
-  try {
-    const keys = [];
-    for (let i = localStorage.length - 1; i >= 0; i--) {
-      const k = localStorage.key(i);
-      if (k && k.indexOf('mj_') === 0) keys.push(k);
-    }
-    keys.forEach(k => localStorage.removeItem(k));
-  } catch (e) {}
-  try { localStorage.setItem('mj_data_version', DATA_VERSION); } catch (e) {}
-  CUSTOM_TEST = null;
-  updateMenuProgress();
-  const hint = document.getElementById('tp-reset-hint');
-  if (hint) hint.textContent = t('resetDone') + '（' + new Date().toLocaleTimeString() + '）';
-  toast(t('resetDone'));
-}
-function startCustomTest() {
-  const num = id => { const el = document.getElementById(id); return el ? parseFloat(el.value) : NaN; };
-  const cfg = {
-    layers: Math.max(1, Math.min(8, Math.round(num('tp-layers') || 1))),
-    grid: Math.max(2, Math.min(8, Math.round(num('tp-grid') || 3))),
-    faces: Math.max(1, Math.min(12, Math.round(num('tp-faces') || 3))),
-    density: Math.max(0.1, Math.min(1, num('tp-density') || 1)),
-    offset: Math.max(0, Math.min(20, Math.round(num('tp-offset') || 0))),
-    jitter: 0,
-    profile: { top: 1, bottom: 1, ramp: 1 },
-    difficulty: 0, teaching: true,
-  };
-  const shapeName = (document.getElementById('tp-shape') || {}).value || 'square';
-  if (shapeName === 'square') {
-    const g = cfg.grid;
-    cfg.shape = 'square3';
-    cfg.cellList = [];
-    for (let r = 0; r < g; r++) for (let c = 0; c < g; c++) cfg.cellList.push([r, c]);
-  } else {
-    cfg.shape = shapeName;
-  }
-  CUSTOM_TEST = cfg;
-  try { localStorage.setItem('mj_test_cfg', JSON.stringify(cfg)); } catch (e) {}
-  startLevel('normal', 0);
-}
-function startDefaultTest() {
-  CUSTOM_TEST = null;
-  try { localStorage.removeItem('mj_test_cfg'); } catch (e) {}
-  startLevel('normal', 1, TEST_LEVEL); // 修复 OBS-001：传 TEST_LEVEL 进入 3 张必过测试关（原写法进入 L1）
-}
-initTestPanel();
-/*#TEST_END*/
 
 function restartLevel() {
   if (!S) return;
@@ -7966,33 +7306,6 @@ function hideBannerAd() {
   document.body.classList.remove('ad-banner-on');
   if (typeof fitBoard === 'function') fitBoard(true); // 广告位恢复后重算牌面基线/缩放
 }
-/*#TEST_START*/
-/* ============ 测试面板：广告测试按钮（打正式包时整体剥离） ============ */
-function testAdRewarded() {
-  mockAd(t('adLoading'), () => toast('✅ 测试激励广告奖励已发放'), 'test');
-}
-function testAdInterstitial() {
-  const Ad = admobPlugin();
-  if (!Ad || !isNativeApp()) { toast('浏览器环境无法展示原生插屏广告'); return; }
-  if (!admobInited) { toast(t('adUnavailable')); return; }
-  if (!admobInterstitialReady) { toast('插屏广告加载中，请稍后重试'); prepareInterstitialAd(); return; }
-  admobInterstitialReady = false;
-  try {
-    Ad.showInterstitial().then(
-      () => track('ad_interstitial', { outcome: 'test_show' }),
-      () => track('ad_interstitial', { outcome: 'test_failed' })
-    );
-  } catch (e) { track('ad_interstitial', { outcome: 'test_error' }); }
-}
-function testAdBanner() {
-  if (!isNativeApp() || !admobPlugin()) { toast('浏览器环境无法展示原生横幅，请用真机测试'); return; }
-  if (!admobInited) { toast(t('adUnavailable')); return; }
-  if (admobBannerShown) { hideBannerAd(); toast('横幅已隐藏'); return; }
-  bannerTestPending = true;
-  showBannerAd();
-  toast('横幅加载中…');
-}
-/*#TEST_END*/
 
 function buildWinButtons() {
   const btns = [];
@@ -9003,35 +8316,6 @@ function debugBoot() {
   updateSoundBtn();
   applyLang();
   updateMenuProgress();
-  /*#TEST_START*/
-  if (h.includes('play')) {
-    const n = parseInt((h.match(/play(\d)/) || [])[1] || '1', 10);
-    startLevel('normal', n);
-  } else if (h.includes('daily')) {
-    startLevel('daily', 0);
-  } else if (h.includes('win')) {
-    startLevel('normal', 1);
-    setTimeout(() => {
-      S.tiles.forEach(t => { t.taken = true; });
-      renderBoard(); renderSlot();
-      S.over = true;
-      playWin();
-      showOverlay(t('winTitle'), t('winText', '1 分 12 秒', 18, 100), buildWinButtons());
-    }, 500);
-  } else if (h.includes('lose')) {
-    startLevel('normal', 1);
-    setTimeout(() => {
-      const pick = S.tiles.filter(t => !t.taken && !t.covered);
-      const seen = new Set(); const chosen = [];
-      for (const t of pick) { if (seen.has(t.face)) continue; seen.add(t.face); chosen.push(t); if (chosen.length >= S.slotLimit) break; }
-      chosen.forEach(t => { t.taken = true; S.slot.push(t); });
-      S.over = true;
-      renderBoard(); renderSlot();
-      playLose(); shakeStage();
-      showOverlay(t('loseTitle'), t('loseText'), buildLoseButtons());
-    }, 500);
-  }
-  /*#TEST_END*/
 }
 
 function buildLoseButtons() {
