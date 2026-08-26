@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Renyi Games — 个人游戏站，这里展示我独立开发的免费与测试游戏，以及上架海外与国内市场的轻量小作品。" />
-    <title>Renyi Games · 个人游戏站</title>
+    <meta name="description" content="Renyi Game — 个人游戏站，这里展示我独立开发的免费与测试游戏，以及上架海外与国内市场的轻量小作品。" />
+    <title>Renyi Game · 个人游戏站</title>
     <meta name="color-scheme" content="light" />
 
     <!-- Google tag (gtag.js) -->
@@ -1011,7 +1011,7 @@
         <div class="wrap topbar-in">
             <a class="brand" href="#top">
                 <span class="dot">R</span>
-                <span>Renyi Games<br><small>个人游戏站</small></span>
+                <span>Renyi Game<br><small>个人游戏站</small></span>
             </a>
             <nav class="nav" aria-label="主导航" id="mainNav">
                 <a class="on" href="#top">首页</a>
@@ -1163,7 +1163,7 @@
         <div class="wrap">
             <div class="footer-grid">
                 <div class="footer-brand">
-                    <div class="brand"><span class="dot">R</span><span>Renyi Games</span></div>
+                    <div class="brand"><span class="dot">R</span><span>Renyi Game</span></div>
                     <p>一枚独立开发者的个人游戏站。记录从想法到上架的过程，分享轻量、好玩、免费的小游戏。</p>
                 </div>
                 <div>
@@ -1186,7 +1186,7 @@
                 </div>
             </div>
             <div class="cp">
-                <span>© 2026 Renyi Games · 个人网站 · 免费游戏</span>
+                <span>© 2026 Renyi Game · 个人网站 · 免费游戏</span>
                 <span>友情提示：适龄游戏，理性娱乐</span>
             </div>
         </div>
@@ -1196,7 +1196,7 @@
         // ===== 游戏数据（占位，后续可替换为真实内容）=====
         const GAMES = [
             // 开发中 / 免费测试
-            { name: "TileBuddies · 测试版", desc: "三消叠牌，休闲解压、离线可玩，正在打磨关卡与动效。", cat: "dev", tags: ["休闲", "三消", "离线"], img: "./Games/TileBuddies/Web/Assets/Icons/icon_app_small.png", rating: 4.8, art: ["#ff9a7a", "#ffd9b8"], link: "./Games/TileBuddies/Web/index.html" },
+            { name: "TileBuddies · 测试版", desc: "三消叠牌，休闲解压、离线可玩，正在打磨关卡与动效。", cat: "dev", tags: ["休闲", "三消", "离线"], img: "./Games/TileBuddies/Web/public/icon_app_small.png", rating: 4.8, art: ["#ff9a7a", "#ffd9b8"], link: "./Games/TileBuddies/Web/index.html" },
         ];
 
         const BADGE = { dev: ["开发中", "#f0a05a"], oversea: ["海外上架", "#e08a4a"], cn: ["国内上架", "#e8924a"] };
@@ -1209,25 +1209,25 @@
             const imgUrl = g.img || "images/default.png";
 
             return `
-        <article class="card" data-cat="${g.cat}">
-            <div class="thumb">
-                <div class="bg" style="background:linear-gradient(135deg,${g.art[0]},${g.art[1]})"></div>
-                <div class="badge" style="background:${c}">${b}</div>
+            <article class="card" data-cat="${g.cat}">
+                <div class="thumb">
+                    <div class="bg" style="background:linear-gradient(135deg,${g.art[0]},${g.art[1]})"></div>
+                    <div class="badge" style="background:${c}">${b}</div>
 
-                <!-- 【修改点】：把原来的 span class="glyph" 删掉，换成下面的 img -->
-                <img src="${imgUrl}" alt="${g.name}" class="card-img">
+                    <!-- 【修改点】：把原来的 span class="glyph" 删掉，换成下面的 img -->
+                    <img src="${imgUrl}" alt="${g.name}" class="card-img">
 
-            </div>
-            <div class="card-body">
-                <h3>${g.name}</h3>
-                <div class="desc">${g.desc}</div>
-                <div class="tags">${tags}</div>
-                <div class="card-foot">
-                    <span class="rating">★ ${g.rating}<span>/5</span></span>
-                    <a href="${g.link}" class="play" target="_blank" rel="noopener noreferrer">立即试玩 &rarr;</a>
                 </div>
-            </div>
-        </article>`;
+                <div class="card-body">
+                    <h3>${g.name}</h3>
+                    <div class="desc">${g.desc}</div>
+                    <div class="tags">${tags}</div>
+                    <div class="card-foot">
+                        <span class="rating">★ ${g.rating}<span>/5</span></span>
+                        <a href="${g.link}" class="play" target="_blank" rel="noopener noreferrer">立即试玩 &rarr;</a>
+                    </div>
+                </div>
+            </article>`;
         }
 
         const grid = document.getElementById('grid');
@@ -1284,6 +1284,21 @@
             if (!mainNav.contains(e.target) && !menuToggle.contains(e.target)) closeMenu();
         });
     </script>
+
+    <!-- 网站页脚区域开始 -->
+    <footer style="margin-top: 50px; padding: 20px; text-align: center; border-top: 1px solid #eee; color: #666; font-size: 14px;">
+        <p>&copy; 2026 RenyiGame. All rights reserved.</p>
+        <p>
+            <!-- 这里是指向隐私政策的链接 -->
+            <a href="privacy.html" style="color: #666; text-decoration: none; margin: 0 10px;">隐私政策</a>
+
+            |
+            <!-- 这里是指向联系我们的链接 -->
+            <a href="contact.html" style="color: #666; text-decoration: none; margin: 0 10px;">联系我们</a>
+        </p>
+    </footer>
+    <!-- 网站页脚区域结束 -->
+
 
 </body>
 </html>
