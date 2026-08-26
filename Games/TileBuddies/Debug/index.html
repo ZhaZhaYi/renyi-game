@@ -3,10 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="color-scheme" content="light"> <!-- 2026-08-26：声明浅色，阻止浏览器/WebView 强制深色导致整体发暗（对齐 Chrome 效果） -->
 <title>叠叠乐 · Prototype</title>
 <style>
   * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-  html,body { height:100%; touch-action:manipulation; overscroll-behavior:none; overflow-x:hidden; } /* BUG-023：禁止横向滚动（固定舞台 540×960，棋盘不超视口） */
+  html,body { height:100%; touch-action:manipulation; overflow-x:hidden; } /* BUG-023：禁止横向滚动 */
+  :root, html { color-scheme: only light; forced-color-adjust:none; } /* 2026-08-26：only light 禁止浏览器/Edge 自动深色覆盖（对齐 Chrome） */
   body {
     font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
     background: url('Assets/Backgrounds/bg_menu.webp?v=2') center/cover no-repeat; /* 2026-08-25：背景图转 WebP，包体 -95% */
