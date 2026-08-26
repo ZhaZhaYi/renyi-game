@@ -1,619 +1,1289 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="Renyi Games — 个人游戏站，这里展示我独立开发的免费与测试游戏，以及上架海外与国内市场的轻量小作品。" />
-<title>Renyi Games · 个人游戏站</title>
-<meta name="color-scheme" content="light" />
-<style>
-  :root{
-    color-scheme:only light;
-    --bg:#fef7f0;
-    --panel:#ffffff;
-    --line:#f0e2d4;
-    --ink:#5b4a3d;
-    --ink-soft:#8a7460;
-    --muted:#a08a76;
-    --accent:#e07a3f;
-    --accent-strong:#e07a3f;
-    --accent-soft:#ffe9d6;
-    --accent-2:#f0a05a;
-    --radius:20px;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth;background:#fef7f0}
-  body{
-    font-family:"Hiragino Sans","PingFang SC","Microsoft YaHei",sans-serif;
-    background:var(--bg);color:var(--ink);line-height:1.7;
-    -webkit-font-smoothing:antialiased;
-  }
-  a{text-decoration:none;color:inherit}
-  .wrap{max-width:1160px;margin:0 auto;padding:0 24px}
-  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Renyi Games — 个人游戏站，这里展示我独立开发的免费与测试游戏，以及上架海外与国内市场的轻量小作品。" />
+    <title>Renyi Games · 个人游戏站</title>
+    <meta name="color-scheme" content="light" />
 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RYDPN1VWEM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
+        gtag('config', 'G-RYDPN1VWEM');
+    </script>
 
-  /* 防御：即使系统/浏览器处于深色偏好，也强制保持本站的浅色配色，与 Chrome 一致 */
-  @media (prefers-color-scheme: dark){
-    :root{color-scheme:only light}
-    html,body{background-color:#fef7f0}
-    body{color:#5b4a3d}
-  }
-
-  /* ===== Top bar ===== */
-  .topbar{
-    position:sticky;top:0;z-index:50;
-    background:rgba(254,247,240,.9);
-    -webkit-backdrop-filter:blur(12px);
-    backdrop-filter:blur(12px);
-    border-bottom:1px solid var(--line);
-  }
-  .topbar-in{display:flex;align-items:center;justify-content:space-between;height:62px;gap:20px}
-  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;color:var(--ink)}
-  .brand .dot{
-    width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#ffb37a,#ff8a5c);
-    display:grid;place-items:center;color:#fff;font-weight:900;font-size:16px;
-    box-shadow:0 3px 8px rgba(255,179,122,.5);
-  }
-  .brand small{font-size:11px;color:var(--muted);font-weight:600}
-  .nav{display:flex;gap:22px;font-size:14px;color:var(--muted)}
-  .nav a{transition:color .2s;padding:4px 0}
-  .nav a:hover,.nav a.on{color:var(--accent)}
-  .nav a.on{border-bottom:2px solid var(--accent)}
-  .actions{display:flex;align-items:center;gap:12px}
-  .btn{
-    font-family:inherit;font-weight:700;border:none;cursor:pointer;
-    border-radius:999px;padding:9px 18px;font-size:14px;transition:.2s;
-  }
-  .btn-orange{background:linear-gradient(135deg,#ffb37a,#ff8a5c);color:#fff;box-shadow:0 6px 14px rgba(255,138,92,.35)}
-  .btn-orange:hover{transform:translateY(-1px);box-shadow:0 8px 18px rgba(255,138,92,.45)}
-  .btn-ghost{background:transparent;color:var(--ink-soft);border:1px solid var(--line)}
-  .btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
-  .btn-white{background:#fff;color:var(--accent);box-shadow:0 4px 12px rgba(0,0,0,.08)}
-  .btn-white:hover{transform:translateY(-1px)}
-
-  /* ===== Hero ===== */
-  .hero{padding:64px 0 30px;text-align:center}
-  .eyebrow{
-    display:inline-flex;align-items:center;gap:8px;
-    font-size:13px;color:var(--accent);font-weight:600;
-    background:var(--accent-soft);border-radius:999px;padding:6px 16px;margin-bottom:18px;
-  }
-  .hero h1{font-size:46px;font-weight:800;line-height:1.2;letter-spacing:-.5px}
-  .hero h1 em{
-    font-style:normal;color:var(--accent);
-    background:linear-gradient(120deg,#ff8a5c,#e07a3f);
-    -webkit-background-clip:text;
-    background-clip:text;
-    -webkit-text-fill-color:transparent;
-    color:transparent;
-  }
-  .hero p{color:var(--muted);font-size:17px;max-width:600px;margin:14px auto 0}
-  .hero .cta-row{display:flex;gap:14px;justify-content:center;margin-top:28px}
-  .hero-stats{
-    display:flex;gap:44px;justify-content:center;margin-top:40px;flex-wrap:wrap;text-align:center;
-  }
-  .hstat{border-top:3px solid var(--accent-soft);padding-top:10px}
-  .hstat b{font-size:27px;color:var(--accent);display:block}
-  .hstat span{display:block;color:var(--muted);font-size:13px;margin-top:2px}
-
-  /* ===== Section base ===== */
-  section{padding:26px 0}
-  .sec-head{text-align:center;margin-bottom:6px}
-  .sec-head .kicker{font-size:12px;color:var(--accent);letter-spacing:2px;font-weight:700}
-  .sec-head h2{font-size:28px;font-weight:800;margin-top:6px}
-  .sec-head p{color:var(--muted);font-size:15px;margin-top:6px}
-
-  /* ===== Categories / tabs ===== */
-  .cats{display:flex;gap:10px;justify-content:center;margin:26px 0 22px;flex-wrap:wrap}
-  .cat{
-    cursor:pointer;user-select:none;display:flex;align-items:center;gap:8px;
-    padding:9px 16px;border-radius:999px;font-size:14px;font-weight:600;
-    color:var(--muted);background:#fff;border:1px solid var(--line);transition:.2s;
-  }
-  .cat:hover{color:var(--accent);border-color:#ffd9b8}
-  .cat.on{color:#fff;background:linear-gradient(135deg,#ffb37a,#ff8a5c);border-color:transparent;box-shadow:0 6px 14px rgba(255,138,92,.3)}
-  .cat .cnt{font-size:12px;font-weight:700;background:var(--accent-soft);color:var(--accent);padding:1px 8px;border-radius:999px}
-  .cat.on .cnt{background:rgba(255,255,255,.35);color:#fff}
-
-  /* ===== Game grid ===== */
-    .grid {
-        display: flex;
-        flex-wrap: wrap; /*运行卡片换行*/
-        gap: 20px;
-        justify-content: center; /* 核心修改：让卡片水平居中 */
-        max-width: 1060px;
-        margin: 0 auto; /* 让整个容器在页面居中 */
-    }
-    .card {
-        background: var(--panel);
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        overflow: hidden;
-        transition: transform .22s,box-shadow .22s,border-color .22s;
-        cursor: pointer;
-        /* --- 关键新增 --- */
-        width: 250px; /* 固定宽度，必须与上面的计算一致 */
-        flex-shrink: 0; /* 防止空间不足时卡片被挤压变形 */
-
-        background: var(--panel);
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        overflow: hidden;
-    }
-  .card:hover{transform:translateY(-5px);box-shadow:0 18px 34px rgba(224,122,63,.12);border-color:#ffcf9a}
-    .thumb {
-        height: 140px;
-        position: relative;
-        /* --- 修改开始 --- */
-        display: flex; /* 改用 flex */
-        align-items: center; /* 垂直居中 */
-        justify-content: center; /* 水平居中 */
-        overflow: hidden; /* 防止图片放大时溢出 */
-        /* --- 修改结束 --- */
-    }
-        /* 把原来的 .thumb .glyph { ... } 替换为下面这段 */
-        .thumb img {
-            width: 80px; /* 根据你的图标大小调整，比如 60px - 100px */
-            height: 80px; /* 保持宽高一致 */
-            object-fit: contain; /* 保持图片比例，不拉伸变形 */
-            z-index: 2; /* 确保图片在背景色块(gradient)的上面 */
-            transition: transform .25s; /* 添加过渡动画，配合下面的 hover 效果 */
+    <style>
+        :root {
+            color-scheme: only light;
+            --bg: #fef7f0;
+            --panel: #ffffff;
+            --line: #f0e2d4;
+            --ink: #5b4a3d;
+            --ink-soft: #8a7460;
+            --muted: #a08a76;
+            --accent: #e07a3f;
+            --accent-strong: #e07a3f;
+            --accent-soft: #ffe9d6;
+            --accent-2: #f0a05a;
+            --radius: 20px;
         }
-  .thumb .bg{position:absolute;inset:0}
-  .thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,rgba(255,255,255,.18))}
-  .thumb .glyph{font-size:50px;position:relative;filter:drop-shadow(0 8px 12px rgba(0,0,0,.18));transition:transform .25s}
-  .card:hover .thumb .glyph{transform:scale(1.12)}
-  .badge{
-    position:absolute;top:10px;left:10px;z-index:3;font-size:11px;font-weight:700;
-    padding:4px 10px;border-radius:999px;color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.12);
-  }
-  .card-body{padding:15px 16px 18px}
-  .card-body h3{font-size:16px;color:var(--ink);font-weight:700}
-  .card-body .desc{color:var(--muted);font-size:13px;margin-top:5px;min-height:38px}
-  .tags{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
-  .tag{font-size:11px;padding:2px 9px;border-radius:999px;background:var(--accent-soft);color:#c9763d}
-  .card-foot{display:flex;align-items:center;justify-content:space-between;margin-top:12px}
-  .rating{color:#e8a04f;font-size:13px;font-weight:700}
-  .rating span{color:var(--muted);font-weight:500;margin-left:2px}
-    .play {
-        font-size: 13px;
-        font-weight: 700;
-        color: var(--accent);
-        text-decoration: none; /* 【新增】去掉下划线 */
-        cursor: pointer; /* 【新增】确保鼠标放上去是手型 */
-        display: inline-block;
-    }
-  .card:hover .play{text-decoration:underline}/* 鼠标悬停时才显示下划线，提示可点击 */
-  .empty{text-align:center;padding:50px 0;color:var(--muted);display:none;grid-column:1/-1}
 
-  /* ===== Feature band ===== */
-  .features{margin:30px auto}
-  .feat-grid{
-    display:grid;grid-template-columns:repeat(4,1fr);gap:20px;
-    max-width:1000px;width:100%;margin:0 auto;
-  }
-  .feat{
-    background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:26px 24px;
-    display:flex;flex-direction:column;align-items:center;text-align:center;
-    transition:box-shadow .2s,border-color .2s;
-  }
-  .feat:hover{border-color:#ffcf9a;box-shadow:0 12px 24px rgba(224,122,63,.08)}
-  .feat .ico{
-    font-size:22px;margin-bottom:14px;width:48px;height:48px;border-radius:14px;
-    background:var(--accent-soft);color:var(--accent);
-    display:grid;place-items:center;
-  }
-  .feat .ico svg{width:23px;height:23px}
-  .feat h3{font-size:16px;color:var(--ink);font-weight:700}
-  .feat p{color:var(--muted);font-size:13px;margin-top:6px;flex:1}
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
 
-  /* ===== Dev log ===== */
-  .devlog{max-width:900px;margin:0 auto;position:relative;padding-top:10px}
-  .devlog::before{
-    content:"";position:absolute;left:112px;top:14px;bottom:14px;width:2px;
-    background:linear-gradient(180deg,#ffd9b8,#ffe9d6);
-  }
-  .devlog-item{
-    position:relative;display:grid;grid-template-columns:104px 1fr;gap:30px;
-    margin-bottom:18px;
-  }
-  .devlog-item:last-child{margin-bottom:0}
-  .devlog-item::before{
-    content:"";position:absolute;left:106px;top:24px;width:14px;height:14px;border-radius:50%;
-    background:#fff;border:3px solid var(--accent);box-shadow:0 0 0 4px #fff;z-index:1;
-  }
-  .dev-date{text-align:right;padding-top:16px}
-  .dev-date b{font-size:19px;color:var(--accent);font-weight:800;letter-spacing:.5px;display:block}
-  .dev-date span{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:2px;display:block;margin-top:2px}
-  .dev-body{
-    background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px 22px;
-    transition:border-color .2s,box-shadow .2s,transform .2s;
-  }
-  .dev-body:hover{border-color:#ffcf9a;box-shadow:0 12px 26px rgba(224,122,63,.1);transform:translateY(-2px)}
-  .dev-tag{
-    font-size:11px;font-weight:700;color:#c9763d;background:var(--accent-soft);
-    padding:3px 11px;border-radius:999px;display:inline-block;margin-bottom:9px;
-  }
-  .dev-body h3{font-size:16.5px;font-weight:800;color:var(--ink);line-height:1.45}
-  .dev-body p{font-size:13px;color:var(--muted);margin-top:7px;line-height:1.75}
+        html {
+            scroll-behavior: smooth;
+            background: #fef7f0
+        }
 
-  /* ===== Subscribe ===== */
-  .subscribe{
-    margin:40px 0;padding:34px;border-radius:24px;
-    background:linear-gradient(120deg,#ffe9d6,#fff2e6);border:1px solid #f6e0c8;
-    display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
-  }
-  .subscribe h3{font-size:22px;color:var(--ink)}
-  .subscribe p{color:var(--muted);margin-top:6px}
-  .sub-form{display:flex;gap:10px;flex-wrap:wrap}
-  .sub-form input{
-    font-family:inherit;font-size:14px;padding:11px 16px;border:1px solid #f0dcc0;border-radius:999px;
-    background:#fff;color:var(--ink);min-width:220px;
-  }
-  .sub-form input:focus{outline:none;border-color:var(--accent)}
-  .sub-note{font-size:12px;color:var(--muted);margin-top:8px;width:100%}
+        body {
+            font-family: "Hiragino Sans","PingFang SC","Microsoft YaHei",sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
 
-  /* ===== Footer ===== */
-  footer{border-top:1px solid var(--line);padding:36px 0 34px;color:var(--muted);font-size:13px}
-  .footer-grid{display:grid;grid-template-columns:2.2fr 1fr 1fr 1.2fr 1.4fr;gap:26px}
-  .footer-brand .brand{margin-bottom:12px}
-  .footer-brand p{max-width:280px}
-  footer h4{color:var(--ink);font-size:14px;margin-bottom:12px;font-weight:700}
-  footer ul{list-style:none;display:grid;gap:8px}
-  footer li a:hover{color:var(--accent)}
-  .cp{margin-top:28px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+        a {
+            text-decoration: none;
+            color: inherit
+        }
 
-  /* ===== Mobile menu (hamburger) ===== */
-  .menu-toggle{
-    display:none;
-    background:transparent;border:1px solid var(--line);border-radius:10px;
-    width:40px;height:40px;cursor:pointer;align-items:center;justify-content:center;flex-direction:column;gap:3px;
-  }
-  .menu-toggle span{display:block;width:18px;height:2px;background:var(--ink);border-radius:2px;transition:.2s}
-  .menu-toggle.open span:nth-child(1){transform:translateY(5px) rotate(45deg)}
-  .menu-toggle.open span:nth-child(2){opacity:0}
-  .menu-toggle.open span:nth-child(3){transform:translateY(-5px) rotate(-45deg)}
+        .wrap {
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 0 24px
+        }
 
-  /* mobile nav (slides down) */
-  @media(max-width:860px){
-    .nav{
-      position:absolute;top:62px;left:0;right:0;
-      background:var(--bg);border-bottom:1px solid var(--line);
-      flex-direction:column;gap:0;padding:8px 24px 16px;
-      display:none;
-    }
-    .nav.open{display:flex}
-    .nav a{padding:12px 0;border-bottom:1px solid var(--line);font-size:15px}
-    .nav a:last-child{border-bottom:none}
-    .nav a.on{border-bottom:none;border-left:3px solid var(--accent);padding-left:10px}
-  }
+        .sr {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            clip: rect(0 0 0 0)
+        }
 
-  @media(max-width:860px){
-    .menu-toggle{display:flex}
-    .topbar-in{height:60px;gap:12px}
-    .hero{padding:44px 0 24px}
-    .hero h1{font-size:30px;line-height:1.25}
-    .hero p{font-size:15px}
-    .hero-stats{gap:24px;margin-top:30px}
-    .hstat b{font-size:22px}
-    .feat-grid{grid-template-columns:repeat(2,1fr)}
-    .cat{font-size:12px;padding:8px 11px}
-    .sec-head h2{font-size:22px}
-    .subscribe{padding:26px 22px}
-    .subscribe h3{font-size:19px}
-    .footer-grid{grid-template-columns:1fr 1fr;gap:24px}
-    .cp{flex-direction:column;align-items:flex-start;gap:6px}
-  }
 
-  @media(max-width:640px){
-    .devlog::before{left:9px}
-    .devlog-item{grid-template-columns:1fr;gap:8px;padding-left:28px}
-    .devlog-item::before{left:2px;top:18px}
-    .dev-date{text-align:left;padding-top:0}
-    .dev-date b{font-size:15px;display:inline}
-    .dev-date span{display:inline;margin-left:8px}
-    .dev-body{padding:16px 16px 17px}
-  }
 
-  @media(max-width:980px){
-    .feat-grid{grid-template-columns:repeat(2,1fr)}
-  }
+        /* 防御：即使系统/浏览器处于深色偏好，也强制保持本站的浅色配色，与 Chrome 一致 */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                color-scheme: only light
+            }
 
-  @media(max-width:520px){
-    .actions .btn-ghost{display:none}
-    .brand small{display:none}
-    .actions .btn-orange{padding:8px 12px;font-size:13px}
-    .feat-grid{grid-template-columns:1fr}
-  }
-  @media(max-width:440px){
-    .grid{grid-template-columns:1fr}
-    .sub-form input{min-width:0;width:100%}
-    .cta-row .btn{flex:1;text-align:center}
-  }
-</style>
+            html, body {
+                background-color: #fef7f0
+            }
+
+            body {
+                color: #5b4a3d
+            }
+        }
+
+        /* ===== Top bar ===== */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(254,247,240,.9);
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .topbar-in {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 62px;
+            gap: 20px
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            font-size: 18px;
+            color: var(--ink)
+        }
+
+            .brand .dot {
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                background: linear-gradient(135deg,#ffb37a,#ff8a5c);
+                display: grid;
+                place-items: center;
+                color: #fff;
+                font-weight: 900;
+                font-size: 16px;
+                box-shadow: 0 3px 8px rgba(255,179,122,.5);
+            }
+
+            .brand small {
+                font-size: 11px;
+                color: var(--muted);
+                font-weight: 600
+            }
+
+        .nav {
+            display: flex;
+            gap: 22px;
+            font-size: 14px;
+            color: var(--muted)
+        }
+
+            .nav a {
+                transition: color .2s;
+                padding: 4px 0
+            }
+
+                .nav a:hover, .nav a.on {
+                    color: var(--accent)
+                }
+
+                .nav a.on {
+                    border-bottom: 2px solid var(--accent)
+                }
+
+        .actions {
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+
+        .btn {
+            font-family: inherit;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            border-radius: 999px;
+            padding: 9px 18px;
+            font-size: 14px;
+            transition: .2s;
+        }
+
+        .btn-orange {
+            background: linear-gradient(135deg,#ffb37a,#ff8a5c);
+            color: #fff;
+            box-shadow: 0 6px 14px rgba(255,138,92,.35)
+        }
+
+            .btn-orange:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 8px 18px rgba(255,138,92,.45)
+            }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--ink-soft);
+            border: 1px solid var(--line)
+        }
+
+            .btn-ghost:hover {
+                border-color: var(--accent);
+                color: var(--accent)
+            }
+
+        .btn-white {
+            background: #fff;
+            color: var(--accent);
+            box-shadow: 0 4px 12px rgba(0,0,0,.08)
+        }
+
+            .btn-white:hover {
+                transform: translateY(-1px)
+            }
+
+        /* ===== Hero ===== */
+        .hero {
+            padding: 64px 0 30px;
+            text-align: center
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--accent);
+            font-weight: 600;
+            background: var(--accent-soft);
+            border-radius: 999px;
+            padding: 6px 16px;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 {
+            font-size: 46px;
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: -.5px
+        }
+
+            .hero h1 em {
+                font-style: normal;
+                color: var(--accent);
+                background: linear-gradient(120deg,#ff8a5c,#e07a3f);
+                -webkit-background-clip: text;
+                background-clip: text;
+                -webkit-text-fill-color: transparent;
+                color: transparent;
+            }
+
+        .hero p {
+            color: var(--muted);
+            font-size: 17px;
+            max-width: 600px;
+            margin: 14px auto 0
+        }
+
+        .hero .cta-row {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            margin-top: 28px
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 44px;
+            justify-content: center;
+            margin-top: 40px;
+            flex-wrap: wrap;
+            text-align: center;
+        }
+
+        .hstat {
+            border-top: 3px solid var(--accent-soft);
+            padding-top: 10px
+        }
+
+            .hstat b {
+                font-size: 27px;
+                color: var(--accent);
+                display: block
+            }
+
+            .hstat span {
+                display: block;
+                color: var(--muted);
+                font-size: 13px;
+                margin-top: 2px
+            }
+
+        /* ===== Section base ===== */
+        section {
+            padding: 26px 0
+        }
+
+        .sec-head {
+            text-align: center;
+            margin-bottom: 6px
+        }
+
+            .sec-head .kicker {
+                font-size: 12px;
+                color: var(--accent);
+                letter-spacing: 2px;
+                font-weight: 700
+            }
+
+            .sec-head h2 {
+                font-size: 28px;
+                font-weight: 800;
+                margin-top: 6px
+            }
+
+            .sec-head p {
+                color: var(--muted);
+                font-size: 15px;
+                margin-top: 6px
+            }
+
+        /* ===== Categories / tabs ===== */
+        .cats {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 26px 0 22px;
+            flex-wrap: wrap
+        }
+
+        .cat {
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 16px;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--muted);
+            background: #fff;
+            border: 1px solid var(--line);
+            transition: .2s;
+        }
+
+            .cat:hover {
+                color: var(--accent);
+                border-color: #ffd9b8
+            }
+
+            .cat.on {
+                color: #fff;
+                background: linear-gradient(135deg,#ffb37a,#ff8a5c);
+                border-color: transparent;
+                box-shadow: 0 6px 14px rgba(255,138,92,.3)
+            }
+
+            .cat .cnt {
+                font-size: 12px;
+                font-weight: 700;
+                background: var(--accent-soft);
+                color: var(--accent);
+                padding: 1px 8px;
+                border-radius: 999px
+            }
+
+            .cat.on .cnt {
+                background: rgba(255,255,255,.35);
+                color: #fff
+            }
+
+        /* ===== Game grid ===== */
+        .grid {
+            display: flex;
+            flex-wrap: wrap; /*运行卡片换行*/
+            gap: 20px;
+            justify-content: center; /* 核心修改：让卡片水平居中 */
+            max-width: 1060px;
+            margin: 0 auto; /* 让整个容器在页面居中 */
+        }
+
+        .card {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: transform .22s,box-shadow .22s,border-color .22s;
+            cursor: pointer;
+            /* --- 关键新增 --- */
+            width: 250px; /* 固定宽度，必须与上面的计算一致 */
+            flex-shrink: 0; /* 防止空间不足时卡片被挤压变形 */
+
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+            .card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 18px 34px rgba(224,122,63,.12);
+                border-color: #ffcf9a
+            }
+
+        .thumb {
+            height: 140px;
+            position: relative;
+            /* --- 修改开始 --- */
+            display: flex; /* 改用 flex */
+            align-items: center; /* 垂直居中 */
+            justify-content: center; /* 水平居中 */
+            overflow: hidden; /* 防止图片放大时溢出 */
+            /* --- 修改结束 --- */
+        }
+            /* 把原来的 .thumb .glyph { ... } 替换为下面这段 */
+            .thumb img {
+                width: 80px; /* 根据你的图标大小调整，比如 60px - 100px */
+                height: 80px; /* 保持宽高一致 */
+                object-fit: contain; /* 保持图片比例，不拉伸变形 */
+                z-index: 2; /* 确保图片在背景色块(gradient)的上面 */
+                transition: transform .25s; /* 添加过渡动画，配合下面的 hover 效果 */
+            }
+
+            .thumb .bg {
+                position: absolute;
+                inset: 0
+            }
+
+            .thumb::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(180deg,transparent 60%,rgba(255,255,255,.18))
+            }
+
+            .thumb .glyph {
+                font-size: 50px;
+                position: relative;
+                filter: drop-shadow(0 8px 12px rgba(0,0,0,.18));
+                transition: transform .25s
+            }
+
+        .card:hover .thumb .glyph {
+            transform: scale(1.12)
+        }
+
+        .badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 3;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 999px;
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,.12);
+        }
+
+        .card-body {
+            padding: 15px 16px 18px
+        }
+
+            .card-body h3 {
+                font-size: 16px;
+                color: var(--ink);
+                font-weight: 700
+            }
+
+            .card-body .desc {
+                color: var(--muted);
+                font-size: 13px;
+                margin-top: 5px;
+                min-height: 38px
+            }
+
+        .tags {
+            display: flex;
+            gap: 6px;
+            margin-top: 10px;
+            flex-wrap: wrap
+        }
+
+        .tag {
+            font-size: 11px;
+            padding: 2px 9px;
+            border-radius: 999px;
+            background: var(--accent-soft);
+            color: #c9763d
+        }
+
+        .card-foot {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 12px
+        }
+
+        .rating {
+            color: #e8a04f;
+            font-size: 13px;
+            font-weight: 700
+        }
+
+            .rating span {
+                color: var(--muted);
+                font-weight: 500;
+                margin-left: 2px
+            }
+
+        .play {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none; /* 【新增】去掉下划线 */
+            cursor: pointer; /* 【新增】确保鼠标放上去是手型 */
+            display: inline-block;
+        }
+
+        .card:hover .play {
+            text-decoration: underline
+        }
+        /* 鼠标悬停时才显示下划线，提示可点击 */
+        .empty {
+            text-align: center;
+            padding: 50px 0;
+            color: var(--muted);
+            display: none;
+            grid-column: 1/-1
+        }
+
+        /* ===== Feature band ===== */
+        .features {
+            margin: 30px auto
+        }
+
+        .feat-grid {
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            gap: 20px;
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .feat {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 26px 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: box-shadow .2s,border-color .2s;
+        }
+
+            .feat:hover {
+                border-color: #ffcf9a;
+                box-shadow: 0 12px 24px rgba(224,122,63,.08)
+            }
+
+            .feat .ico {
+                font-size: 22px;
+                margin-bottom: 14px;
+                width: 48px;
+                height: 48px;
+                border-radius: 14px;
+                background: var(--accent-soft);
+                color: var(--accent);
+                display: grid;
+                place-items: center;
+            }
+
+                .feat .ico svg {
+                    width: 23px;
+                    height: 23px
+                }
+
+            .feat h3 {
+                font-size: 16px;
+                color: var(--ink);
+                font-weight: 700
+            }
+
+            .feat p {
+                color: var(--muted);
+                font-size: 13px;
+                margin-top: 6px;
+                flex: 1
+            }
+
+        /* ===== Dev log ===== */
+        .devlog {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            padding-top: 10px
+        }
+
+            .devlog::before {
+                content: "";
+                position: absolute;
+                left: 112px;
+                top: 14px;
+                bottom: 14px;
+                width: 2px;
+                background: linear-gradient(180deg,#ffd9b8,#ffe9d6);
+            }
+
+        .devlog-item {
+            position: relative;
+            display: grid;
+            grid-template-columns: 104px 1fr;
+            gap: 30px;
+            margin-bottom: 18px;
+        }
+
+            .devlog-item:last-child {
+                margin-bottom: 0
+            }
+
+            .devlog-item::before {
+                content: "";
+                position: absolute;
+                left: 106px;
+                top: 24px;
+                width: 14px;
+                height: 14px;
+                border-radius: 50%;
+                background: #fff;
+                border: 3px solid var(--accent);
+                box-shadow: 0 0 0 4px #fff;
+                z-index: 1;
+            }
+
+        .dev-date {
+            text-align: right;
+            padding-top: 16px
+        }
+
+            .dev-date b {
+                font-size: 19px;
+                color: var(--accent);
+                font-weight: 800;
+                letter-spacing: .5px;
+                display: block
+            }
+
+            .dev-date span {
+                font-size: 11px;
+                color: var(--muted);
+                font-weight: 700;
+                letter-spacing: 2px;
+                display: block;
+                margin-top: 2px
+            }
+
+        .dev-body {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            padding: 20px 22px;
+            transition: border-color .2s,box-shadow .2s,transform .2s;
+        }
+
+            .dev-body:hover {
+                border-color: #ffcf9a;
+                box-shadow: 0 12px 26px rgba(224,122,63,.1);
+                transform: translateY(-2px)
+            }
+
+        .dev-tag {
+            font-size: 11px;
+            font-weight: 700;
+            color: #c9763d;
+            background: var(--accent-soft);
+            padding: 3px 11px;
+            border-radius: 999px;
+            display: inline-block;
+            margin-bottom: 9px;
+        }
+
+        .dev-body h3 {
+            font-size: 16.5px;
+            font-weight: 800;
+            color: var(--ink);
+            line-height: 1.45
+        }
+
+        .dev-body p {
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 7px;
+            line-height: 1.75
+        }
+
+        /* ===== Subscribe ===== */
+        .subscribe {
+            margin: 40px 0;
+            padding: 34px;
+            border-radius: 24px;
+            background: linear-gradient(120deg,#ffe9d6,#fff2e6);
+            border: 1px solid #f6e0c8;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+            .subscribe h3 {
+                font-size: 22px;
+                color: var(--ink)
+            }
+
+            .subscribe p {
+                color: var(--muted);
+                margin-top: 6px
+            }
+
+        .sub-form {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap
+        }
+
+            .sub-form input {
+                font-family: inherit;
+                font-size: 14px;
+                padding: 11px 16px;
+                border: 1px solid #f0dcc0;
+                border-radius: 999px;
+                background: #fff;
+                color: var(--ink);
+                min-width: 220px;
+            }
+
+                .sub-form input:focus {
+                    outline: none;
+                    border-color: var(--accent)
+                }
+
+        .sub-note {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 8px;
+            width: 100%
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            border-top: 1px solid var(--line);
+            padding: 36px 0 34px;
+            color: var(--muted);
+            font-size: 13px
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2.2fr 1fr 1fr 1.2fr 1.4fr;
+            gap: 26px
+        }
+
+        .footer-brand .brand {
+            margin-bottom: 12px
+        }
+
+        .footer-brand p {
+            max-width: 280px
+        }
+
+        footer h4 {
+            color: var(--ink);
+            font-size: 14px;
+            margin-bottom: 12px;
+            font-weight: 700
+        }
+
+        footer ul {
+            list-style: none;
+            display: grid;
+            gap: 8px
+        }
+
+        footer li a:hover {
+            color: var(--accent)
+        }
+
+        .cp {
+            margin-top: 28px;
+            padding-top: 18px;
+            border-top: 1px solid var(--line);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px
+        }
+
+        /* ===== Mobile menu (hamburger) ===== */
+        .menu-toggle {
+            display: none;
+            background: transparent;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+            .menu-toggle span {
+                display: block;
+                width: 18px;
+                height: 2px;
+                background: var(--ink);
+                border-radius: 2px;
+                transition: .2s
+            }
+
+            .menu-toggle.open span:nth-child(1) {
+                transform: translateY(5px) rotate(45deg)
+            }
+
+            .menu-toggle.open span:nth-child(2) {
+                opacity: 0
+            }
+
+            .menu-toggle.open span:nth-child(3) {
+                transform: translateY(-5px) rotate(-45deg)
+            }
+
+        /* mobile nav (slides down) */
+        @media(max-width:860px) {
+            .nav {
+                position: absolute;
+                top: 62px;
+                left: 0;
+                right: 0;
+                background: var(--bg);
+                border-bottom: 1px solid var(--line);
+                flex-direction: column;
+                gap: 0;
+                padding: 8px 24px 16px;
+                display: none;
+            }
+
+                .nav.open {
+                    display: flex
+                }
+
+                .nav a {
+                    padding: 12px 0;
+                    border-bottom: 1px solid var(--line);
+                    font-size: 15px
+                }
+
+                    .nav a:last-child {
+                        border-bottom: none
+                    }
+
+                    .nav a.on {
+                        border-bottom: none;
+                        border-left: 3px solid var(--accent);
+                        padding-left: 10px
+                    }
+        }
+
+        @media(max-width:860px) {
+            .menu-toggle {
+                display: flex
+            }
+
+            .topbar-in {
+                height: 60px;
+                gap: 12px
+            }
+
+            .hero {
+                padding: 44px 0 24px
+            }
+
+                .hero h1 {
+                    font-size: 30px;
+                    line-height: 1.25
+                }
+
+                .hero p {
+                    font-size: 15px
+                }
+
+            .hero-stats {
+                gap: 24px;
+                margin-top: 30px
+            }
+
+            .hstat b {
+                font-size: 22px
+            }
+
+            .feat-grid {
+                grid-template-columns: repeat(2,1fr)
+            }
+
+            .cat {
+                font-size: 12px;
+                padding: 8px 11px
+            }
+
+            .sec-head h2 {
+                font-size: 22px
+            }
+
+            .subscribe {
+                padding: 26px 22px
+            }
+
+                .subscribe h3 {
+                    font-size: 19px
+                }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 24px
+            }
+
+            .cp {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px
+            }
+        }
+
+        @media(max-width:640px) {
+            .devlog::before {
+                left: 9px
+            }
+
+            .devlog-item {
+                grid-template-columns: 1fr;
+                gap: 8px;
+                padding-left: 28px
+            }
+
+                .devlog-item::before {
+                    left: 2px;
+                    top: 18px
+                }
+
+            .dev-date {
+                text-align: left;
+                padding-top: 0
+            }
+
+                .dev-date b {
+                    font-size: 15px;
+                    display: inline
+                }
+
+                .dev-date span {
+                    display: inline;
+                    margin-left: 8px
+                }
+
+            .dev-body {
+                padding: 16px 16px 17px
+            }
+        }
+
+        @media(max-width:980px) {
+            .feat-grid {
+                grid-template-columns: repeat(2,1fr)
+            }
+        }
+
+        @media(max-width:520px) {
+            .actions .btn-ghost {
+                display: none
+            }
+
+            .brand small {
+                display: none
+            }
+
+            .actions .btn-orange {
+                padding: 8px 12px;
+                font-size: 13px
+            }
+
+            .feat-grid {
+                grid-template-columns: 1fr
+            }
+        }
+
+        @media(max-width:440px) {
+            .grid {
+                grid-template-columns: 1fr
+            }
+
+            .sub-form input {
+                min-width: 0;
+                width: 100%
+            }
+
+            .cta-row .btn {
+                flex: 1;
+                text-align: center
+            }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- Top bar -->
-  <header class="topbar">
-    <div class="wrap topbar-in">
-      <a class="brand" href="#top">
-        <span class="dot">R</span>
-        <span>Renyi Games<br><small>个人游戏站</small></span>
-      </a>
-      <nav class="nav" aria-label="主导航" id="mainNav">
-        <a class="on" href="#top">首页</a>
-        <a href="#games">游戏库</a>
-        <a href="#devlog">开发日志</a>
-        <a href="#feature">为什么值得玩</a>
-        <a href="#subscribe">订阅</a>
-        <a href="#about">关于</a>
-      </nav>
-      <div class="actions">
-        <button class="btn btn-ghost">收藏</button>
-        <a class="btn btn-orange" href="#games">立即开始游戏</a>
-        <button class="menu-toggle" id="menuToggle" aria-label="打开菜单" aria-expanded="false" aria-controls="mainNav">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <main id="top">
-    <!-- Hero -->
-    <section class="wrap hero">
-      <span class="eyebrow">🍡 正在开发 · 新作预约</span>
-      <h1><em>一个人</em> 的游戏<br>一群人的 <em>快乐</em></h1>
-      <p>这里展示我独立开发的免费与测试游戏，以及上架海外市场的轻量小作品。轻松解压、离线可玩，随时随地来一盘。</p>
-      <div class="cta-row">
-        <a class="btn btn-orange" href="#games">立即开始游戏</a>
-        <a class="btn btn-ghost" href="#games">看全部作品</a>
-      </div>
-      <div class="hero-stats" id="heroStats">
-        <div class="hstat"><b data-k="all">0</b><span>款游戏</span></div>
-        <div class="hstat"><b data-k="dev">0</b><span>免费测试中</span></div>
-        <div class="hstat"><b data-k="oversea">0</b><span>海外已上架</span></div>
-        <div class="hstat"><b>100%</b><span>免费畅玩</span></div>
-      </div>
-    </section>
-
-    <!-- Games -->
-    <section class="wrap" id="games">
-      <div class="sec-head">
-        <span class="kicker">GAMES</span>
-        <h2>游戏库</h2>
-        <p>我的全部作品 · 按状态分类，点击切换查看</p>
-      </div>
-
-      <div class="cats" id="cats" role="tablist">
-        <div class="cat on" data-f="all" role="tab" tabindex="0">全部 <span class="cnt" data-c="all"></span></div>
-        <div class="cat" data-f="dev" role="tab" tabindex="0">🛠 开发中 <span class="cnt" data-c="dev"></span></div>
-        <div class="cat" data-f="oversea" role="tab" tabindex="0">🌍 已上架 <span class="cnt" data-c="oversea"></span></div>
-      </div>
-
-      <div class="grid" id="grid"></div>
-      <div class="empty" id="empty">该分类暂无作品，敬请期待后续上新。</div>
-    </section>
-
-    <!-- Dev log -->
-    <section class="wrap" id="devlog">
-      <div class="sec-head">
-        <span class="kicker">DEVLOG</span>
-        <h2>TileBuddies 开发日志</h2>
-        <p>TileBuddies 的重要开发节点，持续更新</p>
-      </div>
-      <div class="devlog">
-        <article class="devlog-item">
-          <div class="dev-date"><b>08.26</b><span>2026</span></div>
-          <div class="dev-body">
-              <!-- <span class="dev-tag">里程碑</span> -->
-              <span class="dev-tag">网页版本嵌入</span>
-              <h3>开发日志上线并嵌入网页</h3>
-              <p>官网开发日志正式上线，接入游戏网页版。</p>
-          </div>
-        </article>
-        <article class="devlog-item">
-          <div class="dev-date"><b>08.22</b><span>2026</span></div>
-          <div class="dev-body">
-            <span class="dev-tag">性能适配</span>
-            <h3>性能与多端适配优化</h3>
-            <p>低端机型稳定 60fps，完成横竖屏与主流分辨率适配，离线模式全流程校验通过，保证通勤路上也能随时来一盘。</p>
-          </div>
-        </article>
-        <article class="devlog-item">
-          <div class="dev-date"><b>08.17</b><span>2026</span></div>
-          <div class="dev-body">
-            <span class="dev-tag">首轮内测</span>
-            <h3>首轮免费内测开启</h3>
-            <p>首批玩家进入测试，重点验证难度曲线与离线体验；根据反馈修复了卡牌遮挡、误触判定和翻牌动画卡顿等问题。</p>
-          </div>
-        </article>
-        <article class="devlog-item">
-          <div class="dev-date"><b>08.11</b><span>2026</span></div>
-          <div class="dev-body">
-            <span class="dev-tag">动效表现</span>
-            <h3>核心动效全部落地</h3>
-            <p>选牌高亮、飞牌入槽、消除反馈与通关动画全部接入，配合连击与计分反馈，消除节奏和手感明显提升。</p>
-          </div>
-        </article>
-        <article class="devlog-item">
-          <div class="dev-date"><b>08.03</b><span>2026</span></div>
-          <div class="dev-body">
-            <span class="dev-tag">关卡系统</span>
-            <h3>关卡生成工具完成（Tools/generate_levels.js）</h3>
-            <p>关卡从手工配置升级为参数化批量生成，首批模板覆盖多档难度，并通过平衡校验脚本验证可解性，方便后续持续扩充内容。</p>
-          </div>
-        </article>
-        <article class="devlog-item">
-          <div class="dev-date"><b>07.28</b><span>2026</span></div>
-          <div class="dev-body">
-            <span class="dev-tag">玩法设计</span>
-            <h3>玩法定稿：三消叠牌主题</h3>
-            <p>正式确认「三消叠牌」的核心循环，确定轻量、解压、离线可玩的产品定位，并冻结首版玩法规则与手感目标。</p>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- Feature band -->
-    <section class="wrap features" id="feature">
-      <div class="sec-head">
-        <span class="kicker">WHY</span>
-        <h2>这些小游戏，值得一玩</h2>
-      </div>
-      <div class="feat-grid">
-        <div class="feat"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></div><h3>轻量有趣</h3><p>几分钟一局，随时开玩，不需要复杂学习成本。</p></div>
-        <div class="feat"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8.82a15 15 0 0 1 4.17-2.65"/><path d="M10.66 5.05A15 15 0 0 1 22 8.82"/><path d="M16.85 11.25a10 10 0 0 1 2.22 1.68"/><path d="M5 13a10 10 0 0 1 5.24-2.76"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><path d="M12 20h.01"/><path d="M2 2l20 20"/></svg></div><h3>离线可玩</h3><p>没有网络也能玩，填满碎片时间，通勤路上不无聊。</p></div>
-        <div class="feat"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/></svg></div><h3>免费体验</h3><p>开发中的测试版免费开放，遇到喜欢的游戏随时反馈。</p></div>
-        <div class="feat"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></div><h3>多端支持</h3><p>覆盖网页、iOS、安卓，不管在哪都能接着玩。</p></div>
-      </div>
-    </section>
-
-    <!-- Subscribe -->
-    <section class="wrap" id="subscribe">
-      <div class="subscribe">
-        <div>
-          <h3>想第一时间玩到新游戏？</h3>
-          <p>新作上线、内测资格，第一时间通知你。</p>
-        </div>
-        <form class="sub-form" onsubmit="return false;">
-          <label class="sr" for="email">邮箱</label>
-          <input id="email" type="email" placeholder="输入你的邮箱" required />
-          <button class="btn btn-orange" type="submit">订阅更新</button>
-          <span class="sub-note">我们不会发送垃圾邮件，仅通知新作与内测。</span>
-        </form>
-      </div>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer id="about">
-    <div class="wrap">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <div class="brand"><span class="dot">R</span><span>Renyi Games</span></div>
-          <p>一枚独立开发者的个人游戏站。记录从想法到上架的过程，分享轻量、好玩、免费的小游戏。</p>
-        </div>
-        <div>
-          <h4>游戏</h4>
-          <ul><li><a href="#games">全部作品</a></li><li><a href="#games">开发中</a></li><li><a href="#games">海外上架</a></li><li><a href="#games">国内上架</a></li></ul>
-        </div>
-        <div>
-          <h4>关于</h4>
-          <ul><li><a href="#about">开发者简介</a></li><li><a href="#devlog">开发日志</a></li><li><a href="#contact">合作交流</a></li></ul>
-        </div>
-        <div>
-          <h4>支持</h4>
-          <ul><li><a href="#subscribe">订阅更新</a></li><li><a href="#subscribe">问题反馈</a></li><li><a href="#contact">商务合作</a></li></ul>
-        </div>
-        <div id="contact">
-          <h4>联系方式</h4>
-          <ul>
-            <li><a href="hi.renyigame.com">hi.renyigame.com</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="cp">
-        <span>© 2026 Renyi Games · 个人网站 · 免费游戏</span>
-        <span>友情提示：适龄游戏，理性娱乐</span>
-      </div>
-    </div>
-  </footer>
-
-<script>
-  // ===== 游戏数据（占位，后续可替换为真实内容）=====
-const GAMES = [
-    // 开发中 / 免费测试
-    { name: "TileBuddies · 测试版", desc: "三消叠牌，休闲解压、离线可玩，正在打磨关卡与动效。", cat: "dev", tags: ["休闲", "三消", "离线"], img: "./Games/TileBuddies/Debug/Assets/Icons/icon_app_small.png", rating: 4.8, art: ["#ff9a7a", "#ffd9b8"], link: "./Games/TileBuddies/Debug/index.html" },
-    ];
-
-  const BADGE = { dev:["开发中","#f0a05a"], oversea:["海外上架","#e08a4a"], cn:["国内上架","#e8924a"] };
-
-    function card(g) {
-        const [b, c] = BADGE[g.cat];
-        const tags = g.tags.map(t => `<span class="tag">${t}</span>`).join("");
-
-        // 如果没有图片，给一个默认占位图，防止破图
-        const imgUrl = g.img || "images/default.png";
-
-        return `
-    <article class="card" data-cat="${g.cat}">
-        <div class="thumb">
-            <div class="bg" style="background:linear-gradient(135deg,${g.art[0]},${g.art[1]})"></div>
-            <div class="badge" style="background:${c}">${b}</div>
-            
-            <!-- 【修改点】：把原来的 span class="glyph" 删掉，换成下面的 img -->
-            <img src="${imgUrl}" alt="${g.name}" class="card-img">
-            
-        </div>
-        <div class="card-body">
-            <h3>${g.name}</h3>
-            <div class="desc">${g.desc}</div>
-            <div class="tags">${tags}</div>
-            <div class="card-foot">
-                <span class="rating">★ ${g.rating}<span>/5</span></span>
-                <a href="${g.link}" class="play" target="_blank" rel="noopener noreferrer">立即试玩 &rarr;</a>
+    <!-- Top bar -->
+    <header class="topbar">
+        <div class="wrap topbar-in">
+            <a class="brand" href="#top">
+                <span class="dot">R</span>
+                <span>Renyi Games<br><small>个人游戏站</small></span>
+            </a>
+            <nav class="nav" aria-label="主导航" id="mainNav">
+                <a class="on" href="#top">首页</a>
+                <a href="#games">游戏库</a>
+                <a href="#devlog">开发日志</a>
+                <a href="#feature">为什么值得玩</a>
+                <a href="#subscribe">订阅</a>
+                <a href="#about">关于</a>
+            </nav>
+            <div class="actions">
+                <button class="btn btn-ghost">收藏</button>
+                <a class="btn btn-orange" href="#games">立即开始游戏</a>
+                <button class="menu-toggle" id="menuToggle" aria-label="打开菜单" aria-expanded="false" aria-controls="mainNav">
+                    <span></span><span></span><span></span>
+                </button>
             </div>
         </div>
-    </article>`;
-    }
+    </header>
 
-  const grid = document.getElementById('grid');
-  const empty = document.getElementById('empty');
-  const cats = document.getElementById('cats');
-  const heading = document.querySelector('#games .sec-head h2');
+    <main id="top">
+        <!-- Hero -->
+        <section class="wrap hero">
+            <span class="eyebrow">🍡 正在开发 · 新作预约</span>
+            <h1><em>一个人</em> 的游戏<br>一群人的 <em>快乐</em></h1>
+            <p>这里展示我独立开发的免费与测试游戏，以及上架海外市场的轻量小作品。轻松解压、离线可玩，随时随地来一盘。</p>
+            <div class="cta-row">
+                <a class="btn btn-orange" href="#games">立即开始游戏</a>
+                <a class="btn btn-ghost" href="#games">看全部作品</a>
+            </div>
+            <div class="hero-stats" id="heroStats">
+                <div class="hstat"><b data-k="all">0</b><span>款游戏</span></div>
+                <div class="hstat"><b data-k="dev">0</b><span>免费测试中</span></div>
+                <div class="hstat"><b data-k="oversea">0</b><span>海外已上架</span></div>
+                <div class="hstat"><b>100%</b><span>免费畅玩</span></div>
+            </div>
+        </section>
 
-  function render(filter){
-    const list = GAMES.filter(g => filter === 'all' || g.cat === filter);
-    grid.innerHTML = list.map(card).join('');
-    empty.style.display = list.length ? 'none' : 'block';
-  }
+        <!-- Games -->
+        <section class="wrap" id="games">
+            <div class="sec-head">
+                <span class="kicker">GAMES</span>
+                <h2>游戏库</h2>
+                <p>我的全部作品 · 按状态分类，点击切换查看</p>
+            </div>
 
-  // 计数（同步 hero 统计与分类角标）
-  const counts = { all:GAMES.length, dev:0, oversea:0, cn:0 };
-  GAMES.forEach(g => { counts[g.cat]++; });
-  document.querySelectorAll('[data-c]').forEach(el => { el.textContent = counts[el.dataset.c]; });
-  document.querySelectorAll('#heroStats [data-k]').forEach(el => { el.textContent = counts[el.dataset.k]; });
+            <div class="cats" id="cats" role="tablist">
+                <div class="cat on" data-f="all" role="tab" tabindex="0">全部 <span class="cnt" data-c="all"></span></div>
+                <div class="cat" data-f="dev" role="tab" tabindex="0">🛠 开发中 <span class="cnt" data-c="dev"></span></div>
+                <div class="cat" data-f="oversea" role="tab" tabindex="0">🌍 已上架 <span class="cnt" data-c="oversea"></span></div>
+            </div>
 
-  // 切换分类
-  function selectTab(el){
-    cats.querySelectorAll('.cat').forEach(x => x.classList.remove('on'));
-    el.classList.add('on');
-    render(el.dataset.f);
-    heading.textContent = el.dataset.f === 'all' ? '游戏库' : el.textContent.trim();
-  }
-  cats.addEventListener('click', e => {
-    const el = e.target.closest('.cat'); if(!el) return;
-    selectTab(el);
-  });
-  cats.addEventListener('keydown', e => {
-    if(e.key === 'Enter' || e.key === ' '){
-      const el = e.target.closest('.cat'); if(!el) return;
-      e.preventDefault(); selectTab(el);
-    }
-  });
+            <div class="grid" id="grid"></div>
+            <div class="empty" id="empty">该分类暂无作品，敬请期待后续上新。</div>
+        </section>
 
-  render('all');
+        <!-- Dev log -->
+        <section class="wrap" id="devlog">
+            <div class="sec-head">
+                <span class="kicker">DEVLOG</span>
+                <h2>TileBuddies 开发日志</h2>
+                <p>TileBuddies 的重要开发节点，持续更新</p>
+            </div>
+            <div class="devlog">
+                <article class="devlog-item">
+                    <div class="dev-date"><b>08.26</b><span>2026</span></div>
+                    <div class="dev-body">
+                        <!-- <span class="dev-tag">里程碑</span> -->
+                        <span class="dev-tag">网页版本嵌入</span>
+                        <h3>开发日志上线并嵌入网页</h3>
+                        <p>官网开发日志正式上线，接入游戏网页版。</p>
+                    </div>
+                </article>
+                <article class="devlog-item">
+                    <div class="dev-date"><b>08.22</b><span>2026</span></div>
+                    <div class="dev-body">
+                        <span class="dev-tag">性能适配</span>
+                        <h3>性能与多端适配优化</h3>
+                        <p>低端机型稳定 60fps，完成横竖屏与主流分辨率适配，离线模式全流程校验通过，保证通勤路上也能随时来一盘。</p>
+                    </div>
+                </article>
+                <article class="devlog-item">
+                    <div class="dev-date"><b>08.17</b><span>2026</span></div>
+                    <div class="dev-body">
+                        <span class="dev-tag">首轮内测</span>
+                        <h3>首轮免费内测开启</h3>
+                        <p>首批玩家进入测试，重点验证难度曲线与离线体验；根据反馈修复了卡牌遮挡、误触判定和翻牌动画卡顿等问题。</p>
+                    </div>
+                </article>
+                <article class="devlog-item">
+                    <div class="dev-date"><b>08.11</b><span>2026</span></div>
+                    <div class="dev-body">
+                        <span class="dev-tag">动效表现</span>
+                        <h3>核心动效全部落地</h3>
+                        <p>选牌高亮、飞牌入槽、消除反馈与通关动画全部接入，配合连击与计分反馈，消除节奏和手感明显提升。</p>
+                    </div>
+                </article>
+                <article class="devlog-item">
+                    <div class="dev-date"><b>08.03</b><span>2026</span></div>
+                    <div class="dev-body">
+                        <span class="dev-tag">关卡系统</span>
+                        <h3>关卡生成工具完成（Tools/generate_levels.js）</h3>
+                        <p>关卡从手工配置升级为参数化批量生成，首批模板覆盖多档难度，并通过平衡校验脚本验证可解性，方便后续持续扩充内容。</p>
+                    </div>
+                </article>
+                <article class="devlog-item">
+                    <div class="dev-date"><b>07.28</b><span>2026</span></div>
+                    <div class="dev-body">
+                        <span class="dev-tag">玩法设计</span>
+                        <h3>玩法定稿：三消叠牌主题</h3>
+                        <p>正式确认「三消叠牌」的核心循环，确定轻量、解压、离线可玩的产品定位，并冻结首版玩法规则与手感目标。</p>
+                    </div>
+                </article>
+            </div>
+        </section>
 
-  // ===== Mobile hamburger menu =====
-  const menuToggle = document.getElementById('menuToggle');
-  const mainNav = document.getElementById('mainNav');
-  function closeMenu(){ menuToggle.classList.remove('open'); mainNav.classList.remove('open'); menuToggle.setAttribute('aria-expanded','false'); }
-  menuToggle.addEventListener('click', () => {
-    const isOpen = mainNav.classList.toggle('open');
-    menuToggle.classList.toggle('open', isOpen);
-    menuToggle.setAttribute('aria-expanded', String(isOpen));
-  });
-  // close menu when a nav link is tapped
-  mainNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
-  // close menu on outside click
-  document.addEventListener('click', e => {
-    if(!mainNav.classList.contains('open')) return;
-    if(!mainNav.contains(e.target) && !menuToggle.contains(e.target)) closeMenu();
-  });
-</script>
+        <!-- Feature band -->
+        <section class="wrap features" id="feature">
+            <div class="sec-head">
+                <span class="kicker">WHY</span>
+                <h2>这些小游戏，值得一玩</h2>
+            </div>
+            <div class="feat-grid">
+                <div class="feat"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z" /></svg></div><h3>轻量有趣</h3><p>几分钟一局，随时开玩，不需要复杂学习成本。</p></div>
+                <div class="feat"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8.82a15 15 0 0 1 4.17-2.65" /><path d="M10.66 5.05A15 15 0 0 1 22 8.82" /><path d="M16.85 11.25a10 10 0 0 1 2.22 1.68" /><path d="M5 13a10 10 0 0 1 5.24-2.76" /><path d="M8.53 16.11a6 6 0 0 1 6.95 0" /><path d="M12 20h.01" /><path d="M2 2l20 20" /></svg></div><h3>离线可玩</h3><p>没有网络也能玩，填满碎片时间，通勤路上不无聊。</p></div>
+                <div class="feat"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1" /><path d="M12 8v13" /><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7" /><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5" /></svg></div><h3>免费体验</h3><p>开发中的测试版免费开放，遇到喜欢的游戏随时反馈。</p></div>
+                <div class="feat"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2" /><path d="M11 18h2" /></svg></div><h3>多端支持</h3><p>覆盖网页、iOS、安卓，不管在哪都能接着玩。</p></div>
+            </div>
+        </section>
+
+        <!-- Subscribe -->
+        <section class="wrap" id="subscribe">
+            <div class="subscribe">
+                <div>
+                    <h3>想第一时间玩到新游戏？</h3>
+                    <p>新作上线、内测资格，第一时间通知你。</p>
+                </div>
+                <form class="sub-form" onsubmit="return false;">
+                    <label class="sr" for="email">邮箱</label>
+                    <input id="email" type="email" placeholder="输入你的邮箱" required />
+                    <button class="btn btn-orange" type="submit">订阅更新</button>
+                    <span class="sub-note">我们不会发送垃圾邮件，仅通知新作与内测。</span>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="about">
+        <div class="wrap">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="brand"><span class="dot">R</span><span>Renyi Games</span></div>
+                    <p>一枚独立开发者的个人游戏站。记录从想法到上架的过程，分享轻量、好玩、免费的小游戏。</p>
+                </div>
+                <div>
+                    <h4>游戏</h4>
+                    <ul><li><a href="#games">全部作品</a></li><li><a href="#games">开发中</a></li><li><a href="#games">海外上架</a></li><li><a href="#games">国内上架</a></li></ul>
+                </div>
+                <div>
+                    <h4>关于</h4>
+                    <ul><li><a href="#about">开发者简介</a></li><li><a href="#devlog">开发日志</a></li><li><a href="#contact">合作交流</a></li></ul>
+                </div>
+                <div>
+                    <h4>支持</h4>
+                    <ul><li><a href="#subscribe">订阅更新</a></li><li><a href="#subscribe">问题反馈</a></li><li><a href="#contact">商务合作</a></li></ul>
+                </div>
+                <div id="contact">
+                    <h4>联系方式</h4>
+                    <ul>
+                        <li><a href="hi.renyigame.com">hi.renyigame.com</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="cp">
+                <span>© 2026 Renyi Games · 个人网站 · 免费游戏</span>
+                <span>友情提示：适龄游戏，理性娱乐</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ===== 游戏数据（占位，后续可替换为真实内容）=====
+        const GAMES = [
+            // 开发中 / 免费测试
+            { name: "TileBuddies · 测试版", desc: "三消叠牌，休闲解压、离线可玩，正在打磨关卡与动效。", cat: "dev", tags: ["休闲", "三消", "离线"], img: "./Games/TileBuddies/Debug/Assets/Icons/icon_app_small.png", rating: 4.8, art: ["#ff9a7a", "#ffd9b8"], link: "./Games/TileBuddies/Debug/index.html" },
+        ];
+
+        const BADGE = { dev: ["开发中", "#f0a05a"], oversea: ["海外上架", "#e08a4a"], cn: ["国内上架", "#e8924a"] };
+
+        function card(g) {
+            const [b, c] = BADGE[g.cat];
+            const tags = g.tags.map(t => `<span class="tag">${t}</span>`).join("");
+
+            // 如果没有图片，给一个默认占位图，防止破图
+            const imgUrl = g.img || "images/default.png";
+
+            return `
+        <article class="card" data-cat="${g.cat}">
+            <div class="thumb">
+                <div class="bg" style="background:linear-gradient(135deg,${g.art[0]},${g.art[1]})"></div>
+                <div class="badge" style="background:${c}">${b}</div>
+
+                <!-- 【修改点】：把原来的 span class="glyph" 删掉，换成下面的 img -->
+                <img src="${imgUrl}" alt="${g.name}" class="card-img">
+
+            </div>
+            <div class="card-body">
+                <h3>${g.name}</h3>
+                <div class="desc">${g.desc}</div>
+                <div class="tags">${tags}</div>
+                <div class="card-foot">
+                    <span class="rating">★ ${g.rating}<span>/5</span></span>
+                    <a href="${g.link}" class="play" target="_blank" rel="noopener noreferrer">立即试玩 &rarr;</a>
+                </div>
+            </div>
+        </article>`;
+        }
+
+        const grid = document.getElementById('grid');
+        const empty = document.getElementById('empty');
+        const cats = document.getElementById('cats');
+        const heading = document.querySelector('#games .sec-head h2');
+
+        function render(filter) {
+            const list = GAMES.filter(g => filter === 'all' || g.cat === filter);
+            grid.innerHTML = list.map(card).join('');
+            empty.style.display = list.length ? 'none' : 'block';
+        }
+
+        // 计数（同步 hero 统计与分类角标）
+        const counts = { all: GAMES.length, dev: 0, oversea: 0, cn: 0 };
+        GAMES.forEach(g => { counts[g.cat]++; });
+        document.querySelectorAll('[data-c]').forEach(el => { el.textContent = counts[el.dataset.c]; });
+        document.querySelectorAll('#heroStats [data-k]').forEach(el => { el.textContent = counts[el.dataset.k]; });
+
+        // 切换分类
+        function selectTab(el) {
+            cats.querySelectorAll('.cat').forEach(x => x.classList.remove('on'));
+            el.classList.add('on');
+            render(el.dataset.f);
+            heading.textContent = el.dataset.f === 'all' ? '游戏库' : el.textContent.trim();
+        }
+        cats.addEventListener('click', e => {
+            const el = e.target.closest('.cat'); if (!el) return;
+            selectTab(el);
+        });
+        cats.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                const el = e.target.closest('.cat'); if (!el) return;
+                e.preventDefault(); selectTab(el);
+            }
+        });
+
+        render('all');
+
+        // ===== Mobile hamburger menu =====
+        const menuToggle = document.getElementById('menuToggle');
+        const mainNav = document.getElementById('mainNav');
+        function closeMenu() { menuToggle.classList.remove('open'); mainNav.classList.remove('open'); menuToggle.setAttribute('aria-expanded', 'false'); }
+        menuToggle.addEventListener('click', () => {
+            const isOpen = mainNav.classList.toggle('open');
+            menuToggle.classList.toggle('open', isOpen);
+            menuToggle.setAttribute('aria-expanded', String(isOpen));
+        });
+        // close menu when a nav link is tapped
+        mainNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+        // close menu on outside click
+        document.addEventListener('click', e => {
+            if (!mainNav.classList.contains('open')) return;
+            if (!mainNav.contains(e.target) && !menuToggle.contains(e.target)) closeMenu();
+        });
+    </script>
 
 </body>
 </html>
