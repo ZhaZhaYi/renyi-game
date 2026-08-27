@@ -608,109 +608,287 @@
                 flex: 1
             }
 
-        /* ===== Dev log ===== */
-        .devlog {
-            max-width: 900px;
-            margin: 0 auto;
+        /* ===== Dev log（横向滑动卡片） ===== */
+        .devlog-slider {
             position: relative;
-            padding-top: 10px
+            max-width: 1112px;
+            margin: 8px auto 0;
+            padding: 14px 16px 18px;
+            overflow: hidden;
         }
 
-            .devlog::before {
-                content: "";
-                position: absolute;
-                left: 112px;
-                top: 14px;
-                bottom: 14px;
-                width: 2px;
-                background: linear-gradient(180deg,#ffd9b8,#ffe9d6);
-            }
+        .devlog-track {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            transition: transform .45s cubic-bezier(.22,.61,.36,1);
+        }
 
-        .devlog-item {
+        /* 顶部时间轴 */
+        .devlog-timeline {
             position: relative;
-            display: grid;
-            grid-template-columns: 104px 1fr;
-            gap: 30px;
-            margin-bottom: 18px;
+            max-width: 1112px;
+            margin: 16px auto 0;
+            padding: 0 16px;
         }
 
-            .devlog-item:last-child {
-                margin-bottom: 0
-            }
-
-            .devlog-item::before {
-                content: "";
-                position: absolute;
-                left: 106px;
-                top: 24px;
-                width: 14px;
-                height: 14px;
-                border-radius: 50%;
-                background: #fff;
-                border: 3px solid var(--accent);
-                box-shadow: 0 0 0 4px #fff;
-                z-index: 1;
-            }
-
-        .dev-date {
-            text-align: right;
-            padding-top: 16px
+        .devlog-tl-line {
+            position: absolute;
+            top: 7px;
+            left: 16px;
+            right: 16px;
+            height: 2px;
+            border-radius: 2px;
+            background: linear-gradient(90deg,#ffd9b8,#ffe9d6);
         }
 
-            .dev-date b {
-                font-size: 19px;
-                color: var(--accent);
-                font-weight: 800;
-                letter-spacing: .5px;
-                display: block
-            }
+        .devlog-tl-cursor {
+            position: absolute;
+            top: -7px;
+            width: 0;
+            height: 0;
+            border-left: 7px solid transparent;
+            border-right: 7px solid transparent;
+            border-top: 8px solid var(--accent);
+            transform: translateX(-50%);
+            transition: left .45s cubic-bezier(.22,.61,.36,1);
+            pointer-events: none;
+            z-index: 0;
+        }
 
-            .dev-date span {
-                font-size: 11px;
-                color: var(--muted);
-                font-weight: 700;
-                letter-spacing: 2px;
-                display: block;
-                margin-top: 2px
-            }
+        .devlog-tl-items {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            z-index: 1;
+        }
 
-        .dev-body {
+        .devlog-tl-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 7px;
+            cursor: pointer;
+            padding-top: 3px;
+        }
+
+        .devlog-tl-item .tl-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #fff;
+            border: 2px solid var(--line);
+            box-sizing: border-box;
+            transition: background .25s, border-color .25s, box-shadow .25s;
+        }
+
+        .devlog-tl-item.on .tl-dot {
+            background: linear-gradient(135deg,#ffb37a,#ff8a5c);
+            border-color: transparent;
+            box-shadow: 0 0 0 4px var(--accent-soft);
+            animation: devlogPulse 2.2s ease-in-out infinite;
+        }
+
+        @keyframes devlogPulse {
+            0%, 100% {
+                box-shadow: 0 0 0 4px rgba(224,122,63,.16), 0 0 0 0 rgba(224,122,63,.4);
+            }
+            50% {
+                box-shadow: 0 0 0 4px rgba(224,122,63,.22), 0 0 0 10px rgba(224,122,63,0);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .devlog-tl-item.on .tl-dot {
+                animation: none;
+            }
+        }
+
+        .devlog-tl-item .tl-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--muted);
+            transition: color .25s;
+        }
+
+        .devlog-tl-item.on .tl-label {
+            color: var(--accent);
+        }
+
+        .devlog-card {
+            position: relative;
+            flex: 0 0 calc((100% - 64px) / 5);
+            min-width: 0;
             background: #fff;
             border: 1px solid var(--line);
             border-radius: 18px;
-            padding: 20px 22px;
-            transition: border-color .2s,box-shadow .2s,transform .2s;
+            padding: 18px 17px 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform .2s, box-shadow .2s, border-color .2s;
         }
 
-            .dev-body:hover {
-                border-color: #ffcf9a;
-                box-shadow: 0 12px 26px rgba(224,122,63,.1);
-                transform: translateY(-2px)
-            }
+        .devlog-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg,#ffb37a,#ff8a5c);
+            opacity: .85;
+        }
 
-        .dev-tag {
+        .devlog-card:hover {
+            transform: translateY(-4px);
+            border-color: #ffcf9a;
+            box-shadow: 0 16px 32px rgba(224,122,63,.14);
+        }
+
+        .devlog-card.active {
+            transform: translateY(-6px) scale(1.04);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(224,122,63,.15), 0 10px 24px rgba(224,122,63,.10);
+            z-index: 2;
+        }
+
+        .devlog-card.active:hover {
+            transform: translateY(-8px) scale(1.04);
+        }
+
+        .devlog-card .num {
+            position: absolute;
+            top: 8px;
+            right: 14px;
+            font-size: 46px;
+            font-weight: 900;
+            line-height: 1;
+            color: rgba(224,122,63,.10);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .devlog-card .date,
+        .devlog-card .tag,
+        .devlog-card h3,
+        .devlog-card p {
+            position: relative;
+            z-index: 1;
+        }
+
+        .devlog-card .date {
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--accent);
+            letter-spacing: .5px;
+            margin-top: 10px;
+        }
+
+        .devlog-card .tag {
+            display: inline-block;
+            align-self: flex-start;
             font-size: 11px;
             font-weight: 700;
             color: #c9763d;
             background: var(--accent-soft);
-            padding: 3px 11px;
+            padding: 3px 10px;
             border-radius: 999px;
-            display: inline-block;
-            margin-bottom: 9px;
+            margin-top: 10px;
         }
 
-        .dev-body h3 {
-            font-size: 16.5px;
+        .devlog-card h3 {
+            font-size: 15px;
             font-weight: 800;
             color: var(--ink);
-            line-height: 1.45
+            line-height: 1.45;
+            margin-top: 8px;
         }
 
-        .dev-body p {
-            font-size: 13px;
+        .devlog-card p {
+            font-size: 12.5px;
             color: var(--muted);
-            margin-top: 7px;
-            line-height: 1.75
+            line-height: 1.6;
+            margin-top: 6px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .devlog-card.active p {
+            -webkit-line-clamp: unset;
+            display: block;
+            overflow: visible;
+        }
+
+        .devlog-nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            margin-top: 16px;
+        }
+
+        .devlog-arrow {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid var(--line);
+            background: #fff;
+            color: var(--ink-soft);
+            font-size: 19px;
+            line-height: 1;
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            font-family: inherit;
+            transition: border-color .2s, color .2s, transform .2s, box-shadow .2s;
+        }
+
+        .devlog-arrow:hover:not(:disabled) {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: scale(1.1);
+            box-shadow: 0 6px 14px rgba(224,122,63,.16);
+        }
+
+        .devlog-arrow:disabled {
+            opacity: .35;
+            cursor: default;
+        }
+
+        .devlog-dots {
+            display: flex;
+            gap: 7px;
+        }
+
+        .devlog-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            border: none;
+            background: var(--accent-soft);
+            cursor: pointer;
+            padding: 0;
+            transition: width .25s, background .25s;
+        }
+
+        .devlog-dot.on {
+            width: 20px;
+            background: var(--accent);
+        }
+
+        @media(max-width:1024px) {
+            .devlog-card {
+                flex-basis: calc((100% - 32px) / 3);
+            }
+        }
+
+        @media(max-width:640px) {
+            .devlog-card {
+                flex-basis: 100%;
+            }
         }
 
         /* ===== Subscribe ===== */
@@ -1229,49 +1407,22 @@
 
             .footer-grid {
                 grid-template-columns: 1fr 1fr;
-                gap: 24px
+                gap: 22px 24px
+            }
+
+            .footer-brand {
+                grid-column: 1 / -1;
             }
 
             .cp {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 6px
-            }
-        }
-
-        @media(max-width:640px) {
-            .devlog::before {
-                left: 9px
-            }
-
-            .devlog-item {
-                grid-template-columns: 1fr;
-                gap: 8px;
-                padding-left: 28px
-            }
-
-                .devlog-item::before {
-                    left: 2px;
-                    top: 18px
-                }
-
-            .dev-date {
                 text-align: left;
-                padding-top: 0
+                gap: 8px
             }
 
-                .dev-date b {
-                    font-size: 15px;
-                    display: inline
-                }
-
-                .dev-date span {
-                    display: inline;
-                    margin-left: 8px
-                }
-
-            .dev-body {
-                padding: 16px 16px 17px
+            .cp > span:last-child {
+                align-self: flex-end;
             }
         }
 
@@ -1316,11 +1467,12 @@
                 flex-wrap: nowrap;
                 justify-content: flex-start;
                 gap: 8px;
-                margin: 20px 0 18px;
-                padding: 2px 2px 8px;
+                margin: 20px -24px 18px;
+                padding: 8px 24px 14px;
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
                 scroll-snap-type: x proximity;
+                scroll-padding: 0 24px;
                 scrollbar-width: none;
             }
 
@@ -1344,7 +1496,7 @@
 
         /* ===== About / 开发者简介 ===== */
         .about {
-            padding: 50px 0 60px;
+            padding: 50px 24px 60px;
         }
 
         .about-card {
@@ -1607,7 +1759,7 @@
                 <div class="cat on" data-f="all" role="tab" tabindex="0"><span class="ico">✦</span>全部<span class="cnt" data-c="all"></span></div>
                 <div class="cat" data-f="dev" role="tab" tabindex="0"><span class="ico">🛠</span>研发中<span class="cnt" data-c="dev"></span></div>
                 <div class="cat" data-f="oversea" role="tab" tabindex="0"><span class="ico">🌍</span>海外<span class="cnt" data-c="oversea"></span></div>
-                <div class="cat" data-f="cn" role="tab" tabindex="0"><span class="ico">🏠</span>国内<span class="cnt" data-c="cn"></span></div>
+                <div class="cat" data-f="cn" role="tab" tabindex="0"><span class="ico">🇨🇳</span>国内<span class="cnt" data-c="cn"></span></div>
             </div>
 
             <div class="grid" id="grid"></div>
@@ -1618,59 +1770,71 @@
         <section class="wrap" id="devlog">
             <div class="sec-head">
                 <span class="kicker">DEVLOG</span>
-                <h2>TileBuddies 开发日志</h2>
-                <p>TileBuddies 的重要开发节点，持续更新</p>
+                <h2>研发日志</h2>
+                <p>当前研发项目的重要节点，持续更新</p>
             </div>
-            <div class="devlog">
-                <article class="devlog-item">
-                    <div class="dev-date"><b>08.26</b><span>2026</span></div>
-                    <div class="dev-body">
-                        <!-- <span class="dev-tag">里程碑</span> -->
-                        <span class="dev-tag">网页版本嵌入</span>
-                        <h3>开发日志上线并嵌入网页</h3>
-                        <p>官网开发日志正式上线，接入游戏网页版。</p>
-                    </div>
-                </article>
-                <article class="devlog-item">
-                    <div class="dev-date"><b>08.22</b><span>2026</span></div>
-                    <div class="dev-body">
-                        <span class="dev-tag">性能适配</span>
+            <div class="devlog-timeline">
+                <div class="devlog-tl-line"></div>
+                <div class="devlog-tl-cursor" id="devlogTlCursor"></div>
+                <div class="devlog-tl-items">
+                    <div class="devlog-tl-item on" data-idx="0"><span class="tl-dot"></span><span class="tl-label">08.26</span></div>
+                    <div class="devlog-tl-item" data-idx="1"><span class="tl-dot"></span><span class="tl-label">08.22</span></div>
+                    <div class="devlog-tl-item" data-idx="2"><span class="tl-dot"></span><span class="tl-label">08.17</span></div>
+                    <div class="devlog-tl-item" data-idx="3"><span class="tl-dot"></span><span class="tl-label">08.11</span></div>
+                    <div class="devlog-tl-item" data-idx="4"><span class="tl-dot"></span><span class="tl-label">08.03</span></div>
+                    <div class="devlog-tl-item" data-idx="5"><span class="tl-dot"></span><span class="tl-label">07.28</span></div>
+                </div>
+            </div>
+            <div class="devlog-slider" id="devlogSlider">
+                <div class="devlog-track" id="devlogTrack">
+                    <article class="devlog-card">
+                        <span class="num">01</span>
+                        <span class="date">08.26 · 2026</span>
+                        <span class="tag">网页版本嵌入</span>
+                        <h3>研发日志上线并嵌入网页</h3>
+                        <p>官网研发日志正式上线，接入游戏网页版。</p>
+                    </article>
+                    <article class="devlog-card">
+                        <span class="num">02</span>
+                        <span class="date">08.22 · 2026</span>
+                        <span class="tag">性能适配</span>
                         <h3>性能与多端适配优化</h3>
                         <p>低端机型稳定 60fps，完成横竖屏与主流分辨率适配，离线模式全流程校验通过，保证通勤路上也能随时来一盘。</p>
-                    </div>
-                </article>
-                <article class="devlog-item">
-                    <div class="dev-date"><b>08.17</b><span>2026</span></div>
-                    <div class="dev-body">
-                        <span class="dev-tag">首轮内测</span>
+                    </article>
+                    <article class="devlog-card">
+                        <span class="num">03</span>
+                        <span class="date">08.17 · 2026</span>
+                        <span class="tag">首轮内测</span>
                         <h3>首轮免费内测开启</h3>
                         <p>首批玩家进入测试，重点验证难度曲线与离线体验；根据反馈修复了卡牌遮挡、误触判定和翻牌动画卡顿等问题。</p>
-                    </div>
-                </article>
-                <article class="devlog-item">
-                    <div class="dev-date"><b>08.11</b><span>2026</span></div>
-                    <div class="dev-body">
-                        <span class="dev-tag">动效表现</span>
+                    </article>
+                    <article class="devlog-card">
+                        <span class="num">04</span>
+                        <span class="date">08.11 · 2026</span>
+                        <span class="tag">动效表现</span>
                         <h3>核心动效全部落地</h3>
                         <p>选牌高亮、飞牌入槽、消除反馈与通关动画全部接入，配合连击与计分反馈，消除节奏和手感明显提升。</p>
-                    </div>
-                </article>
-                <article class="devlog-item">
-                    <div class="dev-date"><b>08.03</b><span>2026</span></div>
-                    <div class="dev-body">
-                        <span class="dev-tag">关卡系统</span>
+                    </article>
+                    <article class="devlog-card">
+                        <span class="num">05</span>
+                        <span class="date">08.03 · 2026</span>
+                        <span class="tag">关卡系统</span>
                         <h3>关卡生成工具完成（Tools/generate_levels.js）</h3>
                         <p>关卡从手工配置升级为参数化批量生成，首批模板覆盖多档难度，并通过平衡校验脚本验证可解性，方便后续持续扩充内容。</p>
-                    </div>
-                </article>
-                <article class="devlog-item">
-                    <div class="dev-date"><b>07.28</b><span>2026</span></div>
-                    <div class="dev-body">
-                        <span class="dev-tag">玩法设计</span>
+                    </article>
+                    <article class="devlog-card">
+                        <span class="num">06</span>
+                        <span class="date">07.28 · 2026</span>
+                        <span class="tag">玩法设计</span>
                         <h3>玩法定稿：三消叠牌主题</h3>
                         <p>正式确认「三消叠牌」的核心循环，确定轻量、解压、离线可玩的产品定位，并冻结首版玩法规则与手感目标。</p>
-                    </div>
-                </article>
+                    </article>
+                </div>
+            </div>
+            <div class="devlog-nav">
+                <button type="button" class="devlog-arrow" id="devlogPrev" aria-label="上一条">‹</button>
+                <div class="devlog-dots" id="devlogDots"></div>
+                <button type="button" class="devlog-arrow" id="devlogNext" aria-label="下一条">›</button>
             </div>
         </section>
 
@@ -1787,7 +1951,7 @@
                 </div>
                 <div>
                     <h4>关于</h4>
-                    <ul><li><a href="#about">开发者简介</a></li><li><a href="#devlog">开发日志</a></li><li><a href="contact.html">合作交流</a></li></ul>
+                    <ul><li><a href="#about">开发者简介</a></li><li><a href="#devlog">研发日志</a></li><li><a href="contact.html">合作交流</a></li></ul>
                 </div>
                 <div>
                     <h4>支持</h4>
@@ -1873,6 +2037,14 @@
             render(el.dataset.f);
             const titleMap = { all: '游戏库', dev: '研发中', oversea: '海外上架', cn: '国内上架' };
             heading.textContent = titleMap[el.dataset.f] || '游戏库';
+
+            // 保证选中的按钮完整显示在滑动区域内（移动端滚动到中间）
+            const catsBox = cats.getBoundingClientRect();
+            const elBox = el.getBoundingClientRect();
+            if (cats.scrollWidth > cats.clientWidth) {
+                const target = cats.scrollLeft + (elBox.left - catsBox.left) - (catsBox.width - elBox.width) / 2;
+                cats.scrollTo({ left: Math.max(0, Math.min(target, cats.scrollWidth - cats.clientWidth)), behavior: 'smooth' });
+            }
         }
         cats.addEventListener('click', e => {
             const el = e.target.closest('.cat'); if (!el) return;
@@ -2047,6 +2219,124 @@
                     btn.innerText = originalBtnText;
                 }
             });
+        }
+
+        // ===== 研发日志横滑 =====
+        const devlogTrack = document.getElementById('devlogTrack');
+        const devlogPrev = document.getElementById('devlogPrev');
+        const devlogNext = document.getElementById('devlogNext');
+        const devlogDots = document.getElementById('devlogDots');
+        const devlogSlider = document.getElementById('devlogSlider');
+        const devlogTimeline = document.querySelector('.devlog-timeline');
+        const devlogTlCursor = document.getElementById('devlogTlCursor');
+        let devlogPage = 0;
+        let devlogActive = 0;
+
+        function devlogPerView() {
+            if (window.innerWidth <= 640) return 1;
+            if (window.innerWidth <= 1024) return 3;
+            return 5;
+        }
+
+        function devlogUpdateCards() {
+            if (!devlogTrack) return;
+            Array.prototype.forEach.call(devlogTrack.children, function (card, i) {
+                card.classList.toggle('active', i === devlogActive);
+            });
+        }
+
+        function devlogUpdateTimeline() {
+            const items = document.querySelectorAll('.devlog-tl-item');
+            items.forEach(function (it, i) { it.classList.toggle('on', i === devlogActive); });
+            if (devlogTlCursor && devlogTimeline && items[devlogActive]) {
+                const rect = items[devlogActive].getBoundingClientRect();
+                const base = devlogTimeline.getBoundingClientRect();
+                devlogTlCursor.style.left = Math.round(rect.left - base.left + rect.width / 2) + 'px';
+            }
+        }
+
+        function devlogRender(activeOverride) {
+            if (!devlogTrack || !devlogTrack.children.length) return;
+            const cards = devlogTrack.children.length;
+            const pv = devlogPerView();
+            const pages = Math.max(1, Math.ceil(cards / pv));
+            devlogPage = Math.min(devlogPage, pages - 1);
+            devlogActive = (typeof activeOverride === 'number')
+                ? Math.min(Math.max(0, activeOverride), cards - 1)
+                : Math.min(devlogPage * pv, cards - 1);
+            const cardW = devlogTrack.children[0].offsetWidth;
+            const gap = parseFloat(getComputedStyle(devlogTrack).columnGap) || 16;
+            devlogTrack.style.transform = 'translateX(' + (-devlogPage * (cardW + gap) * pv) + 'px)';
+            if (devlogPrev) devlogPrev.disabled = devlogPage === 0;
+            if (devlogNext) devlogNext.disabled = devlogPage >= pages - 1;
+            if (devlogDots) {
+                devlogDots.innerHTML = '';
+                for (let i = 0; i < pages; i++) {
+                    const d = document.createElement('button');
+                    d.type = 'button';
+                    d.className = 'devlog-dot' + (i === devlogPage ? ' on' : '');
+                    d.setAttribute('aria-label', '第' + (i + 1) + '页');
+                    (function (idx) {
+                        d.addEventListener('click', function () { devlogPage = idx; devlogRender(); });
+                    })(i);
+                    devlogDots.appendChild(d);
+                }
+            }
+            devlogUpdateCards();
+            devlogUpdateTimeline();
+        }
+
+        if (devlogTrack && devlogPrev && devlogNext) {
+            devlogPrev.addEventListener('click', function () {
+                if (devlogPage > 0) { devlogPage--; devlogRender(); }
+            });
+            devlogNext.addEventListener('click', function () {
+                const pv = devlogPerView();
+                const pages = Math.max(1, Math.ceil(devlogTrack.children.length / pv));
+                if (devlogPage < pages - 1) { devlogPage++; devlogRender(); }
+            });
+
+            // 点击卡片：选中并放大，时间轴指针跟随
+            Array.prototype.forEach.call(devlogTrack.children, function (card, idx) {
+                card.addEventListener('click', function () {
+                    devlogActive = idx;
+                    devlogUpdateCards();
+                    devlogUpdateTimeline();
+                });
+            });
+
+            // 点击时间轴节点：跳转到对应卡片并选中
+            document.querySelectorAll('.devlog-tl-item').forEach(function (item) {
+                item.addEventListener('click', function () {
+                    const idx = parseInt(item.dataset.idx, 10);
+                    const pv = devlogPerView();
+                    devlogPage = Math.floor(idx / pv);
+                    devlogRender(idx);
+                });
+            });
+
+            // 触摸/鼠标横向滑动翻页
+            let devlogTouchX = null;
+            if (devlogSlider) {
+                devlogSlider.addEventListener('pointerdown', function (e) { devlogTouchX = e.clientX; });
+                devlogSlider.addEventListener('pointerup', function (e) {
+                    if (devlogTouchX === null) return;
+                    const dx = e.clientX - devlogTouchX;
+                    if (Math.abs(dx) > 40) {
+                        if (dx < 0 && !devlogNext.disabled) devlogNext.click();
+                        if (dx > 0 && !devlogPrev.disabled) devlogPrev.click();
+                    }
+                    devlogTouchX = null;
+                });
+            }
+
+            let devlogResizeTimer = null;
+            window.addEventListener('resize', function () {
+                clearTimeout(devlogResizeTimer);
+                devlogResizeTimer = setTimeout(function () { devlogPage = 0; devlogRender(); }, 150);
+            });
+
+            devlogRender();
         }
     </script>
 
