@@ -9,7 +9,7 @@ function htmlPage(origin, title, text) {
         '<meta name="viewport" content="width=device-width, initial-scale=1">' +
         '<title>' + title + ' · RenyiGame</title>' +
         '<style>' +
-        'body{margin:0;background:#fef7f0;font-family:"Hiragino Sans","PingFang SC","Microsoft YaHei",sans-serif;color:#5b4a3d;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;-webkit-font-smoothing:antialiased}' +
+        'body{margin:0;background:#fef7f0;font-family:"Hiragino Sans","PingFang SC","Microsoft YaHei",sans-serif;color:#5b4a3d;display:flex;align-items:flex-start;justify-content:center;min-height:100vh;padding:12vh 24px 24px;-webkit-font-smoothing:antialiased}' +
         '.card{background:#fff;border:1px solid #f0e2d4;border-radius:24px;max-width:460px;width:100%;padding:40px 34px;text-align:center;box-shadow:0 18px 44px rgba(224,122,63,.12)}' +
         '.logo{display:inline-grid;place-items:center;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#ffb37a,#ff8a5c);color:#fff;font-weight:900;font-size:24px;box-shadow:0 8px 20px rgba(255,138,92,.35)}' +
         'h1{font-size:22px;font-weight:800;margin:18px 0 8px}' +
