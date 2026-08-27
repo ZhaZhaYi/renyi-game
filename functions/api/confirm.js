@@ -7,7 +7,7 @@ function htmlPage(origin, title, text) {
     const html =
         '<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">' +
         '<meta name="viewport" content="width=device-width, initial-scale=1">' +
-        '<title>' + title + ' · Renyi Games</title>' +
+        '<title>' + title + ' · RenyiGame</title>' +
         '<style>' +
         'body{margin:0;background:#fef7f0;font-family:"Hiragino Sans","PingFang SC","Microsoft YaHei",sans-serif;color:#5b4a3d;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;-webkit-font-smoothing:antialiased}' +
         '.card{background:#fff;border:1px solid #f0e2d4;border-radius:24px;max-width:460px;width:100%;padding:40px 34px;text-align:center;box-shadow:0 18px 44px rgba(224,122,63,.12)}' +
@@ -40,7 +40,7 @@ export async function onRequestGet(context) {
 
     try {
         const row = await env.DB
-            .prepare('SELECT id, email, status FROM subscribers WHERE token = ? LIMIT 1')
+            .prepare('SELECT id, email, status, game FROM subscribers WHERE token = ? LIMIT 1')
             .bind(token)
             .first();
 
@@ -49,7 +49,7 @@ export async function onRequestGet(context) {
         }
 
         if (row.status === 'confirmed') {
-            return htmlPage(origin, '订阅已确认', row.email + ' 已经确认过订阅，无需重复操作。');
+            return htmlPage(origin, '订阅已确认', row.email + ' 已订阅《' + row.game + '》，无需重复操作。');
         }
 
         await env.DB
@@ -57,7 +57,7 @@ export async function onRequestGet(context) {
             .bind(row.id)
             .run();
 
-        return htmlPage(origin, '订阅成功 🎉', row.email + ' 已确认订阅，新作与内测消息会第一时间通知你。');
+        return htmlPage(origin, '订阅成功 🎉', row.email + ' 已确认订阅《' + row.game + '》，新作与内测消息会第一时间通知你。');
     } catch (err) {
         console.error('Confirm error:', err);
         return htmlPage(origin, '出了点小问题', '服务器开小差了，请稍后再试，或回到官网重新订阅。');

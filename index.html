@@ -758,34 +758,154 @@
             margin: 26px auto 0;
         }
 
-        .form-row-main {
-            display: flex;
-            gap: 10px;
-            align-items: stretch;
+        .sub-box {
+            background: #fff;
+            border: 1px solid #f6e0c8;
+            border-radius: 20px;
+            padding: 22px 22px 20px;
+            box-shadow: 0 14px 34px rgba(224,122,63,.1);
         }
 
-        .form-row-main input[type="email"] {
-            flex: 1;
-            min-width: 0;
+        .sub-field {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sub-field + .sub-field {
+            margin-top: 16px;
+        }
+
+        .sub-field > label {
+            flex: 0 0 84px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--ink-soft);
+            letter-spacing: .5px;
+        }
+
+        .sub-field input[type="email"],
+        .sub-select-btn {
             height: 48px;
-            padding: 0 20px;
-            border-radius: 999px;
+            padding: 0 18px;
+            border-radius: 14px;
             border: 1px solid var(--line);
-            background: #fff;
+            background: var(--bg);
             font-size: 14px;
             color: var(--ink);
             outline: none;
+            font-family: inherit;
             transition: border-color .2s, box-shadow .2s;
         }
 
-        .form-row-main input[type="email"]:focus {
+        .sub-select {
+            position: relative;
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+
+        .sub-select-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .sub-select-btn .chevron {
+            flex: none;
+            color: var(--muted);
+            transition: transform .2s;
+        }
+
+        .sub-select.open .sub-select-btn .chevron {
+            transform: rotate(180deg);
+        }
+
+        .sub-field input[type="email"]:focus {
             border-color: var(--accent);
             box-shadow: 0 0 0 3px rgba(224,122,63,.13);
         }
 
-        .form-row-main .btn-orange {
+        .sub-select.open .sub-select-btn {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(224,122,63,.13);
+        }
+
+        .sub-select-list {
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 0;
+            right: 0;
+            z-index: 40;
+            margin: 0;
+            padding: 6px;
+            list-style: none;
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            box-shadow: 0 18px 40px rgba(224,122,63,.16);
+            max-height: 240px;
+            overflow: auto;
+            opacity: 0;
+            transform: translateY(-4px);
+            pointer-events: none;
+            transition: opacity .18s, transform .18s;
+        }
+
+        .sub-select.open .sub-select-list {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .sub-select-list li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            font-size: 14px;
+            color: var(--ink-soft);
+            cursor: pointer;
+            transition: background .15s, color .15s;
+        }
+
+        .sub-select-list li:hover {
+            background: var(--accent-soft);
+            color: var(--accent);
+        }
+
+        .sub-select-list li.on {
+            background: var(--accent-soft);
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .sub-select-list li .check {
+            flex: none;
+            color: var(--accent);
+        }
+
+        .sub-input-row {
+            display: flex;
+            gap: 10px;
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+
+        .sub-input-row input[type="email"] {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .sub-input-row .btn-orange {
             height: 48px;
-            padding: 0 28px;
+            padding: 0 24px;
+            border-radius: 14px;
             white-space: nowrap;
             display: flex;
             align-items: center;
@@ -898,9 +1018,12 @@
         @media(max-width:560px) {
             .subscribe { padding: 34px 20px 30px; }
             .subscribe h3 { font-size: 20px; }
-            .form-row-main { flex-direction: column; }
-            .form-row-main input[type="email"] { flex: none; width: 100%; }
-            .form-row-main .btn-orange { width: 100%; }
+            .sub-box { padding: 18px 14px 16px; }
+            .sub-field { gap: 10px; align-items: flex-start; }
+            .sub-field > label { flex: 0 0 60px; font-size: 12px; padding-top: 17px; }
+            .sub-input-row { flex-direction: column; }
+            .sub-input-row input[type="email"] { flex: none; width: 100%; }
+            .sub-input-row .btn-orange { width: 100%; }
         }
 
         /* ===== Footer ===== */
@@ -1329,7 +1452,7 @@
         /* Toast 飘字提示框样式 */
         .toast-notification {
             position: fixed;
-            top: 20px; /* 距离顶部 20px */
+            top: 16vh; /* 中上部分展示 */
             left: 50%;
             transform: translateX(-50%) translateY(-100px); /* 初始位置在屏幕外 */
             background-color: rgba(0, 0, 0, 0.85); /* 黑色半透明背景 */
@@ -1559,11 +1682,24 @@
                     <p>新作上线、内测资格，第一时间通知你。</p>
                 </div>
                 <form class="sub-form" id="subscribeForm" novalidate>
-                    <!-- 第一行：输入与提交 -->
-                    <div class="form-row-main">
-                        <label class="sr" for="email">邮箱</label>
-                        <input id="email" type="email" placeholder="输入你的邮箱，获取内测资格" required />
-                        <button class="btn btn-orange" type="submit">订阅更新</button>
+                    <div class="sub-box">
+                        <div class="sub-field">
+                            <label id="subGameFieldLabel">订阅游戏</label>
+                            <div class="sub-select" id="subGameSelect">
+                                <button type="button" class="sub-select-btn" id="subGameBtn" aria-labelledby="subGameFieldLabel" aria-haspopup="listbox" aria-expanded="false">
+                                    <span id="subGameLabel">TileBuddies</span>
+                                    <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+                                </button>
+                                <ul class="sub-select-list" id="subGameList" role="listbox" aria-labelledby="subGameFieldLabel"></ul>
+                            </div>
+                        </div>
+                        <div class="sub-field">
+                            <label for="email">邮箱</label>
+                            <div class="sub-input-row">
+                                <input id="email" type="email" placeholder="输入你的邮箱，获取内测资格" required />
+                                <button class="btn btn-orange" type="submit">立即订阅</button>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="form-row-sub">
@@ -1620,6 +1756,11 @@
         const GAMES = [
             // 开发中 / 免费测试
             { name: "TileBuddies · 测试版", desc: "三消叠牌，休闲解压、离线可玩，正在打磨关卡与动效。", cat: "dev", tags: ["休闲", "三消", "离线"], img: "./Games/TileBuddies/Web/public/icon_app_small.png", rating: 4.8, art: ["#ff9a7a", "#ffd9b8"], link: "./Games/TileBuddies/Web/index.html" },
+        ];
+
+        // 可订阅的游戏列表（新增游戏时在这里加一项即可）
+        const SUB_GAMES = [
+            { value: 'TileBuddies', label: 'TileBuddies' }
         ];
 
         const BADGE = { dev: ["开发中", "#f0a05a"], oversea: ["海外上架", "#e08a4a"], cn: ["国内上架", "#e8924a"] };
@@ -1737,6 +1878,56 @@
         const subscribeForm = document.getElementById('subscribeForm');
         const subEmailInput = document.getElementById('email');
         const subAgree = document.getElementById('agree');
+        const subGameBtn = document.getElementById('subGameBtn');
+        const subGameList = document.getElementById('subGameList');
+        const subGameLabel = document.getElementById('subGameLabel');
+        let selectedSubGame = SUB_GAMES.length ? SUB_GAMES[0].value : 'TileBuddies';
+
+        // 自定义下拉框：渲染选项 + 交互
+        function renderSubGameOptions() {
+            if (!subGameList) return;
+            subGameList.innerHTML = SUB_GAMES.map(function (g) {
+                const on = g.value === selectedSubGame;
+                return '<li role="option" data-value="' + g.value + '" aria-selected="' + on + '" class="' + (on ? 'on' : '') + '">' +
+                    '<span>' + g.label + '</span>' +
+                    (on ? '<svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>' : '') +
+                    '</li>';
+            }).join('');
+        }
+
+        function setSubGame(value, label) {
+            selectedSubGame = value;
+            if (subGameLabel) subGameLabel.textContent = label;
+            renderSubGameOptions();
+        }
+
+        function closeSubGame() {
+            if (!subGameBtn) return;
+            subGameBtn.parentElement.classList.remove('open');
+            subGameBtn.setAttribute('aria-expanded', 'false');
+        }
+
+        if (subGameBtn && subGameList) {
+            renderSubGameOptions();
+            subGameBtn.addEventListener('click', function () {
+                const isOpen = subGameBtn.parentElement.classList.toggle('open');
+                subGameBtn.setAttribute('aria-expanded', String(isOpen));
+            });
+            subGameList.addEventListener('click', function (e) {
+                const li = e.target.closest('li[data-value]');
+                if (!li) return;
+                const g = SUB_GAMES.find(function (x) { return x.value === li.dataset.value; });
+                if (g) setSubGame(g.value, g.label);
+                closeSubGame();
+            });
+            document.addEventListener('click', function (e) {
+                if (!subGameBtn.parentElement.contains(e.target)) closeSubGame();
+            });
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') closeSubGame();
+            });
+        }
+
         // const subError = document.getElementById('subError'); // 已废弃，不再需要
         // const subSuccess = ... // 已废弃
 
@@ -1746,6 +1937,7 @@
 
                 const email = subEmailInput.value.trim();
                 const isAgreed = subAgree ? subAgree.checked : true; // 如果没有勾选框，默认为true
+                const subGame = selectedSubGame || 'TileBuddies';
 
                 // 1. 基础校验
                 if (!email) {
@@ -1776,7 +1968,7 @@
                     const response = await fetch('/api/subscribe', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ email })
+                        body: JSON.stringify({ email, game: subGame })
                     });
 
                     const data = await response.json();
