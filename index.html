@@ -683,153 +683,166 @@
 
         /* ===== Subscribe ===== */
         .subscribe {
+            position: relative;
+            overflow: hidden;
             margin: 40px 0;
-            padding: 34px;
+            padding: 44px 32px 38px;
             border-radius: 24px;
-            background: linear-gradient(120deg,#ffe9d6,#fff2e6);
+            background: linear-gradient(150deg,#fff4e8,#ffe9d6 60%,#fff7ee);
             border: 1px solid #f6e0c8;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-            flex-wrap: wrap;
+            text-align: center;
         }
 
-            .subscribe h3 {
-                font-size: 22px;
-                color: var(--ink)
-            }
+        .subscribe::before {
+            content: "";
+            position: absolute;
+            top: -70px;
+            right: -70px;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: radial-gradient(circle,rgba(255,138,92,.14),transparent 70%);
+            pointer-events: none;
+        }
 
-            .subscribe p {
-                color: var(--muted);
-                margin-top: 6px
-            }
+        .subscribe::after {
+            content: "";
+            position: absolute;
+            bottom: -80px;
+            left: -60px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle,rgba(255,179,122,.16),transparent 70%);
+            pointer-events: none;
+        }
 
-        /* 表单容器 */
+        .sub-icon {
+            position: relative;
+            z-index: 1;
+            width: 54px;
+            height: 54px;
+            margin: 0 auto 16px;
+            border-radius: 17px;
+            background: #fff;
+            border: 1px solid #f6e0c8;
+            color: var(--accent);
+            display: grid;
+            place-items: center;
+            box-shadow: 0 10px 24px rgba(224,122,63,.14);
+        }
+
+        .sub-icon svg { width: 25px; height: 25px; }
+
+        .subscribe h3 {
+            position: relative;
+            z-index: 1;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--ink);
+            letter-spacing: .3px;
+        }
+
+        .subscribe p {
+            position: relative;
+            z-index: 1;
+            color: var(--muted);
+            font-size: 14px;
+            margin-top: 8px;
+        }
+
         .sub-form {
-            display: flex;
-            flex-direction: column;
-            gap: 12px; /* 上下两行的间距 */
-            width: 100%;
+            position: relative;
+            z-index: 1;
+            max-width: 560px;
+            margin: 26px auto 0;
         }
 
-        /* 第一行：输入框和按钮容器 */
         .form-row-main {
             display: flex;
-            gap: 10px; /* 输入框和按钮的间距 */
-            align-items: stretch; /* 让按钮和输入框等高 */
+            gap: 10px;
+            align-items: stretch;
         }
 
-            /* 输入框样式优化 */
-            .form-row-main input[type="email"] {
-                flex: 1; /* 占据剩余空间 */
-                padding: 0 16px;
-                border-radius: var(--radius); /* 使用你定义的圆角变量 */
-                border: 1px solid var(--line);
-                background: #fff;
-                font-size: 14px;
-                outline: none;
-                transition: border-color 0.2s;
-                height: 44px; /* 固定高度，确保对齐 */
-                box-sizing: border-box;
-            }
+        .form-row-main input[type="email"] {
+            flex: 1;
+            min-width: 0;
+            height: 48px;
+            padding: 0 20px;
+            border-radius: 999px;
+            border: 1px solid var(--line);
+            background: #fff;
+            font-size: 14px;
+            color: var(--ink);
+            outline: none;
+            transition: border-color .2s, box-shadow .2s;
+        }
 
-                .form-row-main input[type="email"]:focus {
-                    border-color: var(--accent); /* 聚焦时变色 */
-                }
+        .form-row-main input[type="email"]:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(224,122,63,.13);
+        }
 
-            /* 按钮样式微调 */
-            .form-row-main .btn-orange {
-                height: 44px; /* 与输入框高度一致 */
-                padding: 0 24px;
-                white-space: nowrap; /* 防止文字换行 */
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
+        .form-row-main .btn-orange {
+            height: 48px;
+            padding: 0 28px;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-        /* --- 订阅表单底部区域修复 --- */
-
-        /* 1. 容器：强制左对齐，垂直排列 */
         .form-row-sub {
             display: flex;
             flex-direction: column;
-            align-items: flex-start; /* ← 新增：覆盖默认 stretch */
+            align-items: center;
+            gap: 7px;
             margin-top: 15px;
         }
 
-        /* 2. 协议包裹层：改为 inline-flex 让它收缩到内容宽度，紧贴左侧 */
         .agreement-wrapper {
-            display: inline-flex; /* ← flex 改为 inline-flex */
+            display: inline-flex;
             align-items: center;
             gap: 8px;
-            margin-bottom: 8px;
             cursor: pointer;
         }
 
-            /* 3. 复选框：清除所有默认边距 */
-            .agreement-wrapper input[type="checkbox"] {
-                margin: 0 !important; /* 关键：清除浏览器默认间距 */
-                padding: 0 !important;
-                width: 16px !important;
-                height: 16px !important;
-                accent-color: var(--accent);
-                cursor: pointer;
-                vertical-align: middle;
-            }
+        .agreement-wrapper input[type="checkbox"] {
+            margin: 0;
+            width: 16px;
+            height: 16px;
+            accent-color: var(--accent);
+            cursor: pointer;
+            vertical-align: middle;
+            flex: none;
+        }
 
-        /* 4. 文字标签：清除边距 */
         .agreement-text {
-            margin: 0 !important;
-            padding: 0 !important;
-            font-size: 0.9em !important;
-            color: #6
-        }
-            /* 5. 链接样式 */
-            .agreement-text a {
-                color: var(--accent);
-                text-decoration: none;
-            }
-
-        /* 6. 底部小字提示 */
-        .sub-note {
-            font-size: 0.8em;
-            color: #999;
-            margin: 0; /* 【关键】清除所有默认 margin */
-            padding: 0;
-            line-height: 1.5;
-            align-self: flex-start; /* 确保自己也靠左 */
+            font-size: 12.5px;
+            color: var(--ink-soft);
         }
 
-        /* 移动端适配：如果屏幕太窄，允许协议文字换行，但不要切断 */
-        @media (max-width: 600px) {
-            .agreement-label {
-                white-space: normal; /* 手机端允许换行 */
-                flex: 1 1 100%; /* 占满一行 */
-            }
+        .agreement-text a {
+            color: var(--accent);
+            font-weight: 700;
         }
 
-        .sub-form input {
-            font-family: inherit;
-            font-size: 14px;
-            padding: 11px 16px;
-            border: 1px solid #f0dcc0;
-            border-radius: 999px;
-            background: #fff;
-            color: var(--ink);
-            min-width: 220px;
+        .agreement-text a:hover {
+            text-decoration: underline;
         }
-
-            .sub-form input:focus {
-                outline: none;
-                border-color: var(--accent)
-            }
 
         .sub-note {
             font-size: 12px;
             color: var(--muted);
-            margin-top: 8px;
-            width: 100%
+            line-height: 1.5;
+        }
+
+        @media(max-width:560px) {
+            .subscribe { padding: 34px 20px 30px; }
+            .subscribe h3 { font-size: 20px; }
+            .form-row-main { flex-direction: column; }
+            .form-row-main input[type="email"] { flex: none; width: 100%; }
+            .form-row-main .btn-orange { width: 100%; }
         }
 
         /* ===== Footer ===== */
@@ -1077,11 +1090,6 @@
         @media(max-width:440px) {
             .grid {
                 grid-template-columns: 1fr
-            }
-
-            .sub-form input {
-                min-width: 0;
-                width: 100%
             }
 
             .cta-row .btn {
@@ -1446,6 +1454,9 @@
         <!-- Subscribe -->
         <section class="wrap" id="subscribe">
             <div class="subscribe">
+                <div class="sub-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
+                </div>
                 <div>
                     <h3>想第一时间玩到新游戏？</h3>
                     <p>新作上线、内测资格，第一时间通知你。</p>
