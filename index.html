@@ -328,7 +328,7 @@
         /* ===== Categories / tabs ===== */
         .cats {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             justify-content: center;
             margin: 26px 0 22px;
             flex-wrap: wrap
@@ -337,42 +337,64 @@
         .cat {
             cursor: pointer;
             user-select: none;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 9px 16px;
+            padding: 10px 18px 10px 14px;
             border-radius: 999px;
             font-size: 14px;
-            font-weight: 600;
-            color: var(--muted);
-            background: #fff;
+            font-weight: 700;
+            color: var(--ink-soft);
+            background: linear-gradient(180deg,#ffffff,#fff7ee);
             border: 1px solid var(--line);
-            transition: .2s;
+            box-shadow: 0 2px 6px rgba(224,122,63,.05), inset 0 1px 0 rgba(255,255,255,.8);
+            transition: transform .18s, box-shadow .18s, border-color .18s, color .18s;
         }
 
             .cat:hover {
                 color: var(--accent);
-                border-color: #ffd9b8
+                border-color: #ffcfa6;
+                transform: translateY(-1px);
+                box-shadow: 0 6px 14px rgba(224,122,63,.12);
             }
 
             .cat.on {
                 color: #fff;
                 background: linear-gradient(135deg,#ffb37a,#ff8a5c);
                 border-color: transparent;
-                box-shadow: 0 6px 14px rgba(255,138,92,.3)
+                box-shadow: 0 8px 18px rgba(255,138,92,.32);
+                transform: translateY(-1px);
+            }
+
+            .cat .ico {
+                display: inline-grid;
+                place-items: center;
+                min-width: 24px;
+                height: 24px;
+                padding: 0 4px;
+                border-radius: 8px;
+                background: var(--accent-soft);
+                font-size: 13px;
+                line-height: 1;
             }
 
             .cat .cnt {
-                font-size: 12px;
-                font-weight: 700;
+                font-size: 11px;
+                font-weight: 800;
                 background: var(--accent-soft);
                 color: var(--accent);
-                padding: 1px 8px;
+                padding: 2px 8px;
+                min-width: 22px;
+                text-align: center;
                 border-radius: 999px
             }
 
+            .cat.on .ico {
+                background: rgba(255,255,255,.22);
+            }
+
             .cat.on .cnt {
-                background: rgba(255,255,255,.35);
+                background: rgba(255,255,255,.3);
                 color: #fff
             }
 
@@ -1285,6 +1307,37 @@
             }
         }
 
+        @media(max-width:640px) {
+            .cats {
+                flex-wrap: nowrap;
+                justify-content: flex-start;
+                gap: 8px;
+                margin: 20px 0 18px;
+                padding: 2px 2px 8px;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scroll-snap-type: x proximity;
+                scrollbar-width: none;
+            }
+
+            .cats::-webkit-scrollbar {
+                display: none;
+            }
+
+            .cat {
+                flex: none;
+                scroll-snap-align: start;
+                padding: 9px 14px 9px 11px;
+                font-size: 13px;
+            }
+
+            .cat .ico {
+                min-width: 22px;
+                height: 22px;
+                font-size: 12px;
+            }
+        }
+
         /* ===== About / 开发者简介 ===== */
         .about {
             padding: 50px 0 60px;
@@ -1546,10 +1599,10 @@
             </div>
 
             <div class="cats" id="cats" role="tablist">
-                <div class="cat on" data-f="all" role="tab" tabindex="0">全部 <span class="cnt" data-c="all"></span></div>
-                <div class="cat" data-f="dev" role="tab" tabindex="0">🛠 开发中 <span class="cnt" data-c="dev"></span></div>
-                <div class="cat" data-f="oversea" role="tab" tabindex="0">🌍 海外上架 <span class="cnt" data-c="oversea"></span></div>
-                <div class="cat" data-f="cn" role="tab" tabindex="0">🇨🇳 国内上架 <span class="cnt" data-c="cn"></span></div>
+                <div class="cat on" data-f="all" role="tab" tabindex="0"><span class="ico">✦</span>全部 <span class="cnt" data-c="all"></span></div>
+                <div class="cat" data-f="dev" role="tab" tabindex="0"><span class="ico">🛠</span>开发中 <span class="cnt" data-c="dev"></span></div>
+                <div class="cat" data-f="oversea" role="tab" tabindex="0"><span class="ico">🌍</span>海外上架 <span class="cnt" data-c="oversea"></span></div>
+                <div class="cat" data-f="cn" role="tab" tabindex="0"><span class="ico">🏠</span>国内上架 <span class="cnt" data-c="cn"></span></div>
             </div>
 
             <div class="grid" id="grid"></div>
