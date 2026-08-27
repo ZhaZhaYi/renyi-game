@@ -1,0 +1,7 @@
+name = "renyigame-site"
+compatibility_date = "2026-08-28"
+
+[[d1_databases]]
+binding = "DB" # 在代码中通过 env.DB 访问
+database_name = "renyigame-db"
+database_id = "1141d213-c03f-4361-adfe-213181b1dd70" # 替换为第一步复制的ID
