@@ -45,7 +45,11 @@
             color: #007bff;
             text-decoration: none;
             font-weight: bold;
+            border-bottom: 1px solid transparent; /* 预留位置，防止抖动 */
         }
+            .email a:hover {
+                text-decoration: underline; /* */ /* 鼠标放上去显示下划线，提示可点 */
+            }
     </style>
 </head>
 <body>
@@ -80,6 +84,6 @@
 
     <h2>7. 联系我们</h2>
     <p>如果您对本隐私政策有任何疑问，请通过以下方式联系我们：</p>
-    <p class="email">📧 邮箱: <a href="mailto:hi@renyigame.com">hi@renyigame.com</a></p>
+    <p class="email">📧 邮箱:  <a href="mailto:hi@renyigame.com?subject=关于RenyiGame的反馈/建议">hi@renyigame.com</a></p>
 </body>
 </html>

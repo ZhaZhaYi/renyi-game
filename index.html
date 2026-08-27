@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -6,6 +7,13 @@
     <meta name="description" content="RenyiGame — 个人游戏站，这里展示我独立开发的免费与测试游戏，以及上架海外与国内市场的轻量小作品。" />
     <title>RenyiGame · 个人游戏站</title>
     <meta name="color-scheme" content="light" />
+    <link rel="icon" type="image/png" href=".favicon.png">
+
+    <meta property="og:title" content="RenyiGame · 个人游戏站" />
+    <meta property="og:description" content="独立游戏开发，免费畅玩轻量小游戏" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://renyigame.com" />
+    <meta property="og:image" content="https:og-image.png" />
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RYDPN1VWEM"></script>
@@ -50,6 +58,7 @@
             color: var(--ink);
             line-height: 1.7;
             -webkit-font-smoothing: antialiased;
+            scroll-padding-top: 70px;
         }
 
         a {
@@ -361,7 +370,6 @@
                 color: #fff
             }
 
-        /* ===== Game grid ===== */
         .grid {
             display: flex;
             flex-wrap: wrap; /*运行卡片换行*/
@@ -378,14 +386,8 @@
             overflow: hidden;
             transition: transform .22s,box-shadow .22s,border-color .22s;
             cursor: pointer;
-            /* --- 关键新增 --- */
             width: 250px; /* 固定宽度，必须与上面的计算一致 */
             flex-shrink: 0; /* 防止空间不足时卡片被挤压变形 */
-
-            background: var(--panel);
-            border: 1px solid var(--line);
-            border-radius: var(--radius);
-            overflow: hidden;
         }
 
             .card:hover {
@@ -397,18 +399,17 @@
         .thumb {
             height: 140px;
             position: relative;
-            /* --- 修改开始 --- */
             display: flex; /* 改用 flex */
             align-items: center; /* 垂直居中 */
             justify-content: center; /* 水平居中 */
             overflow: hidden; /* 防止图片放大时溢出 */
-            /* --- 修改结束 --- */
         }
-            /* 把原来的 .thumb .glyph { ... } 替换为下面这段 */
+
             .thumb img {
                 width: 80px; /* 根据你的图标大小调整，比如 60px - 100px */
                 height: 80px; /* 保持宽高一致 */
                 object-fit: contain; /* 保持图片比例，不拉伸变形 */
+                position: relative;
                 z-index: 2; /* 确保图片在背景色块(gradient)的上面 */
                 transition: transform .25s; /* 添加过渡动画，配合下面的 hover 效果 */
             }
@@ -425,14 +426,7 @@
                 background: linear-gradient(180deg,transparent 60%,rgba(255,255,255,.18))
             }
 
-            .thumb .glyph {
-                font-size: 50px;
-                position: relative;
-                filter: drop-shadow(0 8px 12px rgba(0,0,0,.18));
-                transition: transform .25s
-            }
-
-        .card:hover .thumb .glyph {
+        .card:hover .thumb .card-img {
             transform: scale(1.12)
         }
 
@@ -518,7 +512,7 @@
             padding: 50px 0;
             color: var(--muted);
             display: none;
-            grid-column: 1/-1
+            width: 100%;
         }
 
         /* ===== Feature band ===== */
@@ -711,27 +705,125 @@
                 margin-top: 6px
             }
 
+        /* 表单容器 */
         .sub-form {
             display: flex;
-            gap: 10px;
-            flex-wrap: wrap
+            flex-direction: column;
+            gap: 12px; /* 上下两行的间距 */
+            width: 100%;
         }
 
-            .sub-form input {
-                font-family: inherit;
-                font-size: 14px;
-                padding: 11px 16px;
-                border: 1px solid #f0dcc0;
-                border-radius: 999px;
+        /* 第一行：输入框和按钮容器 */
+        .form-row-main {
+            display: flex;
+            gap: 10px; /* 输入框和按钮的间距 */
+            align-items: stretch; /* 让按钮和输入框等高 */
+        }
+
+            /* 输入框样式优化 */
+            .form-row-main input[type="email"] {
+                flex: 1; /* 占据剩余空间 */
+                padding: 0 16px;
+                border-radius: var(--radius); /* 使用你定义的圆角变量 */
+                border: 1px solid var(--line);
                 background: #fff;
-                color: var(--ink);
-                min-width: 220px;
+                font-size: 14px;
+                outline: none;
+                transition: border-color 0.2s;
+                height: 44px; /* 固定高度，确保对齐 */
+                box-sizing: border-box;
             }
 
-                .sub-form input:focus {
-                    outline: none;
-                    border-color: var(--accent)
+                .form-row-main input[type="email"]:focus {
+                    border-color: var(--accent); /* 聚焦时变色 */
                 }
+
+            /* 按钮样式微调 */
+            .form-row-main .btn-orange {
+                height: 44px; /* 与输入框高度一致 */
+                padding: 0 24px;
+                white-space: nowrap; /* 防止文字换行 */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+        /* --- 订阅表单底部区域修复 --- */
+
+        /* 1. 容器：强制左对齐，垂直排列 */
+        .form-row-sub {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* ← 新增：覆盖默认 stretch */
+            margin-top: 15px;
+        }
+
+        /* 2. 协议包裹层：改为 inline-flex 让它收缩到内容宽度，紧贴左侧 */
+        .agreement-wrapper {
+            display: inline-flex; /* ← flex 改为 inline-flex */
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+
+            /* 3. 复选框：清除所有默认边距 */
+            .agreement-wrapper input[type="checkbox"] {
+                margin: 0 !important; /* 关键：清除浏览器默认间距 */
+                padding: 0 !important;
+                width: 16px !important;
+                height: 16px !important;
+                accent-color: var(--accent);
+                cursor: pointer;
+                vertical-align: middle;
+            }
+
+        /* 4. 文字标签：清除边距 */
+        .agreement-text {
+            margin: 0 !important;
+            padding: 0 !important;
+            font-size: 0.9em !important;
+            color: #6
+        }
+            /* 5. 链接样式 */
+            .agreement-text a {
+                color: var(--accent);
+                text-decoration: none;
+            }
+
+        /* 6. 底部小字提示 */
+        .sub-note {
+            font-size: 0.8em;
+            color: #999;
+            margin: 0; /* 【关键】清除所有默认 margin */
+            padding: 0;
+            line-height: 1.5;
+            align-self: flex-start; /* 确保自己也靠左 */
+        }
+
+        /* 移动端适配：如果屏幕太窄，允许协议文字换行，但不要切断 */
+        @media (max-width: 600px) {
+            .agreement-label {
+                white-space: normal; /* 手机端允许换行 */
+                flex: 1 1 100%; /* 占满一行 */
+            }
+        }
+
+        .sub-form input {
+            font-family: inherit;
+            font-size: 14px;
+            padding: 11px 16px;
+            border: 1px solid #f0dcc0;
+            border-radius: 999px;
+            background: #fff;
+            color: var(--ink);
+            min-width: 220px;
+        }
+
+            .sub-form input:focus {
+                outline: none;
+                border-color: var(--accent)
+            }
 
         .sub-note {
             font-size: 12px;
@@ -826,6 +918,7 @@
             }
 
         /* mobile nav (slides down) */
+
         @media(max-width:860px) {
             .nav {
                 position: absolute;
@@ -859,9 +952,7 @@
                         border-left: 3px solid var(--accent);
                         padding-left: 10px
                     }
-        }
 
-        @media(max-width:860px) {
             .menu-toggle {
                 display: flex
             }
@@ -891,10 +982,6 @@
 
             .hstat b {
                 font-size: 22px
-            }
-
-            .feat-grid {
-                grid-template-columns: repeat(2,1fr)
             }
 
             .cat {
@@ -1002,6 +1089,176 @@
                 text-align: center
             }
         }
+
+        /* ===== About / 开发者简介 ===== */
+        .about {
+            padding: 50px 0 60px;
+        }
+
+        .about-card {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 24px;
+            padding: 48px;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 48px;
+            box-shadow: 0 12px 32px rgba(224,122,63,.08);
+            transition: border-color .25s, box-shadow .25s;
+        }
+
+        .about-sidebar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .about-card:hover {
+            border-color: #ffcf9a;
+            box-shadow: 0 16px 40px rgba(224,122,63,.12);
+        }
+
+        .about-avatar {
+            width: 180px;
+            aspect-ratio: 1;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #ffb37a, #ff8a5c);
+            display: grid;
+            place-items: center;
+            font-size: 64px;
+            font-weight: 900;
+            color: #fff;
+            box-shadow: 0 8px 24px rgba(255,138,92,.35);
+            margin-bottom: 20px;
+        }
+
+        .about-name {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--ink);
+            margin-bottom: 6px;
+        }
+
+        .about-role {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 1px;
+            margin-bottom: 24px;
+            display: block;
+        }
+
+        .about-tags-title {
+            color: var(--ink);
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .about-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .about-tag {
+            background: var(--accent-soft);
+            color: #c9763d;
+            padding: 5px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid transparent;
+            transition: .2s;
+        }
+
+            .about-tag:hover {
+                border-color: var(--accent);
+                color: var(--accent);
+            }
+
+        .about-content h3 {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--ink);
+            margin-bottom: 16px;
+        }
+
+        .about-content p {
+            color: var(--ink-soft);
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 14px;
+        }
+
+        .about-content strong {
+            color: var(--ink);
+        }
+
+        .about-quote {
+            background: linear-gradient(120deg, #ffe9d6, #fff2e6);
+            border-left: 4px solid var(--accent);
+            padding: 18px 22px;
+            border-radius: 12px;
+            margin: 22px 0;
+            font-style: italic;
+            color: var(--ink-soft);
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .about-cta {
+            margin-top: 28px;
+        }
+
+            .about-cta a {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                background: linear-gradient(135deg, #ffb37a, #ff8a5c);
+                color: #fff;
+                padding: 12px 28px;
+                border-radius: 999px;
+                font-weight: 700;
+                font-size: 14px;
+                transition: .25s;
+                box-shadow: 0 6px 16px rgba(255,138,92,.35);
+            }
+
+                .about-cta a:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 10px 24px rgba(255,138,92,.45);
+                }
+
+        @media(max-width:860px) {
+            .about-card {
+                grid-template-columns: 1fr;
+                padding: 28px 24px;
+                gap: 32px;
+            }
+
+            .about-avatar {
+                width: 120px;
+                margin: 0 auto;
+            }
+
+            .about-name, .about-content h3 {
+                text-align: center;
+            }
+
+            .about-role {
+                text-align: center;
+            }
+
+            .about-tags {
+                justify-content: center;
+            }
+
+            .about-cta {
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1020,6 +1277,7 @@
                 <a href="#feature">为什么值得玩</a>
                 <a href="#subscribe">订阅</a>
                 <a href="#about">关于</a>
+                <a href="contact.html">联系</a>
             </nav>
             <div class="actions">
                 <button class="btn btn-ghost">收藏</button>
@@ -1060,7 +1318,8 @@
             <div class="cats" id="cats" role="tablist">
                 <div class="cat on" data-f="all" role="tab" tabindex="0">全部 <span class="cnt" data-c="all"></span></div>
                 <div class="cat" data-f="dev" role="tab" tabindex="0">🛠 开发中 <span class="cnt" data-c="dev"></span></div>
-                <div class="cat" data-f="oversea" role="tab" tabindex="0">🌍 已上架 <span class="cnt" data-c="oversea"></span></div>
+                <div class="cat" data-f="oversea" role="tab" tabindex="0">🌍 海外上架 <span class="cnt" data-c="oversea"></span></div>
+                <div class="cat" data-f="cn" role="tab" tabindex="0">🇨🇳 国内上架 <span class="cnt" data-c="cn"></span></div>
             </div>
 
             <div class="grid" id="grid"></div>
@@ -1127,6 +1386,49 @@
             </div>
         </section>
 
+
+        <!-- About / 开发者简介 -->
+        <section class="wrap about" id="about">
+            <div class="sec-head">
+                <span class="kicker">ABOUT</span>
+                <h2>关于开发者</h2>
+                <p>十年代码，一份热爱</p>
+            </div>
+            <div class="about-card">
+                <!-- 左侧：头像 + 技术标签 -->
+                <div class="about-sidebar">
+                    <div class="about-avatar">R</div>
+                    <h3 class="about-name">Renyi</h3>
+                    <span class="about-role">Unity Developer &amp; Indie Creator</span>
+                    <div>
+                        <div class="about-tags-title">技术武器库</div>
+                        <div class="about-tags">
+                            <span class="about-tag">Unity 3D</span>
+                            <span class="about-tag">C# / Lua</span>
+                            <span class="about-tag">MVC</span>
+                            <span class="about-tag">ECS</span>
+                            <span class="about-tag">HybridCLR</span>
+                            <span class="about-tag">AI Workflow</span>
+                            <span class="about-tag">性能优化</span>
+                            <span class="about-tag">编辑器工具</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- 右侧：自我介绍 -->
+                <div class="about-content">
+                    <h3>十年代码，一份热爱</h3>
+                    <p>你好，我是一名在代码世界里构建了十年虚拟世界的<strong>游戏开发者</strong>。</p>
+                    <p>在成为独立开发者之前，我曾作为核心程序参与过多款大型 ARPG、SLG、 MMO 项目的研发。那段经历让我掌握了处理复杂系统、优化极致性能以及构建稳健架构的能力。</p>
+                    <div class="about-quote">
+                        "以前做大项目是为了生存，现在做小游戏是为了生活。我想把那些积累的'硬核技术'，用到小而美的创意游戏中。"
+                    </div>
+                    <p>现在，我致力于探索 <strong>AI 辅助创作</strong> 与 <strong>轻量化玩法</strong> 的结合。在这里，没有繁琐的打卡，只有对好玩游戏的纯粹追求。</p>
+                    <div class="about-cta">
+                        <a href="contact.html">与我合作 / 联系</a>
+                    </div>
+                </div>
+            </div>
+        </section>
         <!-- Feature band -->
         <section class="wrap features" id="feature">
             <div class="sec-head">
@@ -1149,22 +1451,33 @@
                     <p>新作上线、内测资格，第一时间通知你。</p>
                 </div>
                 <form class="sub-form" onsubmit="return false;">
-                    <label class="sr" for="email">邮箱</label>
-                    <input id="email" type="email" placeholder="输入你的邮箱" required />
-                    <button class="btn btn-orange" type="submit">订阅更新</button>
-                    <span class="sub-note">我们不会发送垃圾邮件，仅通知新作与内测。</span>
+                    <!-- 第一行：输入与提交 -->
+                    <div class="form-row-main">
+                        <label class="sr" for="email">邮箱</label>
+                        <input id="email" type="email" placeholder="输入你的邮箱，获取内测资格" required />
+                        <button class="btn btn-orange" type="submit">订阅更新</button>
+                    </div>
+
+                    <div class="form-row-sub">
+
+                        <!-- 【新增】包裹层：把复选框和文字包在一起 -->
+                        <div class="agreement-wrapper"><input type="checkbox" id="agree" required /><label for="agree" class="agreement-text">我已阅读并同意 <a href="privacy.html">《隐私政策》</a></label></div>
+
+                        <!-- 底部提示语 -->
+                        <span class="sub-note">我们承诺不发送垃圾邮件，仅通知新作与内测。</span>
+                    </div>
                 </form>
             </div>
         </section>
     </main>
 
     <!-- Footer -->
-    <footer id="about">
+    <footer id="footer">
         <div class="wrap">
             <div class="footer-grid">
                 <div class="footer-brand">
                     <div class="brand"><span class="dot">R</span><span>RenyiGame</span></div>
-                    <p>一枚拥有 <strong style="color:var(--accent)">10年经验的 Unity 游戏开发者</strong>。曾深耕 ARPG、MMO、SLG 等大型项目，擅长项目架构、性能优化、热更、编辑器工具拓展及 AI 自动化工作流。如今回归初心，致力于用硬核技术打磨轻量、好玩的精品小游戏。</p>
+                    <p>独立游戏开发者，专注轻量、好玩的精品小游戏。了解更多请查看<a href="#about" style="color:var(--accent)">开发者简介</a>。</p>
                 </div>
                 <div>
                     <h4>游戏</h4>
@@ -1172,22 +1485,23 @@
                 </div>
                 <div>
                     <h4>关于</h4>
-                    <ul><li><a href="#about">开发者简介</a></li><li><a href="#devlog">开发日志</a></li><li><a href="#contact">合作交流</a></li></ul>
+                    <ul><li><a href="#about">开发者简介</a></li><li><a href="#devlog">开发日志</a></li><li><a href="contact.html">合作交流</a></li></ul>
                 </div>
                 <div>
                     <h4>支持</h4>
-                    <ul><li><a href="#subscribe">订阅更新</a></li><li><a href="#subscribe">问题反馈</a></li><li><a href="#contact">商务合作</a></li></ul>
+                    <ul><li><a href="#subscribe">订阅更新</a></li><li><a href="contact.html">问题反馈</a></li><li><a href="contact.html">商务合作</a></li></ul>
                 </div>
                 <div id="contact">
                     <h4>联系方式</h4>
                     <ul>
-                        <li><a href="hi@renyigame.com">hi@renyigame.com</a></li>
+                        <li><a href="mailto:hi@renyigame.com?subject=关于RenyiGame的反馈/建议">hi@renyigame.com</a></li>
                     </ul>
                 </div>
             </div>
             <div class="cp">
-                <span>© 2026 RenyiGame · 个人网站 · 免费游戏</span>
+                <span>© 2026 RenyiGame · All rights reserved.</span>
                 <span>友情提示：适龄游戏，理性娱乐</span>
+                <span style="display:flex;gap:16px;"><a href="privacy.html" style="color:var(--accent);text-decoration:underline;">隐私政策</a><a href="contact.html" style="color:var(--accent);text-decoration:underline;">联系我们</a></span>
             </div>
         </div>
     </footer>
@@ -1209,25 +1523,23 @@
             const imgUrl = g.img || "images/default.png";
 
             return `
-            <article class="card" data-cat="${g.cat}">
-                <div class="thumb">
-                    <div class="bg" style="background:linear-gradient(135deg,${g.art[0]},${g.art[1]})"></div>
-                    <div class="badge" style="background:${c}">${b}</div>
+                    <article class="card" data-cat="${g.cat}">
+                        <div class="thumb">
+                            <div class="bg" style="background:linear-gradient(135deg,${g.art[0]},${g.art[1]})"></div>
+                            <div class="badge" style="background:${c}">${b}</div>
+                            <img src="${imgUrl}" alt="${g.name}" class="card-img" loading="lazy">
 
-                    <!-- 【修改点】：把原来的 span class="glyph" 删掉，换成下面的 img -->
-                    <img src="${imgUrl}" alt="${g.name}" class="card-img">
-
-                </div>
-                <div class="card-body">
-                    <h3>${g.name}</h3>
-                    <div class="desc">${g.desc}</div>
-                    <div class="tags">${tags}</div>
-                    <div class="card-foot">
-                        <span class="rating">★ ${g.rating}<span>/5</span></span>
-                        <a href="${g.link}" class="play" target="_blank" rel="noopener noreferrer">立即试玩 &rarr;</a>
-                    </div>
-                </div>
-            </article>`;
+                        </div>
+                        <div class="card-body">
+                            <h3>${g.name}</h3>
+                            <div class="desc">${g.desc}</div>
+                            <div class="tags">${tags}</div>
+                            <div class="card-foot">
+                                <span class="rating">★ ${g.rating}<span>/5</span></span>
+                                <a href="${g.link}" class="play" target="_blank" rel="noopener noreferrer">立即试玩 &rarr;</a>
+                            </div>
+                        </div>
+                    </article>`;
         }
 
         const grid = document.getElementById('grid');
@@ -1252,7 +1564,8 @@
             cats.querySelectorAll('.cat').forEach(x => x.classList.remove('on'));
             el.classList.add('on');
             render(el.dataset.f);
-            heading.textContent = el.dataset.f === 'all' ? '游戏库' : el.textContent.trim();
+            const titleMap = { all: '游戏库', dev: '开发中', oversea: '海外上架', cn: '国内上架' };
+            heading.textContent = titleMap[el.dataset.f] || '游戏库';
         }
         cats.addEventListener('click', e => {
             const el = e.target.closest('.cat'); if (!el) return;
@@ -1277,28 +1590,20 @@
             menuToggle.setAttribute('aria-expanded', String(isOpen));
         });
         // close menu when a nav link is tapped
-        mainNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+        mainNav.querySelectorAll('a').forEach(a => {
+            a.addEventListener('click', function () {
+                closeMenu();
+                // 更新导航栏选中状态：移除所有 a 的 on 类，给当前点击的加上
+                mainNav.querySelectorAll('a').forEach(link => link.classList.remove('on'));
+                this.classList.add('on');
+            });
+        });
         // close menu on outside click
         document.addEventListener('click', e => {
             if (!mainNav.classList.contains('open')) return;
             if (!mainNav.contains(e.target) && !menuToggle.contains(e.target)) closeMenu();
         });
     </script>
-
-    <!-- 网站页脚区域开始 -->
-    <footer style="margin-top: 50px; padding: 20px; text-align: center; border-top: 1px solid #eee; color: #666; font-size: 14px;">
-        <p>&copy; 2026 RenyiGame. All rights reserved.</p>
-        <p>
-            <!-- 这里是指向隐私政策的链接 -->
-            <a href="privacy.html" style="color: #666; text-decoration: none; margin: 0 10px;">隐私政策</a>
-
-            |
-            <!-- 这里是指向联系我们的链接 -->
-            <a href="contact.html" style="color: #666; text-decoration: none; margin: 0 10px;">联系我们</a>
-        </p>
-    </footer>
-    <!-- 网站页脚区域结束 -->
-
 
 </body>
 </html>
