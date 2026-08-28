@@ -2572,7 +2572,7 @@
                 if (roll < 0.3) {
                     // 奔跑（速度减半）
                     heroMascot.classList.add('mode-run');
-                    const dur = Math.max(35200, dist / 0.053125);
+                    const dur = Math.max(1000, dist / 0.03);
                     heroMascot.style.transition = 'transform ' + dur + 'ms linear';
                     startPrints(75);
                     mx = tx; my = ty; applyPos();
@@ -2593,7 +2593,7 @@
                 } else {
                     // 行走（速度减半）
                     heroMascot.classList.add('mode-walk');
-                    const dur = Math.max(32000, dist / 0.040625);
+                    const dur = Math.max(1500, dist / 0.025);
                     heroMascot.style.transition = 'transform ' + dur + 'ms linear';
                     startPrints(140);
                     mx = tx; my = ty; applyPos();
