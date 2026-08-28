@@ -215,8 +215,15 @@
 
         /* ===== Hero ===== */
         .hero {
+            position: relative;
+            overflow: hidden;
             padding: 64px 0 30px;
             text-align: center
+        }
+
+        .hero > :not(.r-mascot) {
+            position: relative;
+            z-index: 1;
         }
 
         .eyebrow {
@@ -233,6 +240,8 @@
         }
 
         .hero h1 {
+            position: relative;
+            z-index: 1;
             font-size: 46px;
             font-weight: 800;
             line-height: 1.2;
@@ -248,6 +257,169 @@
                 -webkit-text-fill-color: transparent;
                 color: transparent;
             }
+
+        /* 首页 R 小精灵：走 / 跑 / 跳，固定层游走（不随页面滚动，位于所有内容下层） */
+        .r-mascot {
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 0;
+            pointer-events: none;
+            will-change: transform;
+        }
+
+        /* 内容层盖在小精灵之上，确保小精灵可见但在所有文字/图片下层 */
+        main, footer {
+            position: relative;
+            z-index: 1;
+        }
+
+        .r-flip {
+            transform: scaleX(1);
+        }
+
+        .r-mascot.flip .r-flip {
+            transform: scaleX(-1);
+        }
+
+        .r-body {
+            position: relative;
+            width: 34px;
+            height: 34px;
+        }
+
+        .r-head {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 34px;
+            height: 34px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: linear-gradient(135deg,#ffb37a,#ff8a5c);
+            color: #fff;
+            font-weight: 900;
+            font-size: 17px;
+            border: 2px solid #fff;
+            box-shadow: 0 4px 10px rgba(255,138,92,.45);
+        }
+
+        .r-leg {
+            position: absolute;
+            bottom: -9px;
+            width: 6px;
+            height: 12px;
+            background: linear-gradient(180deg,#ff8a5c,#e86f3a);
+            border-radius: 0 0 4px 4px;
+            transform-origin: 50% 0;
+        }
+
+        .r-leg.l { left: 8px; }
+        .r-leg.r { right: 8px; }
+
+        /* 走 / 跑 / 跳：整条腿摆动 */
+        .r-mascot.mode-walk .r-leg.l { animation: legSwingL .55s linear infinite; }
+        .r-mascot.mode-walk .r-leg.r { animation: legSwingR .55s linear infinite; }
+        .r-mascot.mode-run .r-leg.l { animation: legSwingL .3s linear infinite; }
+        .r-mascot.mode-run .r-leg.r { animation: legSwingR .3s linear infinite; }
+        .r-mascot.mode-jump .r-leg.l { animation: legTuck .55s ease-in-out infinite; }
+        .r-mascot.mode-jump .r-leg.r { animation: legTuck .55s ease-in-out infinite; }
+
+        .r-mascot.mode-walk .r-body { animation: bodyBob .55s ease-in-out infinite; }
+        .r-mascot.mode-run .r-body { animation: bodyBob .3s ease-in-out infinite; }
+        .r-mascot.mode-jump .r-body { animation: bodyJump 1.15s infinite; }
+
+        /* 对话气泡 */
+        .r-bubble {
+            position: absolute;
+            left: 17px;
+            bottom: 42px;
+            transform: translateX(-50%) scale(.6);
+            transform-origin: 50% 100%;
+            opacity: 0;
+            pointer-events: none;
+            background: #fff;
+            color: var(--ink);
+            border: 2px solid var(--accent);
+            border-radius: 14px;
+            padding: 6px 13px;
+            font-size: 13px;
+            font-weight: 700;
+            white-space: nowrap;
+            z-index: 2;
+            box-shadow: 0 8px 18px rgba(224,122,63,.16);
+            transition: opacity .22s, transform .22s;
+        }
+
+        .r-bubble::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: -8px;
+            transform: translateX(-50%);
+            border: 8px solid transparent;
+            border-top-color: var(--accent);
+            border-bottom: 0;
+        }
+
+        .r-bubble.show {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+
+        /* 脚印 */
+        .r-prints {
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .r-print {
+            position: absolute;
+            width: 5px;
+            height: 7px;
+            border-radius: 50% 50% 55% 55%;
+            background: rgba(224,122,63,.42);
+            opacity: .55;
+            transition: opacity .5s;
+        }
+
+        @keyframes legSwingL {
+            0%, 100% { transform: rotate(24deg); }
+            50% { transform: rotate(-24deg); }
+        }
+
+        @keyframes legSwingR {
+            0%, 100% { transform: rotate(-24deg); }
+            50% { transform: rotate(24deg); }
+        }
+
+        @keyframes legTuck {
+            0%, 100% { transform: rotate(22deg); }
+            50% { transform: rotate(-10deg); }
+        }
+
+        @keyframes bodyBob {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-2px); }
+        }
+
+        @keyframes bodyJump {
+            0% { transform: translateY(0); animation-timing-function: cubic-bezier(.12,.6,.25,1); }
+            45% { transform: translateY(-34px); animation-timing-function: cubic-bezier(.45,0,1,1); }
+            100% { transform: translateY(0); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .r-mascot,
+            .r-mascot .r-leg,
+            .r-mascot .r-body {
+                animation: none;
+            }
+        }
 
         .hero p {
             color: var(--muted);
@@ -1338,7 +1510,8 @@
             }
 
                 .nav.open {
-                    display: flex
+                    display: flex;
+                    box-shadow: 0 18px 40px rgba(93,74,61,.18);
                 }
 
                 .nav a {
@@ -1735,7 +1908,6 @@
     <main id="top">
         <!-- Hero -->
         <section class="wrap hero">
-            <span class="eyebrow">🍡 正在开发 · 新作预约</span>
             <h1><em>一个人</em> 的游戏<br>一群人的 <em>快乐</em></h1>
             <p>这里展示我独立开发的免费与测试游戏，以及上架海外市场的轻量小作品。轻松解压、离线可玩，随时随地来一盘。</p>
             <div class="hero-stats" id="heroStats">
@@ -1971,6 +2143,18 @@
             </div>
         </div>
     </footer>
+
+    <div class="r-mascot" id="heroMascot" aria-hidden="true">
+        <div class="r-flip">
+            <div class="r-body">
+                <span class="r-head">R</span>
+                <span class="r-leg l"></span>
+                <span class="r-leg r"></span>
+            </div>
+        </div>
+        <span class="r-bubble" id="heroBubble"></span>
+    </div>
+    <div class="r-prints" id="heroPrints" aria-hidden="true"></div>
 
     <script>
         // ===== 游戏数据（占位，后续可替换为真实内容）=====
@@ -2337,6 +2521,147 @@
             });
 
             devlogRender();
+        }
+
+        // ===== 首页 R 小精灵：走 / 跑 / 跳，固定层随机游走（transform 移动，GPU 友好） =====
+        const heroMascot = document.getElementById('heroMascot');
+        if (heroMascot && !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+            const M_W = 34, M_H = 52;
+            let mx, my, faceLeft = false;
+
+            function rand(min, max) { return min + Math.random() * (max - min); }
+
+            function applyPos() {
+                heroMascot.style.transform = 'translate3d(' + mx + 'px,' + my + 'px,0)';
+                heroMascot.classList.toggle('flip', faceLeft);
+            }
+
+            function clampPos() {
+                const w = window.innerWidth;
+                const h = window.innerHeight;
+                mx = Math.max(12, Math.min(mx, w - M_W - 12));
+                my = Math.max(12, Math.min(my, h - M_H - 12));
+                applyPos();
+            }
+
+            function scheduleMove(delay) {
+                setTimeout(moveOnce, delay);
+            }
+
+            function moveOnce() {
+                const w = window.innerWidth;
+                const h = window.innerHeight;
+                const maxX = Math.max(12, w - M_W - 12);
+                const maxY = Math.max(12, h - M_H - 12);
+                const tx = rand(12, maxX);
+                const ty = rand(12, maxY);
+                const dx = tx - mx;
+                const dy = ty - my;
+                const dist = Math.hypot(dx, dy);
+
+                heroMascot.classList.remove('mode-walk', 'mode-run', 'mode-jump');
+                if (dx > 2) faceLeft = false;
+                if (dx < -2) faceLeft = true;
+
+                if (dist < 80) {
+                    setTimeout(function () { scheduleMove(6400 + Math.random() * 6400); }, 3600 + Math.random() * 4000);
+                    return;
+                }
+
+                const roll = Math.random();
+                if (roll < 0.3) {
+                    // 奔跑（速度减半）
+                    heroMascot.classList.add('mode-run');
+                    const dur = Math.max(35200, dist / 0.053125);
+                    heroMascot.style.transition = 'transform ' + dur + 'ms linear';
+                    startPrints(75);
+                    mx = tx; my = ty; applyPos();
+                    setTimeout(function () {
+                        heroMascot.classList.remove('mode-run');
+                        stopPrints();
+                        scheduleMove(5200 + Math.random() * 6000);
+                    }, dur + 200);
+                } else if (roll < 0.55) {
+                    // 原地跳：由快到慢，再由慢到快（腿全程在动）
+                    heroMascot.classList.add('mode-jump');
+                    heroMascot.style.transition = 'none';
+                    const jumpTotal = 3500;
+                    setTimeout(function () {
+                        heroMascot.classList.remove('mode-jump');
+                        scheduleMove(5200 + Math.random() * 6000);
+                    }, jumpTotal);
+                } else {
+                    // 行走（速度减半）
+                    heroMascot.classList.add('mode-walk');
+                    const dur = Math.max(32000, dist / 0.040625);
+                    heroMascot.style.transition = 'transform ' + dur + 'ms linear';
+                    startPrints(140);
+                    mx = tx; my = ty; applyPos();
+                    setTimeout(function () {
+                        heroMascot.classList.remove('mode-walk');
+                        stopPrints();
+                        scheduleMove(5200 + Math.random() * 6000);
+                    }, dur + 200);
+                }
+            }
+
+            heroMascot.style.transition = 'none';
+            mx = rand(12, Math.max(12, window.innerWidth - M_W - 12));
+            my = rand(12, Math.max(12, window.innerHeight - M_H - 12));
+            applyPos();
+            scheduleMove(4000 + Math.random() * 4800);
+
+            // 随机对话气泡（间隔不超过 60s）
+            const PHRASES = ['你过来啊！', '就是玩儿', '蹦蹦跳跳又是一天', '哈哈哈', '好好上班！', '一起玩儿啊', '好无聊~', '开心开心~', '嘻嘻', '抓我啊~'];
+            const heroBubble = document.getElementById('heroBubble');
+            function bubbleNext() {
+                setTimeout(function () {
+                    if (heroBubble) {
+                        heroBubble.textContent = PHRASES[Math.floor(Math.random() * PHRASES.length)];
+                        heroBubble.classList.add('show');
+                        setTimeout(function () {
+                            heroBubble.classList.remove('show');
+                            bubbleNext();
+                        }, 2600 + Math.random() * 1400);
+                    } else {
+                        bubbleNext();
+                    }
+                }, 5000 + Math.random() * 55000);
+            }
+            if (heroBubble) bubbleNext();
+
+            // 脚印：左右腿各一组脚印，交替生成，生命周期 1.5 秒
+            const printsWrap = document.getElementById('heroPrints');
+            let printTimer = null;
+            let footSide = false;
+
+            function placePrint() {
+                if (!printsWrap) return;
+                const r = heroMascot.getBoundingClientRect();
+                footSide = !footSide;
+                const footX = footSide ? r.left + 8 : r.left + 26;
+                const el = document.createElement('span');
+                el.className = 'r-print';
+                el.style.left = (footX + (Math.random() * 4 - 2)) + 'px';
+                el.style.top = (r.top + 36 + (Math.random() * 3 - 1)) + 'px';
+                el.style.transform = 'rotate(' + (footSide ? -1 : 1) * (6 + Math.random() * 8) + 'deg)';
+                printsWrap.appendChild(el);
+                setTimeout(function () { el.style.opacity = '0'; }, 1000);
+                setTimeout(function () { el.remove(); }, 2000);
+            }
+
+            function startPrints(stepMs) {
+                if (!printsWrap) return;
+                if (printTimer) clearInterval(printTimer);
+                placePrint();
+                printTimer = setInterval(placePrint, stepMs);
+            }
+
+            function stopPrints() {
+                if (printTimer) { clearInterval(printTimer); printTimer = null; }
+            }
+
+            window.addEventListener('resize', clampPos);
         }
     </script>
 
