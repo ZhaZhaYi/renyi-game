@@ -2178,7 +2178,7 @@
             const imgUrl = g.img || "images/default.png";
 
             return `
-                        <article class="card" data-cat="${g.cat}">
+                        <article class="card" data-cat="${g.cat}" onclick="location.href='${g.link}'" role="link" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();location.href='${g.link}';}">
                             <div class="thumb">
                                 <div class="bg" style="background:linear-gradient(135deg,${g.art[0]},${g.art[1]})"></div>
                                 <div class="badge" style="background:${c}">${b}</div>
